@@ -1,0 +1,6 @@
+{
+    "extends": ["next/core-web-vitals", "plugin:prettier/recommended", "standard", "plugin:tailwindcss/recommended", "prettier"],
+    "rules": {
+      "prettier/prettier": "error"
+    }
+  }
