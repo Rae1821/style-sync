@@ -26,7 +26,7 @@ const MobileNav = () => {
       </SheetTrigger>
 
       <SheetContent className="flex flex-col gap-6 bg-white md:hidden">
-        <SheetHeader>
+        <SheetHeader className="flex flex-row items-center">
           <SheetTitle>
             {" "}
             <div className="flex items-end">
@@ -44,8 +44,9 @@ const MobileNav = () => {
         </SheetHeader>
 
         <Separator className="border border-gray-50" />
-
-        <Navbar />
+        <div className="pl-8">
+            <Navbar />
+        </div>
       </SheetContent>
     </Sheet>
   </div>

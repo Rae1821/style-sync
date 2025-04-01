@@ -1,13 +1,13 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import Navbar from './Navbar'
-import MobileNav from './MobileNav'
+import Image from "next/image";
+import Link from "next/link";
+import Navbar from "./Navbar";
+import MobileNav from "./MobileNav";
 
 const Header = () => {
   return (
     <header className="mx-auto flex w-full max-w-[1300px] items-center justify-between p-4 sm:px-10">
       <Link href="/" className="flex items-center gap-1">
-        <Image src="/images/logo.png" alt="logo" width={100} height={100} />
+        <Image src="/images/logo-2.png" alt="logo" width={100} height={100} />
         {/* <p className="font-semibold">Style Sync</p> */}
       </Link>
       <div className="flex">
@@ -20,7 +20,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
