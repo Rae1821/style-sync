@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Card,
   CardContent,
@@ -58,10 +59,10 @@ interface ProfileDetails {
 const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
   return (
     <div className="w-full">
-      <div className="flex flex-col gap-8 md:flex-row">
+      <div className="flex flex-col gap-8 mx-auto px-4">
         {/* Body Shape Card  */}
         <div className="w-full">
-          <Card className="relative h-[600px] w-full md:h-[560px]">
+          <Card className="relative w-full md:h-[560px]">
             <CardHeader>
               <CardTitle>Your Body Shape is:</CardTitle>
               <CardDescription className="pt-2 text-4xl font-semibold">

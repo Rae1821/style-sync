@@ -24,14 +24,6 @@ const Navbar = async () => {
           {!user ? (
             <>
               <li>
-                <Link
-                  href="/dashboard"
-                  className="over:underline hover:decoration-teal-300 hover:decoration-2 hover:underline-offset-2 hover:transition-all hover:duration-300 hover:ease-in"
-                >
-                  Dashboard
-                </Link>
-              </li>
-              <li>
                 <Logout />
               </li>
             </>

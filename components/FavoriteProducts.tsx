@@ -14,24 +14,6 @@ import Link from "next/link";
 import { deleteFavoriteProduct } from "@/actions/auth";
 import { IoMdCloseCircle } from "react-icons/io";
 
-interface ProductDetails {
-  id?: string;
-  userEmail: string;
-  product_title?: string | null;
-  product_price?: string | null;
-  product_original_price?: string | null;
-  product_star_rating?: string | null;
-  product_num_ratings?: string | null;
-  product_url?: string | null;
-  product_photo?: string | null;
-  asin?: string | null;
-}
-
-interface UserProductsType {
-  email?: string | null;
-  products?: ProductDetails[];
-}
-
 interface DeleteFavoriteProduct {
   id?: string;
   product_title?: string | null;
@@ -44,28 +26,22 @@ interface DeleteFavoriteProduct {
   asin?: string | null;
 }
 
-const FavoriteProducts = ({
-  userProducts,
-}: {
-  userProducts: UserProductsType;
-}) => {
-  // const [showProducts, setShowProducts] = useState(false);
-  const productsArr = userProducts.products;
-  const favProducts = productsArr?.map((product: ProductDetails) => {
-    return {
-      id: product.id,
-      email: product.userEmail,
-      product_title: product.product_title as string,
-      product_price: product?.product_price,
-      product_originalPrice: product?.product_original_price ?? undefined,
-      product_starRating: product.product_star_rating ?? undefined,
-      product_numRatings: product.product_num_ratings ?? undefined,
-      product_url: product?.product_url,
-      product_photo: product.product_photo,
-      asin: product.id,
-    };
-  });
+interface FavoriteProductsProps {
+  favProducts: {
+    id?: string;
+    userEmail?: string;
+    product_title?: string | null;
+    product_price?: string | null;
+    product_original_price?: string | null;
+    product_star_rating?: string | null;
+    product_num_ratings?: number | null;
+    product_url?: string | null;
+    product_photo?: string | null;
+    asin?: string | null;
+  }[];
+}
 
+const FavoriteProducts = ({ favProducts }: FavoriteProductsProps) => {
   const handleDeleteFavorite = async (product: DeleteFavoriteProduct) => {
     console.log("Product:", product);
     try {
@@ -101,7 +77,7 @@ const FavoriteProducts = ({
                   src={product.product_photo || "/images/logo-2.jpg"}
                   width={200}
                   height={200}
-                  alt={product.product_title}
+                  alt={`${product.product_title}`}
                   className="product-card_img"
                 />
                 <IoMdCloseCircle
@@ -112,7 +88,7 @@ const FavoriteProducts = ({
 
               <div className="flex flex-col gap-3">
                 <h3 className="product-title">
-                  {product.product_title.replace(/[^\w\s]/gi, "")}
+                  {(product.product_title ?? "").replace(/[^\w\s]/gi, "")}
                 </h3>
                 <div className="flex justify-between">
                   <p className="flex items-center gap-2 capitalize text-black opacity-50">
@@ -124,12 +100,13 @@ const FavoriteProducts = ({
                         alt="star icon"
                       />
                     </span>
-                    {product.product_starRating} / {product.product_numRatings}
+                    {product.product_star_rating} /{" "}
+                    {product.product_num_ratings}
                   </p>
                   <p className="font-semibold text-black">
                     <span>{product.product_price}</span>
                     <span className="ml-2 font-light text-gray-400 line-through">
-                      {product.product_originalPrice}
+                      {product.product_original_price}
                     </span>
                   </p>
                 </div>

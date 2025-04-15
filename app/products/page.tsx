@@ -1,4 +1,5 @@
 import ProductsList from "@/components/ProductsList";
+import { styleShapeSearchTerms } from "@/constants";
 import { db } from "@/db";
 import { cookies } from "next/headers";
 import React from "react";
@@ -63,6 +64,9 @@ const ProductsPage = async ({
                 {bodyShape}
               </span>
             </p>
+          </div>
+          <div>
+            <p>Product Search Ideas</p>
           </div>
         </div>
       </div>
