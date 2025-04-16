@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { IoShirtOutline } from "react-icons/io5";
 import { HiMiniFire, HiMiniBolt } from "react-icons/hi2";
+import { BiSolidPear } from "react-icons/bi";
 
 import {
   pearBodyCharacteristic,
@@ -47,6 +48,7 @@ import {
 } from "@/components/ui/dialog";
 import CalculateShape from "./CalculateShape";
 import StyleQuiz from "./StyleQuiz";
+import { Badge } from "./ui/badge";
 
 interface ProfileDetails {
   id: string | null;
@@ -62,29 +64,30 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
       <div className="flex flex-col gap-8 mx-auto px-4">
         {/* Body Shape Card  */}
         <div className="w-full">
-          <Card className="relative w-full md:h-[560px]">
+          <Card className="relative w-full h-[275px] md:h-[560px]">
             <CardHeader>
-              <CardTitle>Your Body Shape is:</CardTitle>
-              <CardDescription className="pt-2 text-4xl font-semibold">
+              <CardDescription>Body Shape</CardDescription>
+              <CardTitle className="text-2xl font-semibold text-[#09090B]">
                 {userProfile?.bodyShape}
-              </CardDescription>
+              </CardTitle>
+              <div className="absolute right-4 top-4 bg-neutral-100 rounded-full p-2">
+                <BiSolidPear className="text-3xl text-red-300" />
+              </div>
             </CardHeader>
             <CardContent>
               <div>
-                <p className="font-medium">
-                  Characteristics for your shape include:
-                </p>
                 {userProfile.bodyShape === "Pear" ? (
-                  <div>
-                    <ul>
-                      {pearBodyCharacteristic.map((item) => (
-                        <li key={item} className="flex items-center gap-1">
-                          <HiMiniFire />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ul>
+                    {pearBodyCharacteristic.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-center gap-1 text-sm"
+                      >
+                        <HiMiniFire />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 ) : userProfile.bodyShape === "Apple" ? (
                   <ul>
                     {appleBodyCharacteristic.map((item) => (
@@ -126,7 +129,7 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                   </ul>
                 ) : null}
               </div>
-              <div className="mt-4">
+              {/* <div className="mt-4">
                 <p className="font-medium">Common clothing items include:</p>
                 {userProfile.bodyShape === "Pear" ? (
                   <ul>
@@ -174,7 +177,7 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     ))}
                   </ul>
                 ) : null}
-              </div>
+              </div> */}
             </CardContent>
             <CardFooter className="absolute bottom-4">
               <Dialog>
@@ -204,24 +207,24 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
         </div>
         {/* Fashion Quiz Card */}
         <div className="w-full">
-          <Card className="relative h-[560px] w-full md:h-[560px]">
+          <Card className="relative h-[300px] w-full md:h-[560px]">
             <CardHeader>
-              <CardTitle>Your Fashion Style is:</CardTitle>
-              <CardDescription className="pt-4">
-                <span className="text-4xl font-semibold">
-                  {userProfile.fashionStyle}
-                </span>
-                {/* want to add in ideas for this style here - maybe even stores that are known for this fashion style? */}
-              </CardDescription>
+              <CardDescription>Fashion Style</CardDescription>
+              <CardTitle className="text-2xl font-semibold text-[#09090B]">
+                {userProfile.fashionStyle}
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div>
-                Characteristics for your style include:
+                {/* Characteristics for your style include: */}
                 {userProfile.fashionStyle === "Classic" ? (
                   <ul>
                     {classicStyle.map((item) => (
-                      <li key={item} className="flex items-center gap-1">
-                        <HiMiniBolt />
+                      <li
+                        key={item}
+                        className="flex items-center gap-1 text-sm"
+                      >
+                        <HiMiniBolt className="text-red-300" />
                         {item}
                       </li>
                     ))}
@@ -264,7 +267,7 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                   </ul>
                 ) : null}
               </div>
-              <div className="mt-4">
+              {/* <div className="mt-4">
                 <p className="font-medium">Common clothing items include:</p>
                 {userProfile.fashionStyle === "Classic" ? (
                   <ul>
@@ -312,7 +315,7 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     ))}
                   </ul>
                 ) : null}
-              </div>
+              </div> */}
             </CardContent>
             <CardFooter className="absolute bottom-4">
               <Dialog>

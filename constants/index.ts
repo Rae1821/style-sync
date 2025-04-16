@@ -419,109 +419,109 @@ export const sportyAppleTerms = [
   "sporty backpacks",
 ];
 
-export const styleShapeSearchTerms = [
-  {
-    style: "sporty",
-    bodyShape: "hourglass",
-    searchTerms: [
-      "fitted leggings",
-      "tracksuits",
-      "bodycon athletic dresses",
-      "supportive sports bras (worn as tops)",
-      "cropped hoodies",
-      "sleek sneakers",
-      "belt bags",
-    ],
-  },
-  {
-    style: "sporty",
-    bodyShape: "rectangle",
-    searchTerms: [
-      "straight-leg track pants",
-      "relaxed-fit joggers",
-      "graphic sweatshirts",
-      "oversized t-shirts",
-      "bomber jackets",
-      "retro sneakers",
-      "duffel bags",
-    ],
-  },
-  {
-    style: "sporty",
-    bodyShape: "invertedTriangle",
-    searchTerms: [
-      "wide-leg track pants",
-      "flared leggings",
-      "halter neck athletic tops",
-      "racerback tanks",
-      "lightweight jackets",
-      "minimalist sneakers",
-      "small backpacks",
-    ],
-  },
-  {
-    style: "edgy",
-    bodyShape: "pear",
-    searchTerms: [
-      "ripped boyfriend jeans",
-      "distressed denim skirts",
-      "band tees",
-      "oversized graphic hoodies",
-      "leather jackets",
-      "combat boots",
-      "studded belts",
-      "chain necklaces",
-    ],
-  },
-  {
-    style: "edgy",
-    bodyShape: "apple",
-    searchTerms: [
-      "loose-fit ripped jeans",
-      "oversized band tees",
-      "distressed denim jackets",
-      "flowy black dresses",
-      "chunky platform boots",
-      "layered necklaces",
-      "statement rings",
-    ],
-  },
-  {
-    style: "edgy",
-    bodyShape: "hourglass",
-    searchTerms: [
-      "high-waisted ripped skinny jeans",
-      "fitted graphic tees",
-      "cropped leather jackets",
-      "bodycon black dresses",
-      "stiletto boots",
-      "bold earrings",
-      "chain belts",
-    ],
-  },
-  {
-    style: "edgy",
-    bodyShape: "rectangle",
-    searchTerms: [
-      "straight-leg ripped jeans",
-      "oversized graphic tees",
-      "bomber jackets",
-      "mesh tops",
-      "combat boots",
-      "studded accessories",
-      "layered chains",
-    ],
-  },
-  {
-    style: "edgy",
-    bodyShape: "invertedTriangle",
-    searchTerms: [
-      "wide-leg distressed pants",
-      "band tees with shoulder pads",
-      "structured leather jackets",
-      "mini skirts with tights",
-      "chunky sneakers",
-      "statement cuffs",
-    ],
-  },
+const sportyHourglassTerms = [
+  "fitted leggings",
+  "tracksuits",
+  "bodycon athletic dresses",
+  "supportive sports bras (worn as tops)",
+  "cropped hoodies",
+  "sleek sneakers",
+  "belt bags",
 ];
+
+const sportyRectangleTerms = [
+  "straight-leg track pants",
+  "relaxed-fit joggers",
+  "graphic sweatshirts",
+  "oversized t-shirts",
+  "bomber jackets",
+  "retro sneakers",
+  "duffel bags",
+];
+
+const edgyPearTerms = [
+  "ripped boyfriend jeans",
+  "distressed denim skirts",
+  "band tees",
+  "oversized graphic hoodies",
+  "leather jackets",
+  "combat boots",
+  "studded belts",
+  "chain necklaces",
+];
+
+const edgyAppleTerms = [
+  "loose-fit ripped jeans",
+  "oversized band tees",
+  "distressed denim jackets",
+  "flowy black dresses",
+  "chunky platform boots",
+  "layered necklaces",
+  "statement rings",
+];
+
+const edgyHourglassTerms = [
+  "high-waisted ripped skinny jeans",
+  "fitted graphic tees",
+  "cropped leather jackets",
+  "bodycon black dresses",
+  "stiletto boots",
+  "bold earrings",
+  "chain belts",
+];
+
+const edgyRectangleTerms = [
+  "straight-leg ripped jeans",
+  "oversized graphic tees",
+  "bomber jackets",
+  "mesh tops",
+  "combat boots",
+  "studded accessories",
+  "layered chains",
+];
+
+const edgyInvertedTriangleTerms = [
+  "wide-leg distressed pants",
+  "band tees with shoulder pads",
+  "structured leather jackets",
+  "mini skirts with tights",
+  "chunky sneakers",
+  "statement cuffs",
+];
+
+export const bodyShapeTerms = {
+  classic: {
+    pear: classicPearTerms,
+    apple: classicAppleTerms,
+    hourglass: classicHourglassTerms,
+    rectangle: classicRectangleTerms,
+    invertedTriangle: classicInvertedTriangleTerms,
+  },
+  boho: {
+    pear: bohoPearTerms,
+    apple: bohoAppleTerms,
+    hourglass: bohoHourglassTerms,
+    rectangle: bohoRectangleTerms,
+    invertedTriangle: bohoInvertedTriangleTerms,
+  },
+  chic: {
+    pear: chicPearTerms,
+    apple: chicAppleTerms,
+    hourglass: chicHourglassTerms,
+    rectangle: chicRectangleTerms,
+    invertedTriangle: chicInvertedTriangleTerms,
+  },
+  sporty: {
+    pear: sportyPearTerms,
+    apple: sportyAppleTerms,
+    hourglass: sportyHourglassTerms,
+    rectangle: sportyRectangleTerms,
+  },
+  edgy: {
+    pear: edgyPearTerms,
+    apple: edgyAppleTerms,
+    hourglass: edgyHourglassTerms,
+    rectangle: edgyRectangleTerms,
+    invertedTriangle: edgyInvertedTriangleTerms,
+  },
+};

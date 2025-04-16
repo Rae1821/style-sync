@@ -1,5 +1,4 @@
 import ProductsList from "@/components/ProductsList";
-import { styleShapeSearchTerms } from "@/constants";
 import { db } from "@/db";
 import { cookies } from "next/headers";
 import React from "react";
