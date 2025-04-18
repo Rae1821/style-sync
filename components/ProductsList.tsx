@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { fetchClothing } from "@/actions/auth";
-import ProductSearch from "./ProductSearch";
 import ClothingCard from "./ClothingCard";
 
 interface ClothingProps {
@@ -33,13 +32,13 @@ const ProductsList = ({ searchItem }: { searchItem: string }) => {
 
   return (
     <div className="mt-24 max-w-[1300px]">
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <ProductSearch
           onSearch={(searchTerm: string) =>
             console.log("Search term:", searchTerm)
           }
         />
-      </div>
+      </div> */}
       <ul className="mt-12 flex flex-wrap gap-4">
         {items.map((item: ClothingProps) => (
           <li className="flex" key={item.asin}>

@@ -8,9 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { IoShirtOutline } from "react-icons/io5";
 import { HiMiniFire, HiMiniBolt } from "react-icons/hi2";
-import { BiSolidPear } from "react-icons/bi";
+import { IoWomanSharp } from "react-icons/io5";
+import { FaShirt } from "react-icons/fa6";
 
 import {
   pearBodyCharacteristic,
@@ -23,16 +23,6 @@ import {
   chicStyle,
   sportyStyle,
   edgyStyle,
-  classicClothing,
-  bohoClothing,
-  chicClothing,
-  sportyClothing,
-  edgyClothing,
-  bestPearProducts,
-  bestAppleProducts,
-  bestRectangleProducts,
-  bestHourglassProducts,
-  bestInvertedTriangleProducts,
 } from "@/constants";
 // import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -48,7 +38,6 @@ import {
 } from "@/components/ui/dialog";
 import CalculateShape from "./CalculateShape";
 import StyleQuiz from "./StyleQuiz";
-import { Badge } from "./ui/badge";
 
 interface ProfileDetails {
   id: string | null;
@@ -70,26 +59,26 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
               <CardTitle className="text-2xl font-semibold text-[#09090B]">
                 {userProfile?.bodyShape}
               </CardTitle>
-              <div className="absolute right-4 top-4 bg-neutral-100 rounded-full p-2">
-                <BiSolidPear className="text-3xl text-red-300" />
+              <div className="absolute right-4 top-4 bg-red-300 rounded-full p-2">
+                <IoWomanSharp className="text-2xl text-neutral-100" />
               </div>
             </CardHeader>
             <CardContent>
               <div>
                 {userProfile.bodyShape === "Pear" ? (
-                  <ul>
+                  <ul className="grid grid-cols-2">
                     {pearBodyCharacteristic.map((item) => (
                       <li
                         key={item}
                         className="flex items-center gap-1 text-sm"
                       >
-                        <HiMiniFire />
+                        <HiMiniFire className="text-red-300" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 ) : userProfile.bodyShape === "Apple" ? (
-                  <ul>
+                  <ul className="grid grid-cols-2">
                     {appleBodyCharacteristic.map((item) => (
                       <li key={item} className="flex items-center gap-1">
                         <HiMiniFire />
@@ -98,7 +87,7 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     ))}
                   </ul>
                 ) : userProfile.bodyShape === "Rectangle" ? (
-                  <ul>
+                  <ul className="grid grid-cols-2">
                     {rectangleBodyCharacteristic.map((item) => (
                       <li key={item} className="flex items-center gap-1">
                         {" "}
@@ -108,7 +97,7 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     ))}
                   </ul>
                 ) : userProfile.bodyShape === "Hourglass" ? (
-                  <ul>
+                  <ul className="grid grid-cols-2">
                     {hourglassBodyCharacteristic.map((item) => (
                       <li key={item} className="flex items-center gap-1">
                         {" "}
@@ -118,7 +107,7 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     ))}
                   </ul>
                 ) : userProfile.bodyShape === "Inverted Triangle" ? (
-                  <ul>
+                  <ul className="grid grid-cols-2">
                     {invertedTriangleBodyCharacteristic.map((item) => (
                       <li key={item} className="flex items-center gap-1">
                         {" "}
@@ -213,16 +202,19 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
               <CardTitle className="text-2xl font-semibold text-[#09090B]">
                 {userProfile.fashionStyle}
               </CardTitle>
+              <div className="absolute right-4 top-4 bg-red-300 rounded-full p-2">
+                <FaShirt className="text-2xl text-neutral-100" />
+              </div>
             </CardHeader>
             <CardContent>
               <div>
                 {/* Characteristics for your style include: */}
                 {userProfile.fashionStyle === "Classic" ? (
-                  <ul>
+                  <ul className="grid grid-cols-2">
                     {classicStyle.map((item) => (
                       <li
                         key={item}
-                        className="flex items-center gap-1 text-sm"
+                        className="flex items-center gap-1 text-xs"
                       >
                         <HiMiniBolt className="text-red-300" />
                         {item}
@@ -323,7 +315,7 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                   <Button className="group relative bg-transparent px-6 py-4 font-semibold text-black">
                     <span className="absolute inset-0 size-full -translate-x-2 -translate-y-2 bg-red-300 transition duration-300 ease-out group-hover:translate-x-0 group-hover:translate-y-0"></span>
                     <span className="absolute inset-0 size-full border-4 border-black"></span>
-                    <span className="relative">Find Style</span>
+                    <span className="relative">Take Style Quiz</span>
                   </Button>
                 </DialogTrigger>
 

@@ -439,6 +439,16 @@ const sportyRectangleTerms = [
   "duffel bags",
 ];
 
+const sportyInvertedTriangleTerms = [
+  "wide-leg track pants",
+  "flared leggings",
+  "halter neck athletic tops",
+  "racerback tanks",
+  "lightweight jackets",
+  "minimalist sneakers",
+  "small backpacks",
+];
+
 const edgyPearTerms = [
   "ripped boyfriend jeans",
   "distressed denim skirts",
@@ -480,18 +490,19 @@ const edgyRectangleTerms = [
   "layered chains",
 ];
 
-const edgyInvertedTriangleTerms = [
-  "wide-leg distressed pants",
-  "band tees with shoulder pads",
-  "structured leather jackets",
-  "mini skirts with tights",
-  "chunky sneakers",
-  "statement cuffs",
-];
-
 export const bodyShapeTerms = {
   classic: {
-    pear: classicPearTerms,
+    pear: [
+      "A-line skirts",
+      "tailored trousers",
+      "wide-leg pants",
+      "wrap dresses",
+      "boat neck tops",
+      "structured cardigans",
+      "fitted blouses",
+      "simple heels",
+      "classic ballet flats",
+    ],
     apple: classicAppleTerms,
     hourglass: classicHourglassTerms,
     rectangle: classicRectangleTerms,
@@ -516,12 +527,20 @@ export const bodyShapeTerms = {
     apple: sportyAppleTerms,
     hourglass: sportyHourglassTerms,
     rectangle: sportyRectangleTerms,
+    invertedTriangle: sportyInvertedTriangleTerms,
   },
   edgy: {
     pear: edgyPearTerms,
     apple: edgyAppleTerms,
     hourglass: edgyHourglassTerms,
     rectangle: edgyRectangleTerms,
-    invertedTriangle: edgyInvertedTriangleTerms,
+    invertedTriangle: [
+      "wide-leg distressed pants",
+      "band tees with shoulder pads",
+      "structured leather jackets",
+      "mini skirts with tights",
+      "chunky sneakers",
+      "statement cuffs",
+    ],
   },
 };

@@ -57,12 +57,18 @@ const FavoriteProducts = ({ favProducts }: FavoriteProductsProps) => {
     <div className="w-full">
       <Card>
         <CardHeader className="">
-          <CardTitle>Your Favorite Products</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-xl mb-[-4]">
+            Your Favorite Products
+          </CardTitle>
+          <CardDescription className="text-xs">
             Here you&apos;ll find all the products you favorited
           </CardDescription>
-          <Button asChild className="w-full md:w-1/4">
-            <Link href="/products"> Search Products</Link>
+          <Button
+            asChild
+            variant="outline"
+            className="w-1/2 md:w-1/4 mt-4 border-4 py-4 font-semibold border-black rounded-none hover:bg-red-300 transition duration-300 ease-out"
+          >
+            <Link href="/products">Find New Products</Link>
           </Button>
         </CardHeader>
         <CardContent className="mt-4 flex flex-col gap-4 overflow-y-scroll md:flex-row ">
