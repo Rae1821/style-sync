@@ -38,7 +38,7 @@ const ProductPageSearch = ({
           handleSearch={handleSearch}
         />
       </div>
-      <div className="mt-10">
+      <div className="mt-10 mx-auto">
         <SearchInput
           searchItem={searchItem}
           setSearchItem={setSearchItem}

@@ -44,10 +44,10 @@ const ProductsPage = async ({
   };
 
   return (
-    <div className="container mx-auto max-w-[1300px] px-4">
+    <div className="container mx-auto max-w-[1300px] px-8 md:px-12 mt-4">
       <div className="">
         <div className="">
-          <h2 className="text-2xl font-semibold text-[#09090B]">
+          <h2 className="text-3xl bg-gradient-to-r from-red-300 to-red-50 font-semibold leading-normal bg-clip-text text-transparent">
             Product Search
           </h2>
           <p className="mt-2 text-sm font-normal tracking-tight">
