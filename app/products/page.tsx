@@ -3,15 +3,6 @@ import ProductsList from "@/components/ProductsList";
 import { db } from "@/db";
 import { cookies } from "next/headers";
 import React from "react";
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
-// import { bodyShapeTerms } from "@/constants";
-// import { Separator } from "@/components/ui/separator";
 
 const ProductsPage = async ({
   searchParams,

@@ -3,6 +3,8 @@ import { db } from "@/db";
 import { OAuth2Client } from "google-auth-library";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { GoogleGenAI } from "@google/genai";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // Create a utility for Google OAuth
 export async function getGoogleClient() {
@@ -210,5 +212,21 @@ export const deleteFavoriteProduct = async (
   } catch (error) {
     console.log("Error deleting product from favorites", error);
     throw error;
+  }
+};
+
+// Gemini AI
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+
+export const geminiAiAction = async () => {
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash-001",
+      contents: "Why is the sky blue?",
+    });
+
+    console.log(response.text);
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
 };

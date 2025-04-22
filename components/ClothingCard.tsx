@@ -72,8 +72,8 @@ const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
         />
       </div>
 
-      <div className="flex flex-col gap-3">
-        <h3 className="product-title">{newProductTitle}</h3>
+      <div className="flex flex-col gap-1">
+        <h3 className="product-title ">{newProductTitle}</h3>
         <div className="flex justify-between">
           <p className="flex items-center gap-2 capitalize text-black opacity-50">
             <span>

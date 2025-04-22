@@ -31,21 +31,21 @@ const ProductPageSearch = ({
 
   return (
     <div className="flex w-full flex-col">
-      <div>
+      <div className="mt-4">
         <SearchSuggestions
           userProfile={userProfile}
           setSearchItem={setSearchItem}
           handleSearch={handleSearch}
         />
       </div>
-      <div className="mt-10 mx-auto">
+      <div className="mt-12 mx-auto">
         <SearchInput
           searchItem={searchItem}
           setSearchItem={setSearchItem}
           handleSearch={handleSearch}
         />
       </div>
-      <div className="mt-4">
+      <div>
         <ProductsList searchItem={searchItem} />
       </div>
     </div>

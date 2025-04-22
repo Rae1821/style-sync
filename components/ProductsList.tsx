@@ -39,7 +39,7 @@ const ProductsList = ({ searchItem }: { searchItem: string }) => {
           }
         />
       </div> */}
-      <ul className="mt-12 flex flex-wrap gap-4">
+      <ul className="mt-12 flex flex-wrap items-center justify-center gap-4 mx-auto">
         {items.map((item: ClothingProps) => (
           <li className="flex" key={item.asin}>
             <ClothingCard clothing={item} />
