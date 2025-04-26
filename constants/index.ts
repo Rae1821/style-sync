@@ -4,12 +4,16 @@ export const navLinks = [
     route: "/",
   },
   {
-    label: "My Dashboard",
+    label: "Dashboard",
     route: "/dashboard",
   },
   {
     label: "Products",
     route: "/products",
+  },
+  {
+    label: "Style Sesh",
+    route: "/style-sesh",
   },
   {
     label: "Moodboard",
