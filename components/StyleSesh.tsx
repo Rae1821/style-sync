@@ -4,12 +4,38 @@ import { geminiImageUpload } from "@/actions/auth";
 import { UploadButton } from "@/utils/uploadthing";
 import { useState } from "react";
 
-const StyleSesh = () => {
-  const [geminiResponse, setGeminiResponse] = useState({});
+interface ProfileDetails {
+  id: string | null;
+  email: string | null;
+  name: string | null;
+  bodyShape: string | null;
+  fashionStyle: string | null;
+}
+
+const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
+  interface GeminiResponse {
+    outfits?:
+      | {
+          outfitOccasion: string;
+          mainArticle: string;
+          shoes: string;
+          accessories: string;
+          completerPiece: string;
+        }[]
+      | null;
+  }
+
+  const [geminiResponse, setGeminiResponse] = useState<GeminiResponse>({});
+  const bodyShape = userProfile?.bodyShape;
+  const fashionStyle = userProfile?.fashionStyle;
 
   const handleUploadComplete = async (res: { ufsUrl: string }[]) => {
     try {
-      const result = await geminiImageUpload(res[0]?.ufsUrl);
+      const result = await geminiImageUpload(
+        res[0]?.ufsUrl,
+        bodyShape || "",
+        fashionStyle || ""
+      );
       setGeminiResponse(result);
 
       console.log("Gemini AI action triggered");
@@ -20,11 +46,12 @@ const StyleSesh = () => {
     }
   };
 
-  const formatResponse = () => {
-    const responseText = JSON.stringify(geminiResponse);
-    const formattedText = responseText.replace(/\\n/g, "\n");
-    return formattedText;
-  };
+  console.log(geminiResponse.outfits);
+  //   const formatResponse = () => {
+  //     const responseText = JSON.stringify(geminiResponse);
+  //     const formattedText = responseText.replace(/\\n/g, "\n");
+  //     return formattedText;
+  //   };
 
   return (
     <div>
@@ -45,7 +72,6 @@ const StyleSesh = () => {
       {geminiResponse && (
         <div>
           <h2>Gemini AI Response</h2>
-          <p>{formatResponse}</p>
         </div>
       )}
     </div>

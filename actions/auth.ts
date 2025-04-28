@@ -258,8 +258,20 @@ const downloadFile = async (url: string): Promise<string> => {
 };
 
 export const geminiImageUpload = async (
-  fileUrl: string
-): Promise<{ text: string }> => {
+  fileUrl: string,
+  bodyShape: string,
+  fashionStyle: string
+): Promise<{
+  outfits:
+    | {
+        outfitOccasion: string;
+        mainArticle: string;
+        shoes: string;
+        accessories: string;
+        completerPiece: string;
+      }[]
+    | null;
+}> => {
   const localFilePath = await downloadFile(fileUrl);
 
   const myFile: UploadedFile = await ai.files.upload({
@@ -267,11 +279,80 @@ export const geminiImageUpload = async (
     config: { mimeType: "image/jpeg" },
   });
 
+  const prompt = `Generate outfit pairings for the clothing item in the image, taking into account the user's body shape: "${bodyShape}" (e.g., pear, apple, hourglass, rectangle, inverted triangle) and their fashion style: "${fashionStyle}" (e.g., classic, bohemian, chic, edgy, sporty). Adhere strictly to the following JSON schema and providing ONLY the JSON output. Do not include any introductory or explanatory text. 
+
+  Conider the follow general guidelines when making suggestions:
+
+  For a "pear" body shape, focus on drawing attention upwards with details on the shoulders and neckline, and choose bottoms that create a balanced silhouette.
+  For an "apple" body shape, create definition at the waist and choose styles that flow over the midsection.
+  For an "hourglass" body shape, highlight the waist and maintain balanced proportions.
+  For a "rectangle" body shape, create the illusion of curves and add definition at the waist and shoulders.
+  For a "inverted triangle" body shape, balance the silhouette by adding volume to the lower body and keeping the upper body streamlined.
+
+  For a "classic" fashion style, suggest timeless and well-fitting pieces in neutral colors.
+  For a "bohemian" fashion style, suggest flowy fabrics, natural textures, and unique accessories.
+  For a "chic" fashion style, suggest clean lines, simple silhouettes, and a neutral color palette.
+  For an "edgy" fashion style, suggest darker colors, leather, and statement accessories.
+  For a "sporty" fashion style, suggest comfortable and functional pieces with a casual vibe.
+
+  The 'mainArticle' in each outfit should either be the uploaded item itself (if it's a complete garment like a dress) or include the uploaded item paired with other suitable pieces (if it's a top, bottom, etc ).
+
+  Consider the following occasions for outfit suggestions: Casual, Work, Weekend, Vacation, Date Night, Special Event.
+
+  For each occasion, suggest a complete outfit including:
+  - mainArticle: A description of the main clothing item(s) that flatters a "${bodyShape}" body shape and aligns with the "${fashionStyle}" fashion style.
+  - shoes: Appropriate footwear for the occasion, considering the "${fashionStyle}" and occasion.
+  - accessories: Complementary accessories suitable for the "${fashionStyle}" and occasion.
+  - completerPiece: An optional layering piece that works with the "${fashionStyle}" and occasion.
+
+  Return an array of outfit objects following this schema:
+  
+  Outfit = {'outfitOccasion': 'Casual', 'mainArticle': 'denim shorts paired with a [uploaded item]', 'shoes': 'colorful sneakers', 'accessories': 'layered necklaces', 'completerPiece': 'cardigan in a color that compliments color of sneakers'}
+
+ Example of expected JSON output:
+ [
+ {
+    "outfitOccasion": "Casual",
+    "mainArticle": "high-waisted denim shorts paired with a [uploaded item] (flattering for ${bodyShape}",
+    "shoes": "fashionable sneakers in a ${fashionStyle} aesthetic",
+    "accessories": "minimalist jewelry suitable for a ${fashionStyle} casual look",
+    "completerPiece": "lightweight cardigan"
+  },
+  {
+    "outfitOccasion": "Date Night",
+    "mainArticle": "[uploaded item] styled with a fitted skirt (flattering for ${bodyShape}",
+    "shoes": "ankle boots or heels in a ${fashionStyle} style",
+    "accessories": "statement earrings, clutch bag suitable for ${fashionStyle}",
+    "completerPiece": "tailored blazer"
+  },
+  {
+    "outfitOccasion": "Vacation",
+    "mainArticle": "[uploaded item] with a flowy maxi skirt (flattering for ${bodyShape}",
+    "shoes": "comfortable sandals or espadrilles suitable for ${fashionStyle}",
+    "accessories": "wide-brimmed hat, beach tote suitable for ${fashionStyle}",
+    "completerPiece": "light kimono"
+  },
+  {
+    "outfitOccasion": "Work",
+    "mainArticle": "[uploaded item] paired with tailored trousers (flattering for ${bodyShape}",
+    "shoes": "loafers or flats in a ${fashionStyle} style",
+    "accessories": "simple jewelry, structured tote bag suitable for ${fashionStyle}",
+    "completerPiece": "blazer"
+  },
+  {
+  "outfitOccasion: "Weekend",
+  "mainArticle": "[uploaded item] with high-waisted jeans (flattering for ${bodyShape}",
+  "shoes": "wedge sandals or stylish sneakers in a ${fashionStyle} style",
+  "accessories": "sunglasses, crossbody bag suitable for ${fashionStyle}",
+  "completerPiece": "vest or light jacket"
+  },
+ ]`;
+
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
     contents: createUserContent([
       createPartFromUri(myFile.uri || "", myFile.mimeType || ""),
-      "Tell me what this item of clothing would pair well with to make a complete outfit. Every outfit should include a main article of clothing (dress or skirt + top or shirt + pants, or shirt + shorts), shoes, accessories, and a completer piece (sweater, vest, jacket, blazer, etc). Give me examples for multiple occasions. For example: Casual, Weekend, Date night, Vacation, Workwear, etc. Be sure to include the occasion in your response and make sure the response. ------  Here are a couple of examples: ------ 1. User: uploads an image of a white t-shirt. Response: This item works well with - Casual: denim shorts of all shades, colorful sneakers, layered necklaces, and a cardigan in a color that compliments color of sneakers. Vacation: Wide leg navy blue trousers, chunky tan wedge sandals, long boho necklaces, and a cream or tan sweater for cooler nights------ 2. User: uploads an image of a black dress. Response: This {type of item} works well with - Date night: black heels, a red clutch, and a red lipstick. Weekend: white sneakers, a denim jacket, and a crossbody bag. Workwear: a blazer in a color that compliments the dress, black pumps, and a structured handbag.",
+      prompt,
     ]),
   });
   console.log(response.text);
@@ -279,8 +360,35 @@ export const geminiImageUpload = async (
   await fs.promises.unlink(localFilePath); // Clean up the temporary file
 
   // console.log(response.text || undefined);
-  return { text: response.text || "" };
+  return { outfits: parseGeminiResponse(response.text) };
 };
+
+// Helper function to parse the Gemini response
+interface Outfit {
+  outfitOccasion: string;
+  mainArticle: string;
+  shoes: string;
+  accessories: string;
+  completerPiece: string;
+}
+
+function parseGeminiResponse(
+  responseText: string | undefined
+): Outfit[] | null {
+  if (!responseText) {
+    return null;
+  }
+  try {
+    const jsonMatch = responseText.match(/```json\s*([\s\S]*?)\s*```/);
+    if (jsonMatch && jsonMatch[1]) {
+      return JSON.parse(jsonMatch[1]);
+    }
+    return JSON.parse(responseText);
+  } catch (error) {
+    console.error("Failed to parse JSON from response:", error);
+    return null;
+  }
+}
 
 // UPLOADTHING MOODBOARD IMAGES
 
