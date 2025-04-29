@@ -226,18 +226,18 @@ export const deleteFavoriteProduct = async (
 // Gemini AI
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-export const geminiAiAction = async () => {
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-001",
-      contents: "Why is the sky blue?",
-    });
+// export const geminiAiAction = async () => {
+//   try {
+//     const response = await ai.models.generateContent({
+//       model: "gemini-2.0-flash-001",
+//       contents: "Why is the sky blue?",
+//     });
 
-    console.log(response.text);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
+//     console.log(response.text);
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
+// };
 
 // Gemini Image Upload
 
@@ -349,7 +349,8 @@ export const geminiImageUpload = async (
  ]`;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
+    // model: "gemini-2.0-flash",
+    model: "gemini-1.5-flash",
     contents: createUserContent([
       createPartFromUri(myFile.uri || "", myFile.mimeType || ""),
       prompt,
