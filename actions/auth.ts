@@ -482,3 +482,45 @@ export const deleteUploadedImage = async (image: DeleteUploadedImageInput) => {
     throw error;
   }
 };
+
+interface AddOutfitInput {
+  id?: string;
+  userEmail: string;
+  outfitOccasion: string;
+  outfitMainArticle: string;
+  outfitShoes: string;
+  outfitAccessories: string;
+  outfitCompleterPiece: string;
+}
+
+// Adding outfit ideas to database
+export const addFavoriteOutfit = async (outfit: AddOutfitInput) => {
+  try {
+    const userCookie = await cookies();
+    const currentUser = userCookie.get("user");
+    if (!currentUser) {
+      throw new Error("User not authenticated");
+    }
+
+    const userData = JSON.parse(currentUser.value);
+    const email = userData.email;
+
+    const addNewOutfit = await db.outfit.create({
+      data: {
+        user: { connect: { email: email } },
+        outfit_occasion: outfit.outfitOccasion,
+        outfit_main_article: outfit.outfitMainArticle,
+        outfit_shoes: outfit.outfitShoes,
+        outfit_accessories: outfit.outfitAccessories,
+        outfit_completer_piece: outfit.outfitCompleterPiece,
+      },
+    });
+
+    revalidatePath("/dashboard");
+    console.log(addNewOutfit, "Outfit added to favorites");
+    return addNewOutfit;
+  } catch (error) {
+    console.log("Error adding product to favorites", error);
+    throw error;
+  }
+};

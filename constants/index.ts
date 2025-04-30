@@ -163,7 +163,7 @@ export const classicStyle = [
   "Simple",
   "Clean lines",
   "Neutral color palettes",
-  "Focus on quality over quantitiy",
+  "Quality over quantitiy",
 ];
 
 export const classicClothing = [

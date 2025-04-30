@@ -50,10 +50,10 @@ interface ProfileDetails {
 const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
   return (
     <div className="w-full">
-      <div className="flex flex-col gap-8 mx-auto px-4">
+      <div className="flex flex-col md:flex-row gap-8 mx-auto px-4">
         {/* Body Shape Card  */}
         <div className="w-full">
-          <Card className="relative w-full h-[275px] md:h-[560px]">
+          <Card className="relative w-full h-[275px]">
             <CardHeader>
               <CardDescription>Body Shape</CardDescription>
               <CardTitle className="text-2xl font-semibold text-[#09090B]">
@@ -66,11 +66,11 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
             <CardContent>
               <div>
                 {userProfile.bodyShape === "Pear" ? (
-                  <ul className="grid grid-cols-2">
+                  <ul className="grid grid-cols-2 gap-2">
                     {pearBodyCharacteristic.map((item) => (
                       <li
                         key={item}
-                        className="flex items-center gap-1 text-sm"
+                        className="flex text-sm gap-1 lg:text-base"
                       >
                         <HiMiniFire className="text-red-300" />
                         {item}
@@ -78,40 +78,52 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     ))}
                   </ul>
                 ) : userProfile.bodyShape === "Apple" ? (
-                  <ul className="grid grid-cols-2">
+                  <ul className="grid grid-cols-2 gap-2">
                     {appleBodyCharacteristic.map((item) => (
-                      <li key={item} className="flex items-center gap-1">
-                        <HiMiniFire />
+                      <li
+                        key={item}
+                        className="flex gap-1 text-sm lg:text-base"
+                      >
+                        <HiMiniFire className="text-red-300" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 ) : userProfile.bodyShape === "Rectangle" ? (
-                  <ul className="grid grid-cols-2">
+                  <ul className="grid grid-cols-2 gap-2">
                     {rectangleBodyCharacteristic.map((item) => (
-                      <li key={item} className="flex items-center gap-1">
+                      <li
+                        key={item}
+                        className="flex gap-1 text-sm lg:text-base"
+                      >
                         {" "}
-                        <HiMiniFire />
+                        <HiMiniFire className="text-red-300" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 ) : userProfile.bodyShape === "Hourglass" ? (
-                  <ul className="grid grid-cols-2">
+                  <ul className="grid grid-cols-2 gap-2">
                     {hourglassBodyCharacteristic.map((item) => (
-                      <li key={item} className="flex items-center gap-1">
+                      <li
+                        key={item}
+                        className="flex gap-1 text-sm lg:text-base"
+                      >
                         {" "}
-                        <HiMiniFire />
+                        <HiMiniFire className="text-red-300" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 ) : userProfile.bodyShape === "Inverted Triangle" ? (
-                  <ul className="grid grid-cols-2">
+                  <ul className="grid grid-cols-2 gap-2">
                     {invertedTriangleBodyCharacteristic.map((item) => (
-                      <li key={item} className="flex items-center gap-1">
+                      <li
+                        key={item}
+                        className="flex gap-1 text-sm lg:text-base"
+                      >
                         {" "}
-                        <HiMiniFire />
+                        <HiMiniFire className="text-red-300" />
                         {item}
                       </li>
                     ))}
@@ -196,7 +208,7 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
         </div>
         {/* Fashion Quiz Card */}
         <div className="w-full">
-          <Card className="relative h-[300px] w-full md:h-[560px]">
+          <Card className="relative h-[275px] w-full">
             <CardHeader>
               <CardDescription>Fashion Style</CardDescription>
               <CardTitle className="text-2xl font-semibold text-[#09090B]">
@@ -210,11 +222,11 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
               <div>
                 {/* Characteristics for your style include: */}
                 {userProfile.fashionStyle === "Classic" ? (
-                  <ul className="grid grid-cols-2">
+                  <ul className="grid grid-cols-2 gap-2">
                     {classicStyle.map((item) => (
                       <li
                         key={item}
-                        className="flex items-center gap-1 text-xs"
+                        className="flex gap-1 items-start text-sm lg:text-base"
                       >
                         <HiMiniBolt className="text-red-300" />
                         {item}
@@ -224,8 +236,11 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                 ) : userProfile.fashionStyle === "Boho" ? (
                   <ul>
                     {bohoStyle.map((item) => (
-                      <li key={item} className="flex items-center gap-1">
-                        <HiMiniBolt />
+                      <li
+                        key={item}
+                        className="flex text-sm lg:text-base gap-1"
+                      >
+                        <HiMiniBolt className="text-red-300" />
                         {item}
                       </li>
                     ))}
@@ -233,8 +248,11 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                 ) : userProfile.fashionStyle === "Chic" ? (
                   <ul>
                     {chicStyle.map((item) => (
-                      <li key={item} className="flex items-center gap-1">
-                        <HiMiniBolt />
+                      <li
+                        key={item}
+                        className="flex items-start text-sm lg:text-base gap-1"
+                      >
+                        <HiMiniBolt className="text-red-300" />
                         {item}
                       </li>
                     ))}
@@ -242,8 +260,11 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                 ) : userProfile.fashionStyle === "Sporty" ? (
                   <ul>
                     {sportyStyle.map((item) => (
-                      <li key={item} className="flex items-center gap-1">
-                        <HiMiniBolt />
+                      <li
+                        key={item}
+                        className="flex items-start text-sm lg:text-base gap-1"
+                      >
+                        <HiMiniBolt className="text-red-300" />
                         {item}
                       </li>
                     ))}
@@ -251,8 +272,11 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
                 ) : userProfile.fashionStyle === "Edgy" ? (
                   <ul>
                     {edgyStyle.map((item) => (
-                      <li key={item} className="flex items-center gap-1">
-                        <HiMiniBolt />
+                      <li
+                        key={item}
+                        className="flex items-start text-sm lg:text-base gap-1"
+                      >
+                        <HiMiniBolt className="text-red-300" />
                         {item}
                       </li>
                     ))}

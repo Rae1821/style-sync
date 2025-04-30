@@ -3,7 +3,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -13,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { deleteFavoriteProduct } from "@/actions/auth";
 import { IoMdCloseCircle } from "react-icons/io";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 interface DeleteFavoriteProduct {
   id?: string;
@@ -56,20 +56,22 @@ const FavoriteProducts = ({ favProducts }: FavoriteProductsProps) => {
   return (
     <div className="w-full">
       <Card>
-        <CardHeader className="">
-          <CardTitle className="text-xl mb-[-4]">
-            Your Favorite Products
-          </CardTitle>
-          <CardDescription className="text-xs">
-            Here you&apos;ll find all the products you favorited
-          </CardDescription>
-          <Button
+        <CardHeader className="relative">
+          <CardTitle className="text-xl mb-[-4]">Favorite Products</CardTitle>
+          <div className="flex items-center justify-between mt-2 w-[150px]">
+            <Link href="/products" className="text-sm text-red-300">
+              Find new products
+            </Link>
+            <FaArrowRightLong className="text-red-300 hover:cursor-pointer" />
+          </div>
+
+          {/* <Button
             asChild
             variant="outline"
-            className="w-1/2 md:w-1/4 mt-4 border-4 py-4 font-semibold border-black rounded-none hover:bg-red-300 transition duration-300 ease-out"
+            className="w-1/2 md:w-1/4 mt-4 border-4 py-4 font-semibold border-black rounded-none hover:bg-red-300 transition duration-300 ease-out absolute top-0 right-6"
           >
             <Link href="/products">Find New Products</Link>
-          </Button>
+          </Button> */}
         </CardHeader>
         <CardContent className="mt-4 flex flex-col gap-4 overflow-y-scroll md:flex-row ">
           {favProducts?.map((product) => (
