@@ -12,8 +12,8 @@ const Logout = () => {
     document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "tokens=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-    // Redirect to login page
-    router.push("/login");
+    // Redirect to home page
+    router.push("/");
   };
   return (
     <button

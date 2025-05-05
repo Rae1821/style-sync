@@ -1,8 +1,10 @@
-import { findUniqueProducts } from "@/actions/auth";
+import { findUniqueOutfits, findUniqueProducts } from "@/actions/auth";
 import Dashboard from "@/components/Dashboard";
 import FavoriteProducts from "@/components/FavoriteProducts";
+import FavoriteStyleIdeas from "@/components/FavoriteStyleIdeas";
 import { db } from "@/db";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import React from "react";
 
 const MyDashboard = async () => {
@@ -10,6 +12,19 @@ const MyDashboard = async () => {
   const user = userCookies.get("user");
   const userData = user ? JSON.parse(user.value) : null;
   const userEmail = userData?.email;
+
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold">
+          Please <Link href="/login">login</Link> to access your dashboard
+        </h1>
+        <p className="text-gray-600">
+          You need to be logged in to view this page.
+        </p>
+      </div>
+    );
+  }
 
   if (!userEmail) {
     throw new Error("User not found");
@@ -45,6 +60,20 @@ const MyDashboard = async () => {
     };
   });
 
+  const userOutfits = await findUniqueOutfits();
+
+  const favOutfits = userOutfits.map((outfit) => {
+    return {
+      id: outfit.id,
+      userEmail: outfit.userEmail || "",
+      outfitOccasion: outfit.outfit_occasion || "",
+      mainArticle: outfit.outfit_main_article || "",
+      shoes: outfit.outfit_shoes || "",
+      accessories: outfit.outfit_accessories || "",
+      completerPiece: outfit.outfit_completer_piece || "",
+    };
+  });
+
   return (
     <div className="magicpattern min-h-screen py-4">
       <div className="container mx-auto">
@@ -65,6 +94,9 @@ const MyDashboard = async () => {
           </div>
           <div className="mt-8 w-full px-4">
             <FavoriteProducts favProducts={favProducts} />
+          </div>
+          <div>
+            <FavoriteStyleIdeas favOutfits={favOutfits} />
           </div>
         </div>
       </div>

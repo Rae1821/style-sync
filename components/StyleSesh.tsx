@@ -1,11 +1,17 @@
 "use client";
 
-import { geminiImageUpload } from "@/actions/auth";
+import { addFavoriteOutfit, geminiImageUpload } from "@/actions/auth";
 import { UploadButton } from "@/utils/uploadthing";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { MdOutlineDiamond } from "react-icons/md";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { MdAddCircleOutline } from "react-icons/md";
+import { MdOutlineCheckCircle } from "react-icons/md";
+
+import { Button } from "./ui/button";
+
+import { toast } from "sonner";
 
 interface ProfileDetails {
   id: string | null;
@@ -27,9 +33,20 @@ interface GeminiResponse {
     | null;
 }
 
+interface OutfitProps {
+  userEmail: string;
+  outfitOccasion: string;
+  mainArticle: string;
+  shoes: string;
+  accessories: string;
+  completerPiece: string;
+}
+
 const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
   const [geminiResponse, setGeminiResponse] = useState<GeminiResponse>({});
   const [loading, setLoading] = useState(false);
+  const [addFavorite, setAddFavorite] = useState(false);
+
   const bodyShape = userProfile?.bodyShape;
   const fashionStyle = userProfile?.fashionStyle;
 
@@ -49,6 +66,34 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
     } catch (error) {
       console.error("Error uploading image:", error);
       setLoading(false);
+    }
+  };
+
+  const handleAddToFavorites = async (outfit: OutfitProps) => {
+    // console.log(addFavoriteOutfit);
+
+    try {
+      const result = await addFavoriteOutfit({
+        userEmail: outfit.userEmail,
+        outfitOccasion: outfit.outfitOccasion,
+        outfitMainArticle: outfit.mainArticle,
+        outfitShoes: outfit.shoes,
+        outfitAccessories: outfit.accessories,
+        outfitCompleterPiece: outfit.completerPiece,
+      });
+      toast("Added to favorites", {
+        action: {
+          label: "Okay",
+          onClick: () => {
+            console.log("Okay clicked");
+          },
+        },
+      });
+
+      console.log(result);
+      setAddFavorite((prevAddFavorite) => !prevAddFavorite);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -86,13 +131,28 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
               <ul key={index} className="mt-8">
                 <li>
                   <Card className="h-[220px]">
-                    <CardHeader>
+                    <CardHeader className="relative">
                       <CardTitle className="flex items-center gap-2">
                         <MdOutlineDiamond className="text-red-300 size-6" />
                         <h2 className="text-lg font-semibold">
                           {outfit.outfitOccasion}
                         </h2>
                       </CardTitle>
+                      <Button
+                        className="absolute top-2 right-2"
+                        onClick={() =>
+                          handleAddToFavorites({
+                            ...outfit,
+                            userEmail: userProfile.email || "",
+                          })
+                        }
+                      >
+                        {addFavorite ? (
+                          <MdOutlineCheckCircle className="text-red-300" />
+                        ) : (
+                          <MdAddCircleOutline className="text-red-300" />
+                        )}
+                      </Button>
                       <CardContent>
                         <p className="text-sm mb-2">
                           <span className="font-semibold">Main Item: </span>

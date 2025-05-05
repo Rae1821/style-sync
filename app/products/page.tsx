@@ -2,6 +2,7 @@ import ProductPageSearch from "@/components/ProductPageSearch";
 import ProductsList from "@/components/ProductsList";
 import { db } from "@/db";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import React from "react";
 
 const ProductsPage = async ({
@@ -16,8 +17,17 @@ const ProductsPage = async ({
   const userData = user ? JSON.parse(user.value) : null;
   const userEmail = userData?.email;
 
-  if (!userEmail) {
-    throw new Error("User not found");
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold">
+          Please <Link href="/login">login</Link> to access your dashboard
+        </h1>
+        <p className="text-gray-600">
+          You need to be logged in to view this page.
+        </p>
+      </div>
+    );
   }
   // Fetch user data from the database
   const userProfile = await db.user.findUnique({

@@ -1,92 +1,81 @@
 import Image from "next/image";
-import React from "react";
+import { MdOutlineDiamond } from "react-icons/md";
 
 const Features = () => {
   return (
     <section className="py-32">
-      <div className="container">
-        <div className="flex mx-auto max-w-screen-md flex-col justify-center gap-7 md:text-center">
-          <h2 className="text-2xl md:text-4xl">Features</h2>
-          <p className="text-sm text-muted-foregroud md:text-base">
-            See the awesome things we offer
+      <div className="container mx-auto">
+        <div className="gap mx-auto flex max-w-screen-sm flex-col justify-center items-center gap-4 text-center">
+          <h1 className="text-4xl font-bold md:text-5xl">What You Get</h1>
+          <p className="text-xl text-muted-foreground md:text-lg">
+            Discover the benefits of using our AI-powered fashion assistant.
           </p>
         </div>
-        <div className="mx-auto mt-14 flex max-w-screen-lg flex-col gap-4 lg:px-16">
-          <div className="flex flex-col items-center justify-between min-[960px]:flex-row min-[960px]:gap-10">
-            <div className="flex gap-4 min-[960px]:max-w-md">
-              <div className="flex flex-col items-center justify-between gap-1">
-                <span className="h-20 shrink-0"></span>
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-full border bg-muted/50 font-mono text-lg">
-                  1
-                </span>
-                <span className="h-20 w-[3px] shrink-0 bg-gradient-to-b from-transparent to-red-300 opacity-70"></span>
-              </div>
-              <div className="flex flex-col justify-center gap-5 px-0 min-[960px]:gap-6 min-[960px]:px-4 min-[960px]:py-4">
-                <h3 className="text-xl min-[960px]:text-2xl">Feature 1</h3>
-                <p className="text-sm text-muted-foreground min-[960px]:text-base">
-                  Feature description goes here. This is a brief description of
-                  the feature and its benefits.
-                </p>
-              </div>
-            </div>
+        <div className="mx-auto mt-20 grid max-w-6xl gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-col justify-between gap-6 rounded-lg bg-muted/70 p-8 md:col-span-2 lg:row-span-2">
+            <MdOutlineDiamond className="text-red-300 size-6" />
+            <h2 className="mb-1 text-2xl font-medium">AI Style Sessions</h2>
+            <p className="text-muted-foreground">
+              Upload a photo of any clothing item and get immediate personalized
+              style recommendations according to your body shape and fashion
+              style.
+            </p>
             <Image
-              src="./icons/placeholder-1.svg"
+              src="/images/style-sesh.jpg"
               height={291}
               width={396}
               alt="placeholder image"
-              className="z-10 aspect-video w-full rounded-xl border object-cover min-[960px]:max-h-56 min-[960px]:w-auto"
+              className="ml-auto max-h-80 w-full rounded-lg object-cover transition-transform duration-300 hover:-translate-y-3"
             />
           </div>
-          <div className="relative flex flex-col items-center justify-between min-[960px]:flex-row min-[960px]:gap-10">
-            <div className="flex gap-4 min-[960px]:max-w-md">
-              <div className="flex flex-col items-center justify-between gap-1">
-                <span className="absolute -top-8 h-8 w-[3px] bg-red-300 opacity-70 shrink-0"></span>
-                <span className="absolute -bottom-8 mx-auto h-8 w-[3px] shrink-0 bg-red-300 opacity-70 "></span>
-                <span className="h-20 w-[3px] shrink-0 bg-red-300 opacity-70"></span>
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-full border bg-muted/50 font-mono text-lg">
-                  2
-                </span>
-                <span className="h-20 w-[3px] shrink-0 bg-red-300 opacity-70"></span>
-              </div>
-              <div className="flex flex-col justify-center gap-5 px-0 min-[960px]:gap-6 min-[960px]:px-4 min-[960px]:py-4">
-                <h3 className="text-xl min-[960px]:text-2xl">Feature 2</h3>
-                <p className="text-sm text-muted-foreground min-[960px]:text-base">
-                  Feature description goes here. This is a brief description of
-                  the feature and its benefits.
-                </p>
-              </div>
+          <div className="flex h-80 flex-col justify-between gap-4 rounded-lg bg-muted/70 p-8">
+            <MdOutlineDiamond className="text-red-300 size-6" />
+            <div>
+              <h2 className="mb-1 text-2xl font-medium">Products Search</h2>
+              <p className="text-muted-foreground">
+                Hop over to our products page where you&asop;ll find
+                personalized search terms for your body shape and fashions style
+                to help you find the perfect items
+              </p>
+            </div>
+          </div>
+          <div className="flex h-80 flex-col justify-between gap-4 rounded-lg bg-muted/70 p-8">
+            <MdOutlineDiamond className="text-red-300 size-6" />
+            <div>
+              <h2 className="mb-1 text-2xl font-medium">Moodboard</h2>
+              <p className="text-muted-foreground">
+                Find your favorite products on our moodboard and add in your own
+                photos to mix and match to your heart&apos;s content.
+              </p>
+            </div>
+          </div>
+          <div className="flex h-80 flex-col justify-between gap-4 rounded-lg bg-muted/70 p-8">
+            <MdOutlineDiamond className="text-red-300 size-6" />
+            <div>
+              <h2 className="mb-1 text-2xl font-medium">Learning Corner</h2>
+              <p className="text-muted-foreground">
+                Coming soon! We are working on a learning corner where you can
+                learn how to mix and match colors and prints in the most
+                flattering way for your body shape and fashion style.
+              </p>
+            </div>
+          </div>
+          <div className="flex h-80 flex-col-reverse justify-between gap-4 rounded-lg bg-muted/70 p-8 lg:col-span-2 lg:grid lg:grid-cols-2">
+            <div className="lg:self-end">
+              <h2 className="mb-1 text-2xl font-medium">
+                Personalized Dashboard
+              </h2>
+              <p className="text-muted-foreground">
+                Your personalized dashboard is where you can find all your
+                favorite products, outfits, and style sessions in one place.
+              </p>
             </div>
             <Image
               src="/icons/placeholder-1.svg"
               height={291}
               width={396}
               alt="placeholder image"
-              className="z-10 aspect-video w-full rounded-xl border object-cover min-[960px]:max-h-56 min-[960px]:w-auto"
-            />
-          </div>
-          <div className="flex flex-col items-center justify-between min-[960px]:flex-row min-[960px]:gap-10">
-            <div className="flex gap-4 min-[960px]:max-w-md">
-              <div className="flex flex-col items-center justify-between gap-1">
-                <span className="h-20 w-[3px] shrink-0 bg-gradient-to-t from-transparent to-red-300 opacity-70"></span>
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-full border bg-muted/50 font-mono text-lg">
-                  3
-                </span>
-                <span className="h-20 shrink-0"></span>
-              </div>
-              <div className="flex flex-col justify-center gap-5 px-0 min-[960px]:gap-6 min-[960px]:px-4 min-[960px]:py-4">
-                <h3 className="text-xl min-[960px]:text-2xl">Feature 3</h3>
-                <p className="text-sm text-muted-foreground min-[960px]:text-base">
-                  Feature description goes here. This is a brief description of
-                  the feature and its benefits.
-                </p>
-              </div>
-            </div>
-            <Image
-              src="/icons/placeholder-1.svg"
-              height={291}
-              width={396}
-              alt="placeholder image"
-              className="z-10 aspect-video w-full rounded-xl border object-cover min-[960px]:max-h-56 min-[960px]:w-auto"
+              className="h-full min-h-0 rounded-lg object-cover transition-transform duration-300 hover:-translate-y-3"
             />
           </div>
         </div>

@@ -483,8 +483,35 @@ export const deleteUploadedImage = async (image: DeleteUploadedImageInput) => {
   }
 };
 
+// Favorite Profucts
+export const findUniqueOutfits = async () => {
+  try {
+    const userCookie = await cookies();
+    const currentUser = userCookie.get("user");
+    if (!currentUser) {
+      throw new Error("User not found");
+    }
+    const userData = JSON.parse(currentUser.value);
+    const email = userData.email;
+
+    // Find the user by email
+    const user = await db.user.findUnique({
+      where: { email },
+      include: { outfits: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user.outfits;
+  } catch (error) {
+    console.log("Error finding unique outfits", error);
+    throw error;
+  }
+};
+
 interface AddOutfitInput {
-  id?: string;
   userEmail: string;
   outfitOccasion: string;
   outfitMainArticle: string;
@@ -520,7 +547,7 @@ export const addFavoriteOutfit = async (outfit: AddOutfitInput) => {
     console.log(addNewOutfit, "Outfit added to favorites");
     return addNewOutfit;
   } catch (error) {
-    console.log("Error adding product to favorites", error);
+    console.log("Error adding outfit to favorites", error);
     throw error;
   }
 };

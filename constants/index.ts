@@ -1,9 +1,5 @@
 export const navLinks = [
   {
-    label: "Home",
-    route: "/",
-  },
-  {
     label: "Dashboard",
     route: "/dashboard",
   },
