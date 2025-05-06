@@ -1,17 +1,11 @@
 "use client";
 
-import { addFavoriteOutfit, geminiImageUpload } from "@/actions/auth";
+import { geminiImageUpload } from "@/actions/auth";
 import { UploadButton } from "@/utils/uploadthing";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
-import { MdOutlineDiamond } from "react-icons/md";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { MdAddCircleOutline } from "react-icons/md";
-import { MdOutlineCheckCircle } from "react-icons/md";
 
-import { Button } from "./ui/button";
-
-import { toast } from "sonner";
+import OutfitCard from "./OutfitCard";
 
 interface ProfileDetails {
   id: string | null;
@@ -33,19 +27,10 @@ interface GeminiResponse {
     | null;
 }
 
-interface OutfitProps {
-  userEmail: string;
-  outfitOccasion: string;
-  mainArticle: string;
-  shoes: string;
-  accessories: string;
-  completerPiece: string;
-}
-
 const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
   const [geminiResponse, setGeminiResponse] = useState<GeminiResponse>({});
   const [loading, setLoading] = useState(false);
-  const [addFavorite, setAddFavorite] = useState(false);
+  // const [addFavorite, setAddFavorite] = useState(false);
 
   const bodyShape = userProfile?.bodyShape;
   const fashionStyle = userProfile?.fashionStyle;
@@ -69,33 +54,33 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
     }
   };
 
-  const handleAddToFavorites = async (outfit: OutfitProps) => {
-    // console.log(addFavoriteOutfit);
+  // const handleAddToFavorites = async (outfit: OutfitProps) => {
+  //   // console.log(addFavoriteOutfit);
 
-    try {
-      const result = await addFavoriteOutfit({
-        userEmail: outfit.userEmail,
-        outfitOccasion: outfit.outfitOccasion,
-        outfitMainArticle: outfit.mainArticle,
-        outfitShoes: outfit.shoes,
-        outfitAccessories: outfit.accessories,
-        outfitCompleterPiece: outfit.completerPiece,
-      });
-      toast("Added to favorites", {
-        action: {
-          label: "Okay",
-          onClick: () => {
-            console.log("Okay clicked");
-          },
-        },
-      });
+  //   try {
+  //     const result = await addFavoriteOutfit({
+  //       userEmail: outfit.userEmail,
+  //       outfitOccasion: outfit.outfitOccasion,
+  //       outfitMainArticle: outfit.mainArticle,
+  //       outfitShoes: outfit.shoes,
+  //       outfitAccessories: outfit.accessories,
+  //       outfitCompleterPiece: outfit.completerPiece,
+  //     });
+  //     toast("Added to favorites", {
+  //       action: {
+  //         label: "Okay",
+  //         onClick: () => {
+  //           console.log("Okay clicked");
+  //         },
+  //       },
+  //     });
 
-      console.log(result);
-      setAddFavorite((prevAddFavorite) => !prevAddFavorite);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     console.log(result);
+  //     setAddFavorite((prevAddFavorite) => !prevAddFavorite);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   console.log(geminiResponse.outfits);
 
@@ -126,58 +111,22 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
       ) : (
         geminiResponse &&
         geminiResponse.outfits && (
-          <div className="my-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {geminiResponse.outfits?.map((outfit, index) => (
-              <ul key={index} className="mt-8">
-                <li>
-                  <Card className="h-[220px]">
-                    <CardHeader className="relative">
-                      <CardTitle className="flex items-center gap-2">
-                        <MdOutlineDiamond className="text-red-300 size-6" />
-                        <h2 className="text-lg font-semibold">
-                          {outfit.outfitOccasion}
-                        </h2>
-                      </CardTitle>
-                      <Button
-                        className="absolute top-2 right-2"
-                        onClick={() =>
-                          handleAddToFavorites({
-                            ...outfit,
-                            userEmail: userProfile.email || "",
-                          })
-                        }
-                      >
-                        {addFavorite ? (
-                          <MdOutlineCheckCircle className="text-red-300" />
-                        ) : (
-                          <MdAddCircleOutline className="text-red-300" />
-                        )}
-                      </Button>
-                      <CardContent>
-                        <p className="text-sm mb-2">
-                          <span className="font-semibold">Main Item: </span>
-                          {outfit.mainArticle}
-                        </p>
-                        <p className="text-sm mb-2">
-                          <span className="font-semibold">Shoes: </span>{" "}
-                          {outfit.shoes}
-                        </p>
-                        <p className="text-sm mb-2">
-                          <span className="font-semibold">Accessories: </span>
-                          {outfit.accessories}
-                        </p>
-                        <p className="text-sm mb-2">
-                          <span className="font-semibold">
-                            Completer piece:{" "}
-                          </span>
-                          {outfit.completerPiece}
-                        </p>
-                      </CardContent>
-                    </CardHeader>
-                  </Card>
+          <div>
+            <ul className="my-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {geminiResponse.outfits?.map((outfit, index) => (
+                <li key={index}>
+                  <OutfitCard
+                    outfit={{
+                      outfitOccasion: outfit.outfitOccasion,
+                      outfitMainArticle: outfit.mainArticle,
+                      outfitShoes: outfit.shoes,
+                      outfitAccessories: outfit.accessories,
+                      outfitCompleterPiece: outfit.completerPiece,
+                    }}
+                  />
                 </li>
-              </ul>
-            ))}
+              ))}
+            </ul>
           </div>
         )
       )}

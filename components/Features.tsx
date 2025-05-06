@@ -12,8 +12,12 @@ const Features = () => {
           </p>
         </div>
         <div className="mx-auto mt-20 grid max-w-6xl gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="flex flex-col justify-between gap-6 rounded-lg bg-muted/70 p-8 md:col-span-2 lg:row-span-2">
-            <MdOutlineDiamond className="text-red-300 size-6" />
+          <div className="group relative isolate h-80 flex flex-col justify-between gap-6 rounded-lg bg-muted/70 p-8 md:col-span-2 lg:col-span-2">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-primary to-transparent"></div>
+            <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-background/15 backdrop-blur-sm">
+              <MdOutlineDiamond className="text-white size-6" />
+            </span>
+
             <h2 className="mb-1 text-2xl font-medium">AI Style Sessions</h2>
             <p className="text-muted-foreground">
               Upload a photo of any clothing item and get immediate personalized
@@ -25,11 +29,21 @@ const Features = () => {
               height={291}
               width={396}
               alt="placeholder image"
-              className="ml-auto max-h-80 w-full rounded-lg object-cover transition-transform duration-300 hover:-translate-y-3"
+              className="absolute inset-0 -z-20 size-full rounded-2xl object-cover opacity-30 transition-transform duration-300"
             />
           </div>
-          <div className="flex h-80 flex-col justify-between gap-4 rounded-lg bg-muted/70 p-8">
-            <MdOutlineDiamond className="text-red-300 size-6" />
+          <div className="group relative isolate flex h-80 flex-col justify-between gap-4 rounded-lg bg-muted/70 p-8">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-primary to-transparent"></div>
+            <Image
+              src="/images/products.jpg"
+              height={291}
+              width={396}
+              alt="placeholder image"
+              className="absolute inset-0 -z-20 size-full rounded-2xl object-cover opacity-30 transition-transform duration-300"
+            />
+            <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-background/15 backdrop-blur-sm">
+              <MdOutlineDiamond className="text-white size-6" />
+            </span>
             <div>
               <h2 className="mb-1 text-2xl font-medium">Products Search</h2>
               <p className="text-muted-foreground">
@@ -49,7 +63,7 @@ const Features = () => {
               </p>
             </div>
           </div>
-          <div className="flex h-80 flex-col justify-between gap-4 rounded-lg bg-muted/70 p-8">
+          {/* <div className="flex h-80 flex-col justify-between gap-4 rounded-lg bg-muted/70 p-8">
             <MdOutlineDiamond className="text-red-300 size-6" />
             <div>
               <h2 className="mb-1 text-2xl font-medium">Learning Corner</h2>
@@ -59,24 +73,29 @@ const Features = () => {
                 flattering way for your body shape and fashion style.
               </p>
             </div>
-          </div>
-          <div className="flex h-80 flex-col-reverse justify-between gap-4 rounded-lg bg-muted/70 p-8 lg:col-span-2 lg:grid lg:grid-cols-2">
-            <div className="lg:self-end">
-              <h2 className="mb-1 text-2xl font-medium">
-                Personalized Dashboard
-              </h2>
-              <p className="text-muted-foreground">
-                Your personalized dashboard is where you can find all your
-                favorite products, outfits, and style sessions in one place.
-              </p>
+          </div> */}
+          <div className="flex h-80 flex-col justify-between gap-4 rounded-lg bg-muted/70 p-8 lg:col-span-2">
+            <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm">
+              <MdOutlineDiamond className="text-red-300 size-6" />
+            </span>
+            <div className="flex flex-col gap-4 lg:flex-row">
+              <div>
+                <h2 className="mb-1 text-2xl font-medium">
+                  Personalized Dashboard
+                </h2>
+                <p className="text-muted-foreground">
+                  Your personalized dashboard is where you can find all your
+                  favorite products, outfits, and style sessions in one place.
+                </p>
+              </div>
+              <Image
+                src="/images/dashboard-pic.png"
+                height={291}
+                width={396}
+                alt="placeholder image"
+                className="h-full min-h-0 rounded-lg object-cover transition-transform duration-300 hover:-translate-y-3"
+              />
             </div>
-            <Image
-              src="/icons/placeholder-1.svg"
-              height={291}
-              width={396}
-              alt="placeholder image"
-              className="h-full min-h-0 rounded-lg object-cover transition-transform duration-300 hover:-translate-y-3"
-            />
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { MdOutlineDiamond } from "react-icons/md";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
 
 interface favOutfitProps {
   favOutfits: {
@@ -14,18 +15,48 @@ interface favOutfitProps {
   }[];
 }
 
+interface DeleteFavOutfitProps {
+  id?: string;
+  userEmail?: string;
+  outfitOccasion?: string | null;
+  mainArticle?: string | null;
+  shoes?: string | null;
+  accessories?: string | null;
+  completerPiece?: string | null;
+}
+
 const FavoriteStyleIdeas = ({ favOutfits }: favOutfitProps) => {
+  const handleDeleteFavorite = async (outfit: DeleteFavOutfitProps) => {
+    console.log("Outfit:", outfit);
+    try {
+      // const result = await deleteFavoriteOutfit(outfit);
+      // console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Card className="h-[220px]">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <MdOutlineDiamond className="text-red-300 size-6" />
-            <h2 className="text-2xl">AI Outfit Suggestion</h2>
+          <CardTitle className="text-xl mb-[-4]">
+            Favorite AI Outfit Ideas
           </CardTitle>
-          <CardContent>
+          <Button
+            className="absolute top-0 right-2 p-0"
+            variant="ghost"
+            onClick={() => handleDeleteFavorite(outfit)}
+          >
+            {addFavorite ? (
+              <IoMdCheckmark className="text-red-300 w-6 h-6" />
+            ) : (
+              <IoMdAdd className="text-red-300 w-6 h-6" />
+            )}
+          </Button>
+          <CardContent className="mt-4 flex flex-col gap-2 overflow-y-scroll md:flex-row">
             {favOutfits.map((outfit) => (
-              <div className="" key={outfit.id}>
+              <div className="product-card" key={outfit.id}>
                 <h3 className="text-lg font-semibold">
                   {outfit.outfitOccasion}
                 </h3>

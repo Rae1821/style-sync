@@ -512,7 +512,6 @@ export const findUniqueOutfits = async () => {
 };
 
 interface AddOutfitInput {
-  userEmail: string;
   outfitOccasion: string;
   outfitMainArticle: string;
   outfitShoes: string;

@@ -95,7 +95,7 @@ const MyDashboard = async () => {
           <div className="mt-8 w-full px-4">
             <FavoriteProducts favProducts={favProducts} />
           </div>
-          <div>
+          <div className="mt-8 w-full px-4">
             <FavoriteStyleIdeas favOutfits={favOutfits} />
           </div>
         </div>

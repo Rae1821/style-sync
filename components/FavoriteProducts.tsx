@@ -64,14 +64,6 @@ const FavoriteProducts = ({ favProducts }: FavoriteProductsProps) => {
             </Link>
             <FaArrowRightLong className="text-red-300 hover:cursor-pointer" />
           </div>
-
-          {/* <Button
-            asChild
-            variant="outline"
-            className="w-1/2 md:w-1/4 mt-4 border-4 py-4 font-semibold border-black rounded-none hover:bg-red-300 transition duration-300 ease-out absolute top-0 right-6"
-          >
-            <Link href="/products">Find New Products</Link>
-          </Button> */}
         </CardHeader>
         <CardContent className="mt-4 flex flex-col gap-4 overflow-y-scroll md:flex-row ">
           {favProducts?.map((product) => (
