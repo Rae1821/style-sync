@@ -26,6 +26,8 @@ const SearchSuggestions = ({
 }: SearchSuggestionProps) => {
   const { bodyShape, fashionStyle } = userProfile;
 
+  console.log(bodyShapeTerms.boho.pear);
+
   return (
     <div>
       <div className="flex flex-col w-full md:flex-row items-center justify-between gap-4 mt-8">
@@ -111,7 +113,7 @@ const SearchSuggestions = ({
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "classic" &&
+                ) : fashionStyle === "Classic" &&
                   bodyShape === "invertedTriangle" ? (
                   <div>
                     {bodyShapeTerms.classic.invertedTriangle.map((item) => (
@@ -127,8 +129,8 @@ const SearchSuggestions = ({
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "boho" && bodyShape === "pear" ? (
-                  <div>
+                ) : fashionStyle === "Boho" && bodyShape === "Pear" ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-3/4 mx-auto mt-4">
                     {bodyShapeTerms.boho.pear.map((item) => (
                       <Badge
                         key={item}
@@ -136,7 +138,7 @@ const SearchSuggestions = ({
                           setSearchItem(item);
                           handleSearch();
                         }}
-                        className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
+                        className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300 px-1"
                       >
                         {item}
                       </Badge>

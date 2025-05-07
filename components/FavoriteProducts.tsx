@@ -11,8 +11,9 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { deleteFavoriteProduct } from "@/actions/auth";
-import { IoMdCloseCircle } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { MdOutlineClose } from "react-icons/md";
+import { toast } from "sonner";
 
 interface DeleteFavoriteProduct {
   id?: string;
@@ -58,14 +59,17 @@ const FavoriteProducts = ({ favProducts }: FavoriteProductsProps) => {
       <Card>
         <CardHeader className="relative">
           <CardTitle className="text-xl mb-[-4]">Favorite Products</CardTitle>
-          <div className="flex items-center justify-between mt-2 w-[150px]">
-            <Link href="/products" className="text-sm text-red-300">
+          <div className="flex items-center gap-1 hover:gap-2 transition-all mt-2 w-[160px]">
+            <Link
+              href="/products"
+              className="text-sm text-red-300 hover:underline hover:decoration-2 hover:underline-offset-2 transition-all"
+            >
               Find new products
             </Link>
             <FaArrowRightLong className="text-red-300 hover:cursor-pointer" />
           </div>
         </CardHeader>
-        <CardContent className="mt-4 flex flex-col gap-4 overflow-y-scroll md:flex-row ">
+        <CardContent className="mt-4 flex flex-col gap-4 overflow-y-scroll md:flex-row">
           {favProducts?.map((product) => (
             <div
               className="product-card bg-red-300"
@@ -80,9 +84,18 @@ const FavoriteProducts = ({ favProducts }: FavoriteProductsProps) => {
                   alt={`${product.product_title}`}
                   className="product-card_img"
                 />
-                <IoMdCloseCircle
-                  className="absolute right-2 top-2 size-6 cursor-pointer text-red-300"
-                  onClick={() => handleDeleteFavorite(product)}
+                <MdOutlineClose
+                  className="absolute right-2 top-2 size-4 cursor-pointer"
+                  onClick={() =>
+                    toast("Product removed from favorites", {
+                      description:
+                        "This product has been removed from your favorites.",
+                      action: {
+                        label: "Undo",
+                        onClick: () => handleDeleteFavorite(product),
+                      },
+                    })
+                  }
                 />
               </div>
 

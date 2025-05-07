@@ -287,18 +287,7 @@ export const classicInvertedTriangleTerms = [
   "structured tote bags",
 ];
 
-export const bohoPearTerms = [
-  "flowy maxi skirts",
-  "wide-leg pants",
-  "peasant blouses",
-  "off-the-shoulder tops",
-  "tiered dresses",
-  "embroidered tunics",
-  "fringe vests",
-  "layered necklaces",
-  "ankle boots",
-  "wide-brimmed hats",
-];
+export const bohoPearTerms = [];
 
 export const bohoAppleTerms = [
   "empire waist maxi dresses",
@@ -376,119 +365,7 @@ export const chicHourglassTerms = [
   "elegant chain bags",
 ];
 
-export const chicRectangleTerms = [
-  "tailored trousers",
-  "structured blazers",
-  "column dresses",
-  "sheath dresses",
-  "belted dresses and tops",
-  "crisp button-down shirts",
-  "minimalist jewelry",
-  "loafers",
-];
-
-export const chicInvertedTriangleTerms = [
-  "wide-leg pants",
-  "A-line skirts",
-  "full skirts",
-  "peplum tops",
-  "cowl neck tops",
-  "delicate earrings",
-  "structured tote bags",
-];
-
-export const sportyPearTerms = [
-  "high-waisted leggings",
-  "track pants",
-  "A-line athletic skirts",
-  "fitted crop tops",
-  "oversized hoodies",
-  "bomber jackets",
-  "stylish sneakers",
-  "crossbody bags",
-];
-
-export const sportyAppleTerms = [
-  "loose-fit track pants",
-  "relaxed-fit leggings",
-  "flowy athletic tops",
-  "zip-up hoodies",
-  "windbreakers",
-  "comfortable sneakers",
-  "baseball caps",
-  "sporty backpacks",
-];
-
-const sportyHourglassTerms = [
-  "fitted leggings",
-  "tracksuits",
-  "bodycon athletic dresses",
-  "supportive sports bras (worn as tops)",
-  "cropped hoodies",
-  "sleek sneakers",
-  "belt bags",
-];
-
-const sportyRectangleTerms = [
-  "straight-leg track pants",
-  "relaxed-fit joggers",
-  "graphic sweatshirts",
-  "oversized t-shirts",
-  "bomber jackets",
-  "retro sneakers",
-  "duffel bags",
-];
-
-const sportyInvertedTriangleTerms = [
-  "wide-leg track pants",
-  "flared leggings",
-  "halter neck athletic tops",
-  "racerback tanks",
-  "lightweight jackets",
-  "minimalist sneakers",
-  "small backpacks",
-];
-
-const edgyPearTerms = [
-  "ripped boyfriend jeans",
-  "distressed denim skirts",
-  "band tees",
-  "oversized graphic hoodies",
-  "leather jackets",
-  "combat boots",
-  "studded belts",
-  "chain necklaces",
-];
-
-const edgyAppleTerms = [
-  "loose-fit ripped jeans",
-  "oversized band tees",
-  "distressed denim jackets",
-  "flowy black dresses",
-  "chunky platform boots",
-  "layered necklaces",
-  "statement rings",
-];
-
-const edgyHourglassTerms = [
-  "high-waisted ripped skinny jeans",
-  "fitted graphic tees",
-  "cropped leather jackets",
-  "bodycon black dresses",
-  "stiletto boots",
-  "bold earrings",
-  "chain belts",
-];
-
-const edgyRectangleTerms = [
-  "straight-leg ripped jeans",
-  "oversized graphic tees",
-  "bomber jackets",
-  "mesh tops",
-  "combat boots",
-  "studded accessories",
-  "layered chains",
-];
+export const chicRectangleTerms = [];
 
 export const bodyShapeTerms = {
   classic: {
@@ -509,7 +386,18 @@ export const bodyShapeTerms = {
     invertedTriangle: classicInvertedTriangleTerms,
   },
   boho: {
-    pear: bohoPearTerms,
+    pear: [
+      "flowy maxi skirts",
+      "wide-leg pants",
+      "peasant blouses",
+      "off-the-shoulder tops",
+      "tiered dresses",
+      "embroidered tunics",
+      "fringe vests",
+      "layered necklaces",
+      "ankle boots",
+      "wide-brimmed hats",
+    ],
     apple: bohoAppleTerms,
     hourglass: bohoHourglassTerms,
     rectangle: bohoRectangleTerms,
@@ -519,21 +407,113 @@ export const bodyShapeTerms = {
     pear: chicPearTerms,
     apple: chicAppleTerms,
     hourglass: chicHourglassTerms,
-    rectangle: chicRectangleTerms,
-    invertedTriangle: chicInvertedTriangleTerms,
+    rectangle: [
+      "tailored trousers",
+      "structured blazers",
+      "column dresses",
+      "sheath dresses",
+      "belted dresses and tops",
+      "crisp button-down shirts",
+      "minimalist jewelry",
+      "loafers",
+    ],
+    invertedTriangle: [
+      "wide-leg pants",
+      "A-line skirts",
+      "full skirts",
+      "peplum tops",
+      "cowl neck tops",
+      "delicate earrings",
+      "structured tote bags",
+    ],
   },
   sporty: {
-    pear: sportyPearTerms,
-    apple: sportyAppleTerms,
-    hourglass: sportyHourglassTerms,
-    rectangle: sportyRectangleTerms,
-    invertedTriangle: sportyInvertedTriangleTerms,
+    pear: [
+      "high-waisted leggings",
+      "track pants",
+      "A-line athletic skirts",
+      "fitted crop tops",
+      "oversized hoodies",
+      "bomber jackets",
+      "stylish sneakers",
+      "crossbody bags",
+    ],
+    apple: [
+      "loose-fit track pants",
+      "relaxed-fit leggings",
+      "flowy athletic tops",
+      "zip-up hoodies",
+      "windbreakers",
+      "comfortable sneakers",
+      "baseball caps",
+      "sporty backpacks",
+    ],
+    hourglass: [
+      "fitted leggings",
+      "tracksuits",
+      "bodycon athletic dresses",
+      "supportive sports bras (worn as tops)",
+      "cropped hoodies",
+      "sleek sneakers",
+      "belt bags",
+    ],
+    rectangle: [
+      "straight-leg track pants",
+      "relaxed-fit joggers",
+      "graphic sweatshirts",
+      "oversized t-shirts",
+      "bomber jackets",
+      "retro sneakers",
+      "duffel bags",
+    ],
+    invertedTriangle: [
+      "wide-leg track pants",
+      "flared leggings",
+      "halter neck athletic tops",
+      "racerback tanks",
+      "lightweight jackets",
+      "minimalist sneakers",
+      "small backpacks",
+    ],
   },
   edgy: {
-    pear: edgyPearTerms,
-    apple: edgyAppleTerms,
-    hourglass: edgyHourglassTerms,
-    rectangle: edgyRectangleTerms,
+    pear: [
+      "ripped boyfriend jeans",
+      "distressed denim skirts",
+      "band tees",
+      "oversized graphic hoodies",
+      "leather jackets",
+      "combat boots",
+      "studded belts",
+      "chain necklaces",
+    ],
+    apple: [
+      "loose-fit ripped jeans",
+      "oversized band tees",
+      "distressed denim jackets",
+      "flowy black dresses",
+      "chunky platform boots",
+      "layered necklaces",
+      "statement rings",
+    ],
+    hourglass: [
+      "high-waisted ripped skinny jeans",
+      "fitted graphic tees",
+      "cropped leather jackets",
+      "bodycon black dresses",
+      "stiletto boots",
+      "bold earrings",
+      "chain belts",
+    ],
+    rectangle: [
+      "straight-leg ripped jeans",
+      "oversized graphic tees",
+      "bomber jackets",
+      "mesh tops",
+      "combat boots",
+      "studded accessories",
+      "layered chains",
+    ],
     invertedTriangle: [
       "wide-leg distressed pants",
       "band tees with shoulder pads",
