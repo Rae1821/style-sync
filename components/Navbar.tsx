@@ -7,6 +7,11 @@ import Logout from "./Logout";
 const Navbar = async () => {
   const userCookies = await cookies();
   const user = userCookies.get("user");
+  const userData = user ? JSON.parse(user.value) : null;
+  const userId = userData?.id;
+  console.log(userId);
+  console.log(userData);
+
   return (
     <nav className="flex w-full items-center">
       <div>

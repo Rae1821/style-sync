@@ -7,6 +7,7 @@ import {
   GoogleGenAI,
   createUserContent,
   createPartFromUri,
+  Modality,
 } from "@google/genai";
 import path from "path";
 import fs from "fs";
@@ -390,6 +391,101 @@ function parseGeminiResponse(
     return null;
   }
 }
+
+// GEMINI API IMAGE GENERATION
+
+interface OutfitResult {
+  outfitOccasion: string;
+  mainArticle: string;
+  shoes: string;
+  accessories: string;
+  completerPiece: string;
+}
+
+export const generateOutfitImage = async (
+  outfitResults: OutfitResult[]
+): Promise<string[]> => {
+  const generatedImagePaths: string[] = [];
+  const imageFolderPath = path.join(process.cwd(), "/images");
+
+  // Ensure the image folder exists
+  if (!fs.existsSync(imageFolderPath)) {
+    console.log("Image folder does not exist");
+  }
+  for (const [index, outfit] of outfitResults.entries()) {
+    const prompt =
+      "Generate an image of a ${outfit.outfitOccasion} outfit with the following items: ${outfit.mainArticle}, ${outfit.shoes}, ${outfit.accessories}, ${outfit.completerPiece}. The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit.";
+
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.0-flash-preview-image-generation",
+        contents: [createUserContent(prompt)], // wrap the single prompt in an array
+        config: {
+          responseModalities: [Modality.TEXT, Modality.IMAGE],
+        },
+      });
+
+      const firstCandidate = response?.candidates?.[0];
+      const firstPart = firstCandidate?.content?.parts?.[0];
+
+      if (firstPart?.inlineData) {
+        const imageData = firstPart.inlineData.data;
+        if (!imageData) {
+          console.error(`Image data is undefined for outfit ${index + 1}`);
+        }
+        if (!imageData) {
+          throw new Error("Image data is undefined");
+        }
+        const buffer = Buffer.from(imageData, "base64");
+        const fileName = `gemini-native-image-${index + 1}.png`;
+        const imagePath = path.join(imageFolderPath, fileName);
+        fs.writeFileSync(imagePath, buffer);
+        console.log(`Image for ${outfit.outfitOccasion} saved as ${imagePath}`);
+        generatedImagePaths.push(`/images/${fileName}`);
+      } else if (firstPart?.text) {
+        console.log(`Text response for outfit ${index + 1}:`, firstPart.text);
+      } else {
+        console.error(`No image or text data found for outfit ${index + 1}`);
+      }
+    } catch (error) {
+      console.error(`Error generating image for outfit ${index + 1}:`, error);
+    }
+  }
+  return generatedImagePaths;
+};
+
+// const response = await ai.models.generateContent({
+// model: "gemini-2.0-flash-preview-image-generation",
+// contents: outfitResults.map((outfit) => {
+//   return createUserContent([
+//     `Generate an image of a ${outfit.outfitOccasion} outfit with the following items: ${outfit.mainArticle}, ${outfit.shoes}, ${outfit.accessories}, ${outfit.completerPiece}.
+//     The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit.
+//     `,
+//   ]);
+// }),
+//   config: {
+//     responseModalities: [Modality.TEXT, Modality.IMAGE],
+//   },
+// });
+// console.log(
+//   "Response: ",
+//   response?.candidates?.map((candidate) => candidate?.content?.parts)
+// );
+
+// for (const part of response?.candidates?.[0]?.content?.parts || []) {
+//   if (part.text) {
+//     console.log(part.text);
+//   } else if (part.inlineData) {
+//     const imageData = part.inlineData.data;
+//     if (!imageData) {
+//       throw new Error("Image data is undefined");
+//     }
+//     const buffer = Buffer.from(imageData, "base64");
+//     fs.writeFileSync("gemini-native-image.png", buffer);
+//     console.log("Image saved as gemini-native-image.png");
+//   }
+// }
+// };
 
 // UPLOADTHING MOODBOARD IMAGES
 

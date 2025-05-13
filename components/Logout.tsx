@@ -13,7 +13,7 @@ const Logout = () => {
     document.cookie = "tokens=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
     // Redirect to home page
-    router.push("/");
+    router.push("/login");
   };
   return (
     <button

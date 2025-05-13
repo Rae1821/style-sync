@@ -1,11 +1,11 @@
 "use client";
 
-import { geminiImageUpload } from "@/actions/auth";
+import { geminiImageUpload, generateOutfitImage } from "@/actions/auth";
 import { UploadButton } from "@/utils/uploadthing";
-import { useState } from "react";
-import { Skeleton } from "./ui/skeleton";
+// import { useState } from "react";
+// import { Skeleton } from "./ui/skeleton";
 
-import OutfitCard from "./OutfitCard";
+// import OutfitCard from "./OutfitCard";
 
 interface ProfileDetails {
   id: string | null;
@@ -15,21 +15,29 @@ interface ProfileDetails {
   fashionStyle: string | null;
 }
 
-interface GeminiResponse {
-  outfits?:
-    | {
-        outfitOccasion: string;
-        mainArticle: string;
-        shoes: string;
-        accessories: string;
-        completerPiece: string;
-      }[]
-    | null;
-}
+// interface GeminiResponse {
+//   outfits?:
+//     | {
+//         outfitOccasion: string;
+//         mainArticle: string;
+//         shoes: string;
+//         accessories: string;
+//         completerPiece: string;
+//       }[]
+//     | null;
+// }
+
+// interface Outfit {
+//   outfitOccasion: string;
+//   outfitMainArticle: string;
+//   outfitShoes: string;
+//   outfitAccessories: string;
+//   outfitCompleterPiece: string;
+// }
 
 const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
-  const [geminiResponse, setGeminiResponse] = useState<GeminiResponse>({});
-  const [loading, setLoading] = useState(false);
+  // const [geminiResponse, setGeminiResponse] = useState<GeminiResponse>({});
+  // const [loading, setLoading] = useState(false);
   // const [addFavorite, setAddFavorite] = useState(false);
 
   const bodyShape = userProfile?.bodyShape;
@@ -37,52 +45,48 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
 
   const handleUploadComplete = async (res: { ufsUrl: string }[]) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const result = await geminiImageUpload(
         res[0]?.ufsUrl,
         bodyShape || "",
         fashionStyle || ""
       );
-      setGeminiResponse(result);
-      setLoading(false);
+      // setGeminiResponse(result);
+      const outfitResults = result.outfits;
+
+      if (outfitResults) {
+        return handleGenerateOutfitImages(outfitResults);
+      }
+
+      console.log(result.outfits);
+      // setLoading(false);
       console.log("Gemini AI action triggered");
       console.log("Response:", result);
       //   return responseText;
     } catch (error) {
       console.error("Error uploading image:", error);
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
-  // const handleAddToFavorites = async (outfit: OutfitProps) => {
-  //   // console.log(addFavoriteOutfit);
+  // console.log(geminiResponse.outfits);
 
-  //   try {
-  //     const result = await addFavoriteOutfit({
-  //       userEmail: outfit.userEmail,
-  //       outfitOccasion: outfit.outfitOccasion,
-  //       outfitMainArticle: outfit.mainArticle,
-  //       outfitShoes: outfit.shoes,
-  //       outfitAccessories: outfit.accessories,
-  //       outfitCompleterPiece: outfit.completerPiece,
-  //     });
-  //     toast("Added to favorites", {
-  //       action: {
-  //         label: "Okay",
-  //         onClick: () => {
-  //           console.log("Okay clicked");
-  //         },
-  //       },
-  //     });
+  interface OutfitResult {
+    outfitOccasion: string;
+    mainArticle: string;
+    shoes: string;
+    accessories: string;
+    completerPiece: string;
+  }
 
-  //     console.log(result);
-  //     setAddFavorite((prevAddFavorite) => !prevAddFavorite);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  console.log(geminiResponse.outfits);
+  const handleGenerateOutfitImages = async (outfitResults: OutfitResult[]) => {
+    try {
+      const imageResult = await generateOutfitImage(outfitResults);
+      console.log(imageResult);
+    } catch (error) {
+      console.error("Error generating outfit images:", error);
+    }
+  };
 
   return (
     <div>
@@ -100,7 +104,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
           }}
         />
       </div>
-      {loading ? (
+      {/* {loading ? (
         <div className="flex flex-col space-y-3 mt-24 items-center">
           <Skeleton className="h-[125px] w-[250px] rounded-xl" />
           <div className="space-y-2">
@@ -118,10 +122,10 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                   <OutfitCard
                     outfit={{
                       outfitOccasion: outfit.outfitOccasion,
-                      outfitMainArticle: outfit.mainArticle,
-                      outfitShoes: outfit.shoes,
-                      outfitAccessories: outfit.accessories,
-                      outfitCompleterPiece: outfit.completerPiece,
+                      outfitMainArticle: MainArticle,
+                      outfitShoes: outfit.outfitShoes,
+                      outfitAccessories: outfit.outfitAccessories,
+                      outfitCompleterPiece: outfit.outfitCompleterPiece,
                     }}
                   />
                 </li>
@@ -129,7 +133,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
             </ul>
           </div>
         )
-      )}
+      )} */}
     </div>
   );
 };
