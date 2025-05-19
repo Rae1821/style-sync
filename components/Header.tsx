@@ -2,8 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "./Navbar";
 import MobileNav from "./MobileNav";
+// import { cookies } from "next/headers";
 
-const Header = () => {
+const Header = async () => {
+  // const userCookies = await cookies();
+  // const user = userCookies.get("user");
+
   return (
     <header className="mx-auto flex w-full max-w-[1300px] items-center justify-between p-4 sm:px-10">
       <Link href="/" className="flex items-center gap-1">

@@ -1,19 +1,22 @@
 import { findUniqueOutfits, findUniqueProducts } from "@/actions/auth";
+import { auth } from "@/auth";
 import Dashboard from "@/components/Dashboard";
 import FavoriteProducts from "@/components/FavoriteProducts";
 import FavoriteStyleIdeas from "@/components/FavoriteStyleIdeas";
-import { db } from "@/db";
-import { cookies } from "next/headers";
+import db from "@/db";
+// import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
 
 const MyDashboard = async () => {
-  const userCookies = await cookies();
-  const user = userCookies.get("user");
-  const userData = user ? JSON.parse(user.value) : null;
-  const userEmail = userData?.email;
+  const session = await auth();
 
-  if (!user) {
+  // const userCookies = await cookies();
+  // const user = userCookies.get("user");
+  // const userData = user ? JSON.parse(user.value) : null;
+  // const userEmail = userData?.email;
+
+  if (!session?.user) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold">
@@ -26,13 +29,13 @@ const MyDashboard = async () => {
     );
   }
 
-  if (!userEmail) {
+  if (!session?.user?.email) {
     throw new Error("User not found");
   }
   // Fetch user data from the database
   const userProfile = await db.user.findUnique({
     where: {
-      email: userEmail,
+      email: session?.user?.email,
     },
     include: {
       products: true,

@@ -65,6 +65,7 @@ model Outfit {
   outfit_accessories String?
   outfit_completer_piece String?
   images Image[]
+  imageData String?
 }
 
 model Image {

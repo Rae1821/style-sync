@@ -1,7 +1,8 @@
+import { auth } from "@/auth";
 import ProductPageSearch from "@/components/ProductPageSearch";
 import ProductsList from "@/components/ProductsList";
-import { db } from "@/db";
-import { cookies } from "next/headers";
+import db from "@/db";
+// import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
 
@@ -12,10 +13,13 @@ const ProductsPage = async ({
 }) => {
   const searchItem = searchParams.searchItem || "";
 
-  const userCookies = await cookies();
-  const user = userCookies.get("user");
-  const userData = user ? JSON.parse(user.value) : null;
-  const userEmail = userData?.email;
+  const session = await auth();
+  const user = session?.user;
+
+  // const userCookies = await cookies();
+  // const user = userCookies.get("user");
+  // const userData = user ? JSON.parse(user.value) : null;
+  // const userEmail = userData?.email;
 
   if (!user) {
     return (
@@ -32,7 +36,7 @@ const ProductsPage = async ({
   // Fetch user data from the database
   const userProfile = await db.user.findUnique({
     where: {
-      email: userEmail,
+      email: user?.email ?? undefined,
     },
   });
   if (!userProfile) {

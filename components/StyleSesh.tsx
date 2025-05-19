@@ -1,11 +1,27 @@
 "use client";
 
-import { geminiImageUpload, generateOutfitImage } from "@/actions/auth";
+import {
+  addFavoriteOutfit,
+  geminiImageUpload,
+  generateOutfitImage,
+} from "@/actions/auth";
 import { UploadButton } from "@/utils/uploadthing";
-// import { useState } from "react";
-// import { Skeleton } from "./ui/skeleton";
 
-// import OutfitCard from "./OutfitCard";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useState } from "react";
+import { Skeleton } from "./ui/skeleton";
+import { IoMdCheckmark, IoMdAdd } from "react-icons/io";
+import { MdOutlineDiamond } from "react-icons/md";
+import { Button } from "./ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
+import Image from "next/image";
+import { toast } from "sonner";
 
 interface ProfileDetails {
   id: string | null;
@@ -15,30 +31,26 @@ interface ProfileDetails {
   fashionStyle: string | null;
 }
 
-// interface GeminiResponse {
-//   outfits?:
-//     | {
-//         outfitOccasion: string;
-//         mainArticle: string;
-//         shoes: string;
-//         accessories: string;
-//         completerPiece: string;
-//       }[]
-//     | null;
-// }
-
-// interface Outfit {
-//   outfitOccasion: string;
-//   outfitMainArticle: string;
-//   outfitShoes: string;
-//   outfitAccessories: string;
-//   outfitCompleterPiece: string;
-// }
+interface GeminiResponse {
+  outfitOccasion: string;
+  mainArticle: string;
+  shoes: string;
+  accessories: string;
+  completerPiece: string;
+}
 
 const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
-  // const [geminiResponse, setGeminiResponse] = useState<GeminiResponse>({});
-  // const [loading, setLoading] = useState(false);
-  // const [addFavorite, setAddFavorite] = useState(false);
+  const [geminiResponse, setGeminiResponse] = useState<GeminiResponse>({
+    outfitOccasion: "",
+    mainArticle: "",
+    shoes: "",
+    accessories: "",
+    completerPiece: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [occasionValue, setOccasionValue] = useState("");
+  const [addFavorite, setAddFavorite] = useState(false);
+  const [imageData, setImageData] = useState<string | null>(null);
 
   const bodyShape = userProfile?.bodyShape;
   const fashionStyle = userProfile?.fashionStyle;
@@ -49,23 +61,41 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
       const result = await geminiImageUpload(
         res[0]?.ufsUrl,
         bodyShape || "",
-        fashionStyle || ""
+        fashionStyle || "",
+        occasionValue || ""
       );
-      // setGeminiResponse(result);
-      const outfitResults = result.outfits;
+      setGeminiResponse(result.outfit);
+      const outfitResult = await handleGenerateOutfitImages(result.outfit);
 
-      if (outfitResults) {
-        return handleGenerateOutfitImages(outfitResults);
-      }
-
-      console.log(result.outfits);
-      // setLoading(false);
+      return outfitResult;
+      console.log(result.outfit);
+      setLoading(false);
       console.log("Gemini AI action triggered");
       console.log("Response:", result);
       //   return responseText;
     } catch (error) {
       console.error("Error uploading image:", error);
       // setLoading(false);
+    }
+  };
+
+  const handleAddToFavorites = async () => {
+    try {
+      if (imageData) {
+        await addFavoriteOutfit(geminiResponse, imageData);
+        toast("Added to favorites", {
+          action: {
+            label: "Okay",
+            onClick: () => {
+              console.log("Okay clicked");
+            },
+          },
+        });
+      }
+
+      setAddFavorite((prevAddFavorite) => !prevAddFavorite);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -79,10 +109,11 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
     completerPiece: string;
   }
 
-  const handleGenerateOutfitImages = async (outfitResults: OutfitResult[]) => {
+  const handleGenerateOutfitImages = async (outfit: OutfitResult) => {
     try {
-      const imageResult = await generateOutfitImage(outfitResults);
-      console.log(imageResult);
+      const imageResult = await generateOutfitImage(outfit);
+      // console.log(imageResult);
+      setImageData(imageResult);
     } catch (error) {
       console.error("Error generating outfit images:", error);
     }
@@ -90,21 +121,39 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
 
   return (
     <div>
-      <div>
-        <UploadButton
-          className="ut-button:bg-red-300 ut-label:text-black ut-button:ut-readying:bg-red-300/50 ut-button:ut-uploading:bg-red-300/70"
-          endpoint="imageUploader"
-          onClientUploadComplete={(res) => {
-            // Do something with the response
-            handleUploadComplete(res);
-          }}
-          onUploadError={(error: Error) => {
-            // Do something with the error.
-            alert(`ERROR! ${error.message}`);
-          }}
-        />
+      <div className="flex flex-col items-center justify-center gap-8 md:flex-row md:items-baseline">
+        <>
+          <Select value={occasionValue} onValueChange={setOccasionValue}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select Occasion" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="casual">Casual</SelectItem>
+              <SelectItem value="date-night">Date Night</SelectItem>
+              <SelectItem value="special-event">Special Event</SelectItem>
+              <SelectItem value="vacation">Vacation</SelectItem>
+              <SelectItem value="work">Work</SelectItem>
+              <SelectItem value="weekend">Weekend</SelectItem>
+            </SelectContent>
+          </Select>
+        </>
+
+        <div>
+          <UploadButton
+            className="ut-button:bg-red-300 ut-label:text-black ut-button:ut-readying:bg-red-300/50 ut-button:ut-uploading:bg-red-300/70"
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              // Do something with the response
+              handleUploadComplete(res);
+            }}
+            onUploadError={(error: Error) => {
+              // Do something with the error.
+              alert(`ERROR! ${error.message}`);
+            }}
+          />
+        </div>
       </div>
-      {/* {loading ? (
+      {loading ? (
         <div className="flex flex-col space-y-3 mt-24 items-center">
           <Skeleton className="h-[125px] w-[250px] rounded-xl" />
           <div className="space-y-2">
@@ -113,10 +162,57 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
           </div>
         </div>
       ) : (
-        geminiResponse &&
-        geminiResponse.outfits && (
-          <div>
-            <ul className="my-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        geminiResponse && (
+          <div className="mb-8 max-w-2xl mx-auto">
+            <Card className="mt-12">
+              <CardHeader className="relative">
+                <CardTitle className="flex items-center gap-2">
+                  <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm">
+                    <MdOutlineDiamond className="text-red-300 size-6" />
+                  </span>
+                  <h2 className="text-lg font-semibold">
+                    {geminiResponse.outfitOccasion}
+                  </h2>
+                </CardTitle>
+                <Button
+                  className="absolute top-0 right-2 p-0"
+                  variant="ghost"
+                  onClick={() => handleAddToFavorites()}
+                >
+                  {addFavorite ? (
+                    <IoMdCheckmark className="text-red-300 w-6 h-6" />
+                  ) : (
+                    <IoMdAdd className="text-red-300 w-6 h-6" />
+                  )}
+                </Button>
+                <CardContent className="mt-4">
+                  <Image
+                    src={`data:image/png;base64, ${imageData}`}
+                    alt="Gemini generated outfit flatlay"
+                    height={300}
+                    width={300}
+                    className="mx-auto"
+                  />
+                  <p className="text-sm mb-2 mt-8">
+                    <span className="font-semibold">Main Item: </span>
+                    {geminiResponse.mainArticle}
+                  </p>
+                  <p className="text-sm mb-2">
+                    <span className="font-semibold">Shoes: </span>{" "}
+                    {geminiResponse.shoes}
+                  </p>
+                  <p className="text-sm mb-2">
+                    <span className="font-semibold">Accessories: </span>
+                    {geminiResponse.accessories}
+                  </p>
+                  <p className="text-sm mb-2">
+                    <span className="font-semibold">Completer piece: </span>
+                    {geminiResponse.completerPiece}
+                  </p>
+                </CardContent>
+              </CardHeader>
+            </Card>
+            {/* <ul className="my-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
               {geminiResponse.outfits?.map((outfit, index) => (
                 <li key={index}>
                   <OutfitCard
@@ -130,10 +226,10 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                   />
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
         )
-      )} */}
+      )}
     </div>
   );
 };

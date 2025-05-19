@@ -1,11 +1,12 @@
 import { MdOutlineDiamond } from "react-icons/md";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { IoMdAdd } from "react-icons/io";
-import { IoMdCheckmark } from "react-icons/io";
-import { Button } from "./ui/button";
-import { useState } from "react";
-import { addFavoriteOutfit } from "@/actions/auth";
-import { toast } from "sonner";
+// import { IoMdAdd } from "react-icons/io";
+// import { IoMdCheckmark } from "react-icons/io";
+// import { Button } from "./ui/button";
+// import { useState } from "react";
+// import { addFavoriteOutfit } from "@/actions/auth";
+// import { toast } from "sonner";
+import Image from "next/image";
 
 interface OutfitProps {
   outfitOccasion: string;
@@ -24,26 +25,26 @@ const OutfitCard = ({ outfit }: { outfit: OutfitProps }) => {
     outfitCompleterPiece,
   } = outfit;
 
-  const [addFavorite, setAddFavorite] = useState(false);
+  // const [addFavorite, setAddFavorite] = useState(false);
 
-  const handleAddToFavorites = async (outfit: OutfitProps) => {
-    try {
-      const result = await addFavoriteOutfit(outfit);
-      toast("Added to favorites", {
-        action: {
-          label: "Okay",
-          onClick: () => {
-            console.log("Okay clicked");
-          },
-        },
-      });
+  // const handleAddToFavorites = async (outfit: OutfitProps) => {
+  //   try {
+  //     const result = await addFavoriteOutfit(outfit);
+  //     toast("Added to favorites", {
+  //       action: {
+  //         label: "Okay",
+  //         onClick: () => {
+  //           console.log("Okay clicked");
+  //         },
+  //       },
+  //     });
 
-      console.log(result);
-      setAddFavorite((prevAddFavorite) => !prevAddFavorite);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     console.log(result);
+  //     setAddFavorite((prevAddFavorite) => !prevAddFavorite);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div>
@@ -55,7 +56,7 @@ const OutfitCard = ({ outfit }: { outfit: OutfitProps }) => {
             </span>
             <h2 className="text-lg font-semibold">{outfitOccasion}</h2>
           </CardTitle>
-          <Button
+          {/* <Button
             className="absolute top-0 right-2 p-0"
             variant="ghost"
             onClick={() => handleAddToFavorites(outfit)}
@@ -65,8 +66,14 @@ const OutfitCard = ({ outfit }: { outfit: OutfitProps }) => {
             ) : (
               <IoMdAdd className="text-red-300 w-6 h-6" />
             )}
-          </Button>
+          </Button> */}
           <CardContent>
+            <Image
+              src="/gemini-native-image.png"
+              alt="Gemini generated outfit flatlay"
+              height={250}
+              width={250}
+            />
             <p className="text-sm mb-2 mt-4">
               <span className="font-semibold">Main Item: </span>
               {outfitMainArticle}

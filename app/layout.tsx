@@ -6,9 +6,7 @@ import Header from "@/components/Header";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-})
-
-
+});
 
 export const metadata: Metadata = {
   title: "Style Sync",
@@ -22,10 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
-      <body
-        className={poppins.className}
-      >
+      <body className={poppins.className}>
         <Header />
         {children}
       </body>

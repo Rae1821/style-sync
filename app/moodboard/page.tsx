@@ -1,17 +1,19 @@
 // import { findUniqueImages, findUniqueProducts } from "@/actions/auth";
+import { auth } from "@/auth";
 import MoodBoard from "@/components/MoodBoard";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
 
 const MoodboardPage = async () => {
+  const session = await auth();
   // const fetchUserProducts = await findUniqueProducts();
   // const fetchUserImages = await findUniqueImages();
 
-  const userCookies = await cookies();
-  const user = userCookies.get("user");
+  // const userCookies = await cookies();
+  // const user = userCookies.get("user");
 
-  if (!user) {
+  if (!session?.user) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold">

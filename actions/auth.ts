@@ -1,6 +1,5 @@
 "use server";
-import { db } from "@/db";
-import { OAuth2Client } from "google-auth-library";
+import db from "@/db";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import {
@@ -14,28 +13,6 @@ import fs from "fs";
 import os from "os";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
-// Create a utility for Google OAuth
-export async function getGoogleClient() {
-  return new OAuth2Client(
-    process.env.GOOGLE_CLIENT_ID,
-    process.env.GOOGLE_CLIENT_SECRET,
-    // Use the full callback URL
-    process.env.GOOGLE_REDIRECT_URI || "http://localhost:3000/api/auth/callback"
-  );
-}
-
-export async function generateAuthUrl() {
-  const client = await getGoogleClient();
-  return client.generateAuthUrl({
-    access_type: "offline", // Enables refresh tokens
-    scope: [
-      "https://www.googleapis.com/auth/userinfo.profile",
-      "https://www.googleapis.com/auth/userinfo.email",
-    ],
-    prompt: "consent", // Ensures we get a refresh token
-  });
-}
 
 // for debugging purposes
 export const getUserByEmail = async (email: string) => {
@@ -261,17 +238,16 @@ const downloadFile = async (url: string): Promise<string> => {
 export const geminiImageUpload = async (
   fileUrl: string,
   bodyShape: string,
-  fashionStyle: string
+  fashionStyle: string,
+  outfitOccasion: string
 ): Promise<{
-  outfits:
-    | {
-        outfitOccasion: string;
-        mainArticle: string;
-        shoes: string;
-        accessories: string;
-        completerPiece: string;
-      }[]
-    | null;
+  outfit: {
+    outfitOccasion: string;
+    mainArticle: string;
+    shoes: string;
+    accessories: string;
+    completerPiece: string;
+  };
 }> => {
   const localFilePath = await downloadFile(fileUrl);
 
@@ -280,7 +256,7 @@ export const geminiImageUpload = async (
     config: { mimeType: "image/jpeg" },
   });
 
-  const prompt = `Generate outfit pairings for the clothing item in the image, taking into account the user's body shape: "${bodyShape}" (e.g., pear, apple, hourglass, rectangle, inverted triangle) and their fashion style: "${fashionStyle}" (e.g., classic, bohemian, chic, edgy, sporty). Adhere strictly to the following JSON schema and providing ONLY the JSON output. Do not include any introductory or explanatory text. 
+  const prompt = `Generate outfit pairings for ${outfitOccasion} using the clothing item in the image, taking into account the user's body shape: "${bodyShape}" (e.g., pear, apple, hourglass, rectangle, inverted triangle) and their fashion style: "${fashionStyle}" (e.g., classic, bohemian, chic, edgy, sporty). Adhere strictly to the following JSON schema and providing ONLY the JSON output. Do not include any introductory or explanatory text. 
 
   Conider the follow general guidelines when making suggestions:
 
@@ -298,56 +274,25 @@ export const geminiImageUpload = async (
 
   The 'mainArticle' in each outfit should either be the uploaded item itself (if it's a complete garment like a dress) or include the uploaded item paired with other suitable pieces (if it's a top, bottom, etc ).
 
-  Consider the following occasions for outfit suggestions: Casual, Work, Weekend, Vacation, Date Night, Special Event.
-
   For each occasion, suggest a complete outfit including:
   - mainArticle: A description of the main clothing item(s) that flatters a "${bodyShape}" body shape and aligns with the "${fashionStyle}" fashion style.
   - shoes: Appropriate footwear for the occasion, considering the "${fashionStyle}" and occasion.
   - accessories: Complementary accessories suitable for the "${fashionStyle}" and occasion.
   - completerPiece: An optional layering piece that works with the "${fashionStyle}" and occasion.
 
-  Return an array of outfit objects following this schema:
+  Return an outfit object following this schema:
   
   Outfit = {'outfitOccasion': 'Casual', 'mainArticle': 'denim shorts paired with a [uploaded item]', 'shoes': 'colorful sneakers', 'accessories': 'layered necklaces', 'completerPiece': 'cardigan in a color that compliments color of sneakers'}
 
  Example of expected JSON output:
- [
+ 
  {
-    "outfitOccasion": "Casual",
+    "outfitOccasion": ${outfitOccasion},
     "mainArticle": "high-waisted denim shorts paired with a [uploaded item] (flattering for ${bodyShape}",
     "shoes": "fashionable sneakers in a ${fashionStyle} aesthetic",
     "accessories": "minimalist jewelry suitable for a ${fashionStyle} casual look",
     "completerPiece": "lightweight cardigan"
-  },
-  {
-    "outfitOccasion": "Date Night",
-    "mainArticle": "[uploaded item] styled with a fitted skirt (flattering for ${bodyShape}",
-    "shoes": "ankle boots or heels in a ${fashionStyle} style",
-    "accessories": "statement earrings, clutch bag suitable for ${fashionStyle}",
-    "completerPiece": "tailored blazer"
-  },
-  {
-    "outfitOccasion": "Vacation",
-    "mainArticle": "[uploaded item] with a flowy maxi skirt (flattering for ${bodyShape}",
-    "shoes": "comfortable sandals or espadrilles suitable for ${fashionStyle}",
-    "accessories": "wide-brimmed hat, beach tote suitable for ${fashionStyle}",
-    "completerPiece": "light kimono"
-  },
-  {
-    "outfitOccasion": "Work",
-    "mainArticle": "[uploaded item] paired with tailored trousers (flattering for ${bodyShape}",
-    "shoes": "loafers or flats in a ${fashionStyle} style",
-    "accessories": "simple jewelry, structured tote bag suitable for ${fashionStyle}",
-    "completerPiece": "blazer"
-  },
-  {
-  "outfitOccasion: "Weekend",
-  "mainArticle": "[uploaded item] with high-waisted jeans (flattering for ${bodyShape}",
-  "shoes": "wedge sandals or stylish sneakers in a ${fashionStyle} style",
-  "accessories": "sunglasses, crossbody bag suitable for ${fashionStyle}",
-  "completerPiece": "vest or light jacket"
-  },
- ]`;
+  }`;
 
   const response = await ai.models.generateContent({
     // model: "gemini-2.0-flash",
@@ -362,7 +307,13 @@ export const geminiImageUpload = async (
   await fs.promises.unlink(localFilePath); // Clean up the temporary file
 
   // console.log(response.text || undefined);
-  return { outfits: parseGeminiResponse(response.text) };
+  const parsed = parseGeminiResponse(response.text);
+  if (!parsed || (Array.isArray(parsed) && parsed.length === 0)) {
+    throw new Error("Failed to parse Gemini response or response is empty");
+  }
+  // If parsed is an array, take the first element; otherwise, use parsed directly
+  const outfit: Outfit = Array.isArray(parsed) ? parsed[0] : parsed;
+  return { outfit };
 };
 
 // Helper function to parse the Gemini response
@@ -403,89 +354,41 @@ interface OutfitResult {
 }
 
 export const generateOutfitImage = async (
-  outfitResults: OutfitResult[]
-): Promise<string[]> => {
-  const generatedImagePaths: string[] = [];
-  const imageFolderPath = path.join(process.cwd(), "/images");
+  outfit: OutfitResult
+): Promise<string> => {
+  const prompt = `Generate an image of a ${outfit.outfitOccasion} outfit with one of each of the following items: ${outfit.mainArticle}, ${outfit.shoes}, ${outfit.accessories}, ${outfit.completerPiece}. The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit.`;
 
-  // Ensure the image folder exists
-  if (!fs.existsSync(imageFolderPath)) {
-    console.log("Image folder does not exist");
-  }
-  for (const [index, outfit] of outfitResults.entries()) {
-    const prompt =
-      "Generate an image of a ${outfit.outfitOccasion} outfit with the following items: ${outfit.mainArticle}, ${outfit.shoes}, ${outfit.accessories}, ${outfit.completerPiece}. The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit.";
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash-preview-image-generation",
+    contents: [createUserContent(prompt)], // wrap the single prompt in an array
+    config: {
+      responseModalities: [Modality.TEXT, Modality.IMAGE],
+    },
+  });
+  console.log(
+    "Response: ",
+    response?.candidates?.map((candidate) => candidate?.content?.parts)
+  );
 
-    try {
-      const response = await ai.models.generateContent({
-        model: "gemini-2.0-flash-preview-image-generation",
-        contents: [createUserContent(prompt)], // wrap the single prompt in an array
-        config: {
-          responseModalities: [Modality.TEXT, Modality.IMAGE],
-        },
-      });
-
-      const firstCandidate = response?.candidates?.[0];
-      const firstPart = firstCandidate?.content?.parts?.[0];
-
-      if (firstPart?.inlineData) {
-        const imageData = firstPart.inlineData.data;
-        if (!imageData) {
-          console.error(`Image data is undefined for outfit ${index + 1}`);
-        }
-        if (!imageData) {
-          throw new Error("Image data is undefined");
-        }
-        const buffer = Buffer.from(imageData, "base64");
-        const fileName = `gemini-native-image-${index + 1}.png`;
-        const imagePath = path.join(imageFolderPath, fileName);
-        fs.writeFileSync(imagePath, buffer);
-        console.log(`Image for ${outfit.outfitOccasion} saved as ${imagePath}`);
-        generatedImagePaths.push(`/images/${fileName}`);
-      } else if (firstPart?.text) {
-        console.log(`Text response for outfit ${index + 1}:`, firstPart.text);
-      } else {
-        console.error(`No image or text data found for outfit ${index + 1}`);
+  for (const part of response?.candidates?.[0]?.content?.parts || []) {
+    if (part.inlineData) {
+      const imageData = part.inlineData.data;
+      if (!imageData) {
+        throw new Error("Image data is undefined");
       }
-    } catch (error) {
-      console.error(`Error generating image for outfit ${index + 1}:`, error);
+      // Optionally save the image to disk
+      const buffer = Buffer.from(imageData, "base64");
+      fs.writeFileSync("gemini-native-image.png", buffer);
+      console.log("Image saved as gemini-native-image.png");
+      return imageData;
+    }
+    if (part.text) {
+      console.log(part.text);
     }
   }
-  return generatedImagePaths;
+  // If no image data found, return empty string
+  return "";
 };
-
-// const response = await ai.models.generateContent({
-// model: "gemini-2.0-flash-preview-image-generation",
-// contents: outfitResults.map((outfit) => {
-//   return createUserContent([
-//     `Generate an image of a ${outfit.outfitOccasion} outfit with the following items: ${outfit.mainArticle}, ${outfit.shoes}, ${outfit.accessories}, ${outfit.completerPiece}.
-//     The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit.
-//     `,
-//   ]);
-// }),
-//   config: {
-//     responseModalities: [Modality.TEXT, Modality.IMAGE],
-//   },
-// });
-// console.log(
-//   "Response: ",
-//   response?.candidates?.map((candidate) => candidate?.content?.parts)
-// );
-
-// for (const part of response?.candidates?.[0]?.content?.parts || []) {
-//   if (part.text) {
-//     console.log(part.text);
-//   } else if (part.inlineData) {
-//     const imageData = part.inlineData.data;
-//     if (!imageData) {
-//       throw new Error("Image data is undefined");
-//     }
-//     const buffer = Buffer.from(imageData, "base64");
-//     fs.writeFileSync("gemini-native-image.png", buffer);
-//     console.log("Image saved as gemini-native-image.png");
-//   }
-// }
-// };
 
 // UPLOADTHING MOODBOARD IMAGES
 
@@ -609,14 +512,17 @@ export const findUniqueOutfits = async () => {
 
 interface AddOutfitInput {
   outfitOccasion: string;
-  outfitMainArticle: string;
-  outfitShoes: string;
-  outfitAccessories: string;
-  outfitCompleterPiece: string;
+  mainArticle: string;
+  shoes: string;
+  accessories: string;
+  completerPiece: string;
 }
 
 // Adding outfit ideas to database
-export const addFavoriteOutfit = async (outfit: AddOutfitInput) => {
+export const addFavoriteOutfit = async (
+  outfit: AddOutfitInput,
+  imageData: string
+) => {
   try {
     const userCookie = await cookies();
     const currentUser = userCookie.get("user");
@@ -630,11 +536,12 @@ export const addFavoriteOutfit = async (outfit: AddOutfitInput) => {
     const addNewOutfit = await db.outfit.create({
       data: {
         user: { connect: { email: email } },
+        imageData: imageData,
         outfit_occasion: outfit.outfitOccasion,
-        outfit_main_article: outfit.outfitMainArticle,
-        outfit_shoes: outfit.outfitShoes,
-        outfit_accessories: outfit.outfitAccessories,
-        outfit_completer_piece: outfit.outfitCompleterPiece,
+        outfit_main_article: outfit.mainArticle,
+        outfit_shoes: outfit.shoes,
+        outfit_accessories: outfit.accessories,
+        outfit_completer_piece: outfit.completerPiece,
       },
     });
 
