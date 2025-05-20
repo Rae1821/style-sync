@@ -64,18 +64,18 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
         fashionStyle || "",
         occasionValue || ""
       );
+      console.log(result);
       setGeminiResponse(result);
       const outfitResult = await handleGenerateOutfitImages(result);
 
       return outfitResult;
       // console.log(result);
-      setLoading(false);
       // console.log("Gemini AI action triggered");
       // console.log("Response:", result);
       //   return responseText;
     } catch (error) {
       console.error("Error uploading image:", error);
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -99,8 +99,6 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
     }
   };
 
-  // console.log(geminiResponse.outfits);
-
   interface OutfitResult {
     outfit_occasion: string;
     outfit_main_article: string;
@@ -114,15 +112,46 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
       const imageResult = await generateOutfitImage(outfit);
       // console.log(imageResult);
       setImageData(imageResult);
+      setLoading(false);
+      console.log(imageResult);
     } catch (error) {
       console.error("Error generating outfit images:", error);
     }
   };
 
+  const outfitOccasionTitle = () => {
+    if (occasionValue === "casual") {
+      return "Casual";
+    } else if (occasionValue === "date-night") {
+      return "Date Night";
+    } else if (occasionValue === "special-event") {
+      return "Special Event";
+    } else if (occasionValue === "vacation") {
+      return "Vacation";
+    } else if (occasionValue === "work") {
+      return "Work";
+    } else if (occasionValue === "weekend") {
+      return "Weekend";
+    }
+  };
+
+  const handleStartOver = () => {
+    setOccasionValue("");
+    setGeminiResponse({
+      outfit_occasion: "",
+      outfit_main_article: "",
+      outfit_shoes: "",
+      outfit_accessories: "",
+      outfit_completer_piece: "",
+    });
+    setImageData(null);
+    setLoading(false);
+  };
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center gap-8 md:flex-row md:items-baseline">
-        <>
+        <div className="flex flex-col items-center gap-2 justify-start">
           <Select value={occasionValue} onValueChange={setOccasionValue}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select Occasion" />
@@ -136,7 +165,12 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
               <SelectItem value="weekend">Weekend</SelectItem>
             </SelectContent>
           </Select>
-        </>
+          <div>
+            <Button onClick={handleStartOver} variant="link">
+              Start Over
+            </Button>
+          </div>
+        </div>
 
         <div>
           <UploadButton
@@ -162,11 +196,11 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
           </div>
         </div>
       ) : (
-        geminiResponse.outfit_occasion &&
-        geminiResponse.outfit_main_article &&
-        geminiResponse.outfit_shoes &&
-        geminiResponse.outfit_accessories &&
-        geminiResponse.outfit_completer_piece && (
+        geminiResponse.outfit_occasion !== "" &&
+        geminiResponse.outfit_main_article !== "" &&
+        geminiResponse.outfit_shoes !== "" &&
+        geminiResponse.outfit_accessories !== "" &&
+        geminiResponse.outfit_completer_piece !== "" && (
           <div className="mb-8 max-w-2xl mx-auto">
             <Card className="mt-12">
               <CardHeader className="relative">
@@ -175,7 +209,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     <MdOutlineDiamond className="text-red-300 size-6" />
                   </span>
                   <h2 className="text-lg font-semibold">
-                    {geminiResponse.outfit_occasion}
+                    {outfitOccasionTitle()}
                   </h2>
                 </CardTitle>
                 <Button
@@ -191,7 +225,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                 </Button>
                 <CardContent className="mt-4">
                   <Image
-                    src={`data:image/png;base64, ${imageData}`}
+                    src={`data:image/png;base64 + ${imageData}`}
                     alt="Gemini generated outfit flatlay"
                     height={300}
                     width={300}
@@ -233,6 +267,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
             </ul> */}
           </div>
         )
+        // )}
       )}
     </div>
   );

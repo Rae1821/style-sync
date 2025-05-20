@@ -254,7 +254,7 @@ export const geminiImageUpload = async (
     config: { mimeType: "image/jpeg" },
   });
 
-  const prompt = `Generate outfit pairings for ${outfit_occasion} using the clothing item in the image, taking into account the user's body shape: "${bodyShape}" (e.g., pear, apple, hourglass, rectangle, inverted triangle) and their fashion style: "${fashionStyle}" (e.g., classic, bohemian, chic, edgy, sporty). Adhere strictly to the following JSON schema and providing ONLY the JSON output. Do not include any introductory or explanatory text. 
+  const prompt = `Generate outfit pairings for ${outfit_occasion} using the clothing item in the uploaded image, taking into account the user's body shape: "${bodyShape}" (e.g., pear, apple, hourglass, rectangle, inverted triangle) and their fashion style: "${fashionStyle}" (e.g., classic, bohemian, chic, edgy, sporty). Adhere strictly to the following JSON schema and providing ONLY the JSON output. Do not include any introductory or explanatory text. 
 
   Conider the follow general guidelines when making suggestions:
 
@@ -270,9 +270,9 @@ export const geminiImageUpload = async (
   For an "edgy" fashion style, suggest darker colors, leather, and statement accessories.
   For a "sporty" fashion style, suggest comfortable and functional pieces with a casual vibe.
 
-  The 'mainArticle' in each outfit should either be the uploaded item itself (if it's a complete garment like a dress) or include the uploaded item paired with other suitable pieces (if it's a top, bottom, etc ).
+  The 'mainArticle' in the outfit should either be the uploaded item itself (if it's a complete garment like a dress) or include the uploaded item paired with other suitable pieces (if it's a top include a bottom, if it's a bottom include a top, etc ).
 
-  For each occasion, suggest a complete outfit including:
+  Suggest one complete outfit including:
   - mainArticle: A description of the main clothing item(s) that flatters a "${bodyShape}" body shape and aligns with the "${fashionStyle}" fashion style.
   - shoes: Appropriate footwear for the occasion, considering the "${fashionStyle}" and occasion.
   - accessories: Complementary accessories suitable for the "${fashionStyle}" and occasion.
@@ -280,7 +280,7 @@ export const geminiImageUpload = async (
 
   Return an outfit object following this schema:
   
-  Outfit = {'outfitOccasion': 'Casual', 'mainArticle': 'denim shorts paired with a [uploaded item]', 'shoes': 'colorful sneakers', 'accessories': 'layered necklaces', 'completerPiece': 'cardigan in a color that compliments color of sneakers'}
+  Outfit = {'outfitOccasion': '${outfit_occasion}', 'mainArticle': 'denim shorts paired with a [uploaded item]', 'shoes': 'colorful sneakers', 'accessories': 'layered necklaces', 'completerPiece': 'cardigan in a color that compliments color of sneakers'}
 
  Example of expected JSON output:
  
@@ -352,7 +352,7 @@ interface OutfitResult {
 export const generateOutfitImage = async (
   outfit: OutfitResult
 ): Promise<string> => {
-  const prompt = `Generate an image of a ${outfit.outfit_occasion} outfit with one of each of the following items: ${outfit.outfit_main_article}, ${outfit.outfit_shoes}, ${outfit.outfit_accessories}, ${outfit.outfit_completer_piece}. The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit.`;
+  const prompt = `Generate an image of a ${outfit.outfit_occasion} outfit with one of each of the following items: ${outfit.outfit_main_article}, ${outfit.outfit_shoes}, ${outfit.outfit_accessories}, ${outfit.outfit_completer_piece}. The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit. The image size should be 300x300 pixels and no more than 500KB.`;
 
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash-preview-image-generation",

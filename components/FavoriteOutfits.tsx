@@ -4,9 +4,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { MdOutlineClose, MdOutlineDiamond } from "react-icons/md";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { toast } from "sonner";
 import { deleteFavoriteOutfit } from "@/actions/auth";
-// import Image from "next/image";
+import Image from "next/image";
 
 interface FavOutfitProps {
   favOutfits: {
@@ -33,8 +32,9 @@ interface DeleteFavOutfitProps {
 }
 
 const FavoriteOutfits = ({ favOutfits }: FavOutfitProps) => {
+  // console.log(favOutfits.imageData);
+  // Delete favorite outfit
   const handleDeleteFavorite = async (outfit: DeleteFavOutfitProps) => {
-    console.log("Outfit:", outfit);
     if (!outfit.id) {
       console.error("Outfit id is required to delete a favorite.");
       return;
@@ -66,20 +66,11 @@ const FavoriteOutfits = ({ favOutfits }: FavOutfitProps) => {
           <CardContent className="mt-4 flex flex-col gap-2 overflow-y-scroll md:flex-row">
             {favOutfits.map((outfit) => {
               return (
-                <div className="product-card" key={outfit.id}>
+                <div className=" w-[350px]" key={outfit.id}>
                   <div className="flex-end relative">
                     <MdOutlineClose
                       className="size-4 absolute top-2 right-2 hover:cursor-pointer"
-                      onClick={() =>
-                        toast("Outfit removed from favorites", {
-                          description:
-                            "This outfit has been removed from your favorites.",
-                          action: {
-                            label: "Undo",
-                            onClick: () => handleDeleteFavorite(outfit),
-                          },
-                        })
-                      }
+                      onClick={() => handleDeleteFavorite(outfit)}
                     />
                   </div>
                   <div className="px-2 flex flex-col gap-2">
@@ -89,13 +80,13 @@ const FavoriteOutfits = ({ favOutfits }: FavOutfitProps) => {
                       </span>
                       {outfit.outfit_occasion}
                     </h3>
-                    {/* <Image
-                      src={outfit.imageData}
+                    <Image
+                      src={`data:image/png;base64, src.trimEnd(${outfit.imageData})`}
                       alt="Gemini generated outfit flatlay"
                       height={300}
                       width={300}
                       className="mx-auto"
-                    /> */}
+                    />
                     <p className="text-sm mb-2">
                       <span className="font-semibold">Main Item: </span>
                       {outfit.outfit_main_article}
