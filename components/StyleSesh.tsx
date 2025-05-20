@@ -32,20 +32,20 @@ interface ProfileDetails {
 }
 
 interface GeminiResponse {
-  outfitOccasion: string;
-  mainArticle: string;
-  shoes: string;
-  accessories: string;
-  completerPiece: string;
+  outfit_occasion: string;
+  outfit_main_article: string;
+  outfit_shoes: string;
+  outfit_accessories: string;
+  outfit_completer_piece: string;
 }
 
 const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
   const [geminiResponse, setGeminiResponse] = useState<GeminiResponse>({
-    outfitOccasion: "",
-    mainArticle: "",
-    shoes: "",
-    accessories: "",
-    completerPiece: "",
+    outfit_occasion: "",
+    outfit_main_article: "",
+    outfit_shoes: "",
+    outfit_accessories: "",
+    outfit_completer_piece: "",
   });
   const [loading, setLoading] = useState(false);
   const [occasionValue, setOccasionValue] = useState("");
@@ -57,21 +57,21 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
 
   const handleUploadComplete = async (res: { ufsUrl: string }[]) => {
     try {
-      // setLoading(true);
+      setLoading(true);
       const result = await geminiImageUpload(
         res[0]?.ufsUrl,
         bodyShape || "",
         fashionStyle || "",
         occasionValue || ""
       );
-      setGeminiResponse(result.outfit);
-      const outfitResult = await handleGenerateOutfitImages(result.outfit);
+      setGeminiResponse(result);
+      const outfitResult = await handleGenerateOutfitImages(result);
 
       return outfitResult;
-      console.log(result.outfit);
+      // console.log(result);
       setLoading(false);
-      console.log("Gemini AI action triggered");
-      console.log("Response:", result);
+      // console.log("Gemini AI action triggered");
+      // console.log("Response:", result);
       //   return responseText;
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -102,11 +102,11 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
   // console.log(geminiResponse.outfits);
 
   interface OutfitResult {
-    outfitOccasion: string;
-    mainArticle: string;
-    shoes: string;
-    accessories: string;
-    completerPiece: string;
+    outfit_occasion: string;
+    outfit_main_article: string;
+    outfit_shoes: string;
+    outfit_accessories: string;
+    outfit_completer_piece: string;
   }
 
   const handleGenerateOutfitImages = async (outfit: OutfitResult) => {
@@ -162,7 +162,11 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
           </div>
         </div>
       ) : (
-        geminiResponse && (
+        geminiResponse.outfit_occasion &&
+        geminiResponse.outfit_main_article &&
+        geminiResponse.outfit_shoes &&
+        geminiResponse.outfit_accessories &&
+        geminiResponse.outfit_completer_piece && (
           <div className="mb-8 max-w-2xl mx-auto">
             <Card className="mt-12">
               <CardHeader className="relative">
@@ -171,7 +175,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     <MdOutlineDiamond className="text-red-300 size-6" />
                   </span>
                   <h2 className="text-lg font-semibold">
-                    {geminiResponse.outfitOccasion}
+                    {geminiResponse.outfit_occasion}
                   </h2>
                 </CardTitle>
                 <Button
@@ -195,19 +199,19 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                   />
                   <p className="text-sm mb-2 mt-8">
                     <span className="font-semibold">Main Item: </span>
-                    {geminiResponse.mainArticle}
+                    {geminiResponse.outfit_main_article}
                   </p>
                   <p className="text-sm mb-2">
                     <span className="font-semibold">Shoes: </span>{" "}
-                    {geminiResponse.shoes}
+                    {geminiResponse.outfit_shoes}
                   </p>
                   <p className="text-sm mb-2">
                     <span className="font-semibold">Accessories: </span>
-                    {geminiResponse.accessories}
+                    {geminiResponse.outfit_accessories}
                   </p>
                   <p className="text-sm mb-2">
                     <span className="font-semibold">Completer piece: </span>
-                    {geminiResponse.completerPiece}
+                    {geminiResponse.outfit_completer_piece}
                   </p>
                 </CardContent>
               </CardHeader>

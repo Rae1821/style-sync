@@ -239,15 +239,13 @@ export const geminiImageUpload = async (
   fileUrl: string,
   bodyShape: string,
   fashionStyle: string,
-  outfitOccasion: string
+  outfit_occasion: string
 ): Promise<{
-  outfit: {
-    outfitOccasion: string;
-    mainArticle: string;
-    shoes: string;
-    accessories: string;
-    completerPiece: string;
-  };
+  outfit_occasion: string;
+  outfit_main_article: string;
+  outfit_shoes: string;
+  outfit_accessories: string;
+  outfit_completer_piece: string;
 }> => {
   const localFilePath = await downloadFile(fileUrl);
 
@@ -256,7 +254,7 @@ export const geminiImageUpload = async (
     config: { mimeType: "image/jpeg" },
   });
 
-  const prompt = `Generate outfit pairings for ${outfitOccasion} using the clothing item in the image, taking into account the user's body shape: "${bodyShape}" (e.g., pear, apple, hourglass, rectangle, inverted triangle) and their fashion style: "${fashionStyle}" (e.g., classic, bohemian, chic, edgy, sporty). Adhere strictly to the following JSON schema and providing ONLY the JSON output. Do not include any introductory or explanatory text. 
+  const prompt = `Generate outfit pairings for ${outfit_occasion} using the clothing item in the image, taking into account the user's body shape: "${bodyShape}" (e.g., pear, apple, hourglass, rectangle, inverted triangle) and their fashion style: "${fashionStyle}" (e.g., classic, bohemian, chic, edgy, sporty). Adhere strictly to the following JSON schema and providing ONLY the JSON output. Do not include any introductory or explanatory text. 
 
   Conider the follow general guidelines when making suggestions:
 
@@ -287,11 +285,11 @@ export const geminiImageUpload = async (
  Example of expected JSON output:
  
  {
-    "outfitOccasion": ${outfitOccasion},
-    "mainArticle": "high-waisted denim shorts paired with a [uploaded item] (flattering for ${bodyShape}",
-    "shoes": "fashionable sneakers in a ${fashionStyle} aesthetic",
-    "accessories": "minimalist jewelry suitable for a ${fashionStyle} casual look",
-    "completerPiece": "lightweight cardigan"
+    "outfit_occasion": ${outfit_occasion},
+    "outfit_main_article": "high-waisted denim shorts paired with a [uploaded item] (flattering for ${bodyShape}",
+    "outfit_shoes": "fashionable sneakers in a ${fashionStyle} aesthetic",
+    "outfit_accessories": "minimalist jewelry suitable for a ${fashionStyle} casual look",
+    "outfit_complete_piece": "lightweight cardigan"
   }`;
 
   const response = await ai.models.generateContent({
@@ -313,21 +311,19 @@ export const geminiImageUpload = async (
   }
   // If parsed is an array, take the first element; otherwise, use parsed directly
   const outfit: Outfit = Array.isArray(parsed) ? parsed[0] : parsed;
-  return { outfit };
+  return outfit;
 };
 
 // Helper function to parse the Gemini response
 interface Outfit {
-  outfitOccasion: string;
-  mainArticle: string;
-  shoes: string;
-  accessories: string;
-  completerPiece: string;
+  outfit_occasion: string;
+  outfit_main_article: string;
+  outfit_shoes: string;
+  outfit_accessories: string;
+  outfit_completer_piece: string;
 }
 
-function parseGeminiResponse(
-  responseText: string | undefined
-): Outfit[] | null {
+function parseGeminiResponse(responseText: string | undefined): Outfit | null {
   if (!responseText) {
     return null;
   }
@@ -346,17 +342,17 @@ function parseGeminiResponse(
 // GEMINI API IMAGE GENERATION
 
 interface OutfitResult {
-  outfitOccasion: string;
-  mainArticle: string;
-  shoes: string;
-  accessories: string;
-  completerPiece: string;
+  outfit_occasion: string;
+  outfit_main_article: string;
+  outfit_shoes: string;
+  outfit_accessories: string;
+  outfit_completer_piece: string;
 }
 
 export const generateOutfitImage = async (
   outfit: OutfitResult
 ): Promise<string> => {
-  const prompt = `Generate an image of a ${outfit.outfitOccasion} outfit with one of each of the following items: ${outfit.mainArticle}, ${outfit.shoes}, ${outfit.accessories}, ${outfit.completerPiece}. The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit.`;
+  const prompt = `Generate an image of a ${outfit.outfit_occasion} outfit with one of each of the following items: ${outfit.outfit_main_article}, ${outfit.outfit_shoes}, ${outfit.outfit_accessories}, ${outfit.outfit_completer_piece}. The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit.`;
 
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash-preview-image-generation",
@@ -511,11 +507,11 @@ export const findUniqueOutfits = async () => {
 };
 
 interface AddOutfitInput {
-  outfitOccasion: string;
-  mainArticle: string;
-  shoes: string;
-  accessories: string;
-  completerPiece: string;
+  outfit_occasion: string;
+  outfit_main_article: string;
+  outfit_shoes: string;
+  outfit_accessories: string;
+  outfit_completer_piece: string;
 }
 
 // Adding outfit ideas to database
@@ -537,11 +533,11 @@ export const addFavoriteOutfit = async (
       data: {
         user: { connect: { email: email } },
         imageData: imageData,
-        outfit_occasion: outfit.outfitOccasion,
-        outfit_main_article: outfit.mainArticle,
-        outfit_shoes: outfit.shoes,
-        outfit_accessories: outfit.accessories,
-        outfit_completer_piece: outfit.completerPiece,
+        outfit_occasion: outfit.outfit_occasion,
+        outfit_main_article: outfit.outfit_main_article,
+        outfit_shoes: outfit.outfit_shoes,
+        outfit_accessories: outfit.outfit_accessories,
+        outfit_completer_piece: outfit.outfit_completer_piece,
       },
     });
 
@@ -550,6 +546,41 @@ export const addFavoriteOutfit = async (
     return addNewOutfit;
   } catch (error) {
     console.log("Error adding outfit to favorites", error);
+    throw error;
+  }
+};
+
+interface DeleteFavoriteOutfitInput {
+  id: string;
+  userEmail: string;
+  outfit_occasion: string | null;
+  outfit_main_article: string | null;
+  outfit_shoes: string | null;
+  outfit_accessories: string | null;
+  outfit_completer_piece: string | null;
+  imageData: string | null;
+}
+
+// Delete Favorite Outfits
+export const deleteFavoriteOutfit = async (
+  outfit: DeleteFavoriteOutfitInput
+) => {
+  try {
+    const userCookie = await cookies();
+    const currentUser = userCookie.get("user");
+    if (!currentUser) {
+      throw new Error("User not authenticated");
+    }
+
+    const deleteFavoriteOutfit = await db.outfit.delete({
+      where: {
+        id: outfit.id,
+      },
+    });
+    revalidatePath("/dashboard");
+    return deleteFavoriteOutfit;
+  } catch (error) {
+    console.log("Error deleting outfit from favorites", error);
     throw error;
   }
 };

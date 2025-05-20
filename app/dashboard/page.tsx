@@ -2,7 +2,7 @@ import { findUniqueOutfits, findUniqueProducts } from "@/actions/auth";
 import { auth } from "@/auth";
 import Dashboard from "@/components/Dashboard";
 import FavoriteProducts from "@/components/FavoriteProducts";
-import FavoriteStyleIdeas from "@/components/FavoriteStyleIdeas";
+import FavoriteStyleIdeas from "@/components/FavoriteOutfits";
 import db from "@/db";
 // import { cookies } from "next/headers";
 import Link from "next/link";
@@ -69,11 +69,12 @@ const MyDashboard = async () => {
     return {
       id: outfit.id,
       userEmail: outfit.userEmail || "",
-      outfitOccasion: outfit.outfit_occasion || "",
-      mainArticle: outfit.outfit_main_article || "",
-      shoes: outfit.outfit_shoes || "",
-      accessories: outfit.outfit_accessories || "",
-      completerPiece: outfit.outfit_completer_piece || "",
+      outfit_occasion: outfit.outfit_occasion || "",
+      outfit_main_article: outfit.outfit_main_article || "",
+      outfit_shoes: outfit.outfit_shoes || "",
+      outfit_accessories: outfit.outfit_accessories || "",
+      outfit_completer_piece: outfit.outfit_completer_piece || "",
+      imageData: outfit.imageData || "",
     };
   });
 
