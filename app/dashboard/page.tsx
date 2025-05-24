@@ -4,17 +4,11 @@ import Dashboard from "@/components/Dashboard";
 import FavoriteProducts from "@/components/FavoriteProducts";
 import FavoriteStyleIdeas from "@/components/FavoriteOutfits";
 import db from "@/db";
-// import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
 
 const MyDashboard = async () => {
   const session = await auth();
-
-  // const userCookies = await cookies();
-  // const user = userCookies.get("user");
-  // const userData = user ? JSON.parse(user.value) : null;
-  // const userEmail = userData?.email;
 
   if (!session?.user) {
     return (
@@ -75,6 +69,7 @@ const MyDashboard = async () => {
       outfit_accessories: outfit.outfit_accessories || "",
       outfit_completer_piece: outfit.outfit_completer_piece || "",
       imageData: outfit.imageData || "",
+      favorite: outfit.favorite || false,
     };
   });
 

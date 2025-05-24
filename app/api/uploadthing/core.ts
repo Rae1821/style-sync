@@ -1,5 +1,6 @@
 import { addUploadedImages } from "@/actions/auth";
-import { cookies } from "next/headers";
+import { auth } from "@/auth";
+// import { cookies } from "next/headers";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 
@@ -23,15 +24,20 @@ export const ourFileRouter = {
     // Set permissions and file types for this FileRoute
     .middleware(async ({}) => {
       // This code runs on your server before upload
-      const userCookies = await cookies();
-      const user = userCookies.get("user");
+      // const userCookies = await cookies();
+      // const user = userCookies.get("user");
+
+      const session = await auth();
+      const user = session?.user;
+      const userEmail = session?.user?.email;
+      const userId = user?.id;
 
       // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError("Unauthorized");
 
-      const userData = user ? JSON.parse(user.value) : null;
-      const userEmail = userData?.email;
-      const userId = userData?.id;
+      // const userData = user ? JSON.parse(user.value) : null;
+      // const userEmail = userData?.email;
+      // const userId = userData?.id;
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userEmail: userEmail, userId: userId };
@@ -39,10 +45,10 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
       const newImage = await addUploadedImages({
-        id: metadata.userId,
-        email: metadata.userEmail,
-        image_url: file.ufsUrl,
-        image_name: file.name,
+        id: metadata.userId ?? "",
+        email: metadata.userEmail ?? "",
+        image_url: file.ufsUrl ?? "",
+        image_name: file.name ?? "",
       });
       console.log(newImage);
       console.log("Upload complete for userId:", metadata.userId);

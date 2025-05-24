@@ -26,7 +26,7 @@ const StyleSeshPage = async () => {
       email: session?.user.email ?? undefined,
     },
     include: {
-      products: true,
+      outfits: true,
     },
   });
   if (!userProfile) {

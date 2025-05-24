@@ -16,11 +16,6 @@ const ProductsPage = async ({
   const session = await auth();
   const user = session?.user;
 
-  // const userCookies = await cookies();
-  // const user = userCookies.get("user");
-  // const userData = user ? JSON.parse(user.value) : null;
-  // const userEmail = userData?.email;
-
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">

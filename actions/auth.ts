@@ -1,7 +1,7 @@
 "use server";
 import db from "@/db";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import {
   GoogleGenAI,
   createUserContent,
@@ -11,6 +11,7 @@ import {
 import path from "path";
 import fs from "fs";
 import os from "os";
+import { auth } from "@/auth";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -45,13 +46,16 @@ export const updateUser = async (input: UpdateUserInput) => {
     if (input.fashionStyle) {
       updateData.fashionStyle = input.fashionStyle;
     }
-    const userCookie = await cookies();
-    const currentUser = userCookie.get("user");
+    // const userCookie = await cookies();
+    // const currentUser = userCookie.get("user");
+    const session = await auth();
+    const currentUser = session?.user;
+    const email = session?.user?.email ?? "";
     if (!currentUser) {
       throw new Error("User not found");
     }
-    const userData = JSON.parse(currentUser.value);
-    const email = userData.email;
+    // const userData = JSON.parse(currentUser.value);
+    // const email = userData.email;
     const data = {
       ...updateData,
       updatedAt: new Date(),
@@ -94,13 +98,12 @@ export async function fetchClothing({ searchItem }: { searchItem: string }) {
 // Favorite Profucts
 export const findUniqueProducts = async () => {
   try {
-    const userCookie = await cookies();
-    const currentUser = userCookie.get("user");
+    const session = await auth();
+    const currentUser = session?.user;
+    const email = session?.user?.email ?? "";
     if (!currentUser) {
       throw new Error("User not found");
     }
-    const userData = JSON.parse(currentUser.value);
-    const email = userData.email;
 
     // Find the user by email
     const user = await db.user.findUnique({
@@ -133,14 +136,12 @@ interface AddProductInput {
 
 export const addFavoriteProduct = async (product: AddProductInput) => {
   try {
-    const userCookie = await cookies();
-    const currentUser = userCookie.get("user");
+    const session = await auth();
+    const currentUser = session?.user;
+    const email = session?.user?.email ?? "";
     if (!currentUser) {
-      throw new Error("User not authenticated");
+      throw new Error("User not found");
     }
-
-    const userData = JSON.parse(currentUser.value);
-    const email = userData.email;
 
     const addNewProduct = await db.product.create({
       data: {
@@ -182,12 +183,17 @@ export const deleteFavoriteProduct = async (
   product: DeleteFavoriteProductInput
 ) => {
   try {
-    const userCookie = await cookies();
-    const currentUser = userCookie.get("user");
-    if (!currentUser) {
-      throw new Error("User not authenticated");
-    }
+    // const userCookie = await cookies();
+    // const currentUser = userCookie.get("user");
+    // if (!currentUser) {
+    //   throw new Error("User not authenticated");
+    // }
 
+    const session = await auth();
+    const currentUser = session?.user;
+    if (!currentUser) {
+      throw new Error("User not found");
+    }
     const deleteFavoriteProduct = await db.product.delete({
       where: {
         id: product.id,
@@ -289,7 +295,7 @@ export const geminiImageUpload = async (
     "outfit_main_article": "high-waisted denim shorts paired with a [uploaded item] (flattering for ${bodyShape}",
     "outfit_shoes": "fashionable sneakers in a ${fashionStyle} aesthetic",
     "outfit_accessories": "minimalist jewelry suitable for a ${fashionStyle} casual look",
-    "outfit_complete_piece": "lightweight cardigan"
+    "outfit_completer_piece": "lightweight cardigan"
   }`;
 
   const response = await ai.models.generateContent({
@@ -390,7 +396,7 @@ export const generateOutfitImage = async (
 
 interface AddUploadedImagesInput {
   id?: string;
-  email: string;
+  email?: string;
   image_url?: string;
   image_name?: string;
 }
@@ -417,18 +423,25 @@ export const addUploadedImages = async (image: AddUploadedImagesInput) => {
 // Find user's uploaded images
 export const findUniqueImages = async () => {
   try {
-    const userCookie = await cookies();
-    const currentUser = userCookie.get("user");
+    // const userCookie = await cookies();
+    // const currentUser = userCookie.get("user");
 
+    // if (!currentUser) {
+    //   throw new Error("User not authenticated");
+    // }
+    // const userData = JSON.parse(currentUser.value);
+
+    const session = await auth();
+    const email = session?.user?.email ?? "";
+    const currentUser = session?.user;
     if (!currentUser) {
-      throw new Error("User not authenticated");
+      throw new Error("User not found");
     }
-    const userData = JSON.parse(currentUser.value);
 
     const findImages = await db.image.findMany({
       where: {
         user: {
-          email: userData.email,
+          email,
         },
       },
       select: {
@@ -453,11 +466,17 @@ interface DeleteUploadedImageInput {
 // Delete an uploaded image from moodboard
 export const deleteUploadedImage = async (image: DeleteUploadedImageInput) => {
   try {
-    const userCookie = await cookies();
-    const currentUser = userCookie.get("user");
+    // const userCookie = await cookies();
+    // const currentUser = userCookie.get("user");
 
+    // if (!currentUser) {
+    //   throw new Error("User not authenticated");
+    // }
+
+    const session = await auth();
+    const currentUser = session?.user;
     if (!currentUser) {
-      throw new Error("User not authenticated");
+      throw new Error("User not found");
     }
 
     console.log(image.id);
@@ -481,14 +500,20 @@ export const deleteUploadedImage = async (image: DeleteUploadedImageInput) => {
 // Favorite Profucts
 export const findUniqueOutfits = async () => {
   try {
-    const userCookie = await cookies();
-    const currentUser = userCookie.get("user");
+    // const userCookie = await cookies();
+    // const currentUser = userCookie.get("user");
+    // if (!currentUser) {
+    //   throw new Error("User not found");
+    // }
+    // const userData = JSON.parse(currentUser.value);
+    // const email = userData.email;
+    const session = await auth();
+    const email = session?.user?.email ?? "";
+
+    const currentUser = session?.user;
     if (!currentUser) {
       throw new Error("User not found");
     }
-    const userData = JSON.parse(currentUser.value);
-    const email = userData.email;
-
     // Find the user by email
     const user = await db.user.findUnique({
       where: { email },
@@ -514,20 +539,22 @@ interface AddOutfitInput {
   outfit_completer_piece: string;
 }
 
-// Adding outfit ideas to database
-export const addFavoriteOutfit = async (
-  outfit: AddOutfitInput,
-  imageData: string
-) => {
+export const addOutfit = async (outfit: AddOutfitInput, imageData: string) => {
   try {
-    const userCookie = await cookies();
-    const currentUser = userCookie.get("user");
-    if (!currentUser) {
-      throw new Error("User not authenticated");
-    }
+    // const userCookie = await cookies();
+    // const currentUser = userCookie.get("user");
+    // if (!currentUser) {
+    //   throw new Error("User not authenticated");
+    // }
+    // const userData = JSON.parse(currentUser.value);
+    // const email = userData.email;
 
-    const userData = JSON.parse(currentUser.value);
-    const email = userData.email;
+    const session = await auth();
+    const currentUser = session?.user;
+    const email = session?.user?.email ?? "";
+    if (!currentUser) {
+      throw new Error("User not found");
+    }
 
     const addNewOutfit = await db.outfit.create({
       data: {
@@ -538,12 +565,58 @@ export const addFavoriteOutfit = async (
         outfit_shoes: outfit.outfit_shoes,
         outfit_accessories: outfit.outfit_accessories,
         outfit_completer_piece: outfit.outfit_completer_piece,
+        favorite: false,
       },
     });
 
     revalidatePath("/dashboard");
-    console.log(addNewOutfit, "Outfit added to favorites");
+    console.log(addNewOutfit, "Outfit added to database");
     return addNewOutfit;
+  } catch (error) {
+    console.log("Error adding outfit to database", error);
+    throw error;
+  }
+};
+
+interface AddFavoriteOutfit {
+  id: string;
+  outfit_occasion: string;
+  outfit_main_article: string;
+  outfit_shoes: string;
+  outfit_accessories: string;
+  outfit_completer_piece: string;
+  imageData: string;
+}
+
+// Adding outfit ideas to database
+export const addFavoriteOutfit = async (outfit: AddFavoriteOutfit) => {
+  try {
+    const session = await auth();
+    const currentUser = session?.user;
+    const userId = session?.user?.id ?? "";
+    if (!currentUser) {
+      throw new Error("User not found");
+    }
+
+    const favoriteOutfit = await db.outfit.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        user: { connect: { id: userId } },
+        imageData: outfit.imageData,
+        outfit_occasion: outfit.outfit_occasion,
+        outfit_main_article: outfit.outfit_main_article,
+        outfit_shoes: outfit.outfit_shoes,
+        outfit_accessories: outfit.outfit_accessories,
+        outfit_completer_piece: outfit.outfit_completer_piece,
+        favorite: true,
+      },
+    });
+
+    revalidatePath("/dashboard");
+    console.log(favoriteOutfit, "Outfit added to favorites");
+    return favoriteOutfit;
   } catch (error) {
     console.log("Error adding outfit to favorites", error);
     throw error;
@@ -566,15 +639,23 @@ export const deleteFavoriteOutfit = async (
   outfit: DeleteFavoriteOutfitInput
 ) => {
   try {
-    const userCookie = await cookies();
-    const currentUser = userCookie.get("user");
+    // const userCookie = await cookies();
+    // const currentUser = userCookie.get("user");
+    // if (!currentUser) {
+    //   throw new Error("User not authenticated");
+    // }
+    const session = await auth();
+    const currentUser = session?.user;
     if (!currentUser) {
-      throw new Error("User not authenticated");
+      throw new Error("User not found");
     }
 
-    const deleteFavoriteOutfit = await db.outfit.delete({
+    const deleteFavoriteOutfit = await db.outfit.update({
       where: {
         id: outfit.id,
+      },
+      data: {
+        favorite: false,
       },
     });
     revalidatePath("/dashboard");

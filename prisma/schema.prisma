@@ -66,6 +66,7 @@ model Outfit {
   outfit_completer_piece String?
   images Image[]
   imageData String?
+  favorite Boolean? @default(false)
 }
 
 model Image {
