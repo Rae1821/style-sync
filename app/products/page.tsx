@@ -11,7 +11,10 @@ const ProductsPage = async ({
 }: {
   searchParams: { searchItem?: string };
 }) => {
-  const searchItem = searchParams.searchItem || "";
+  const searchItem: string = searchParams.searchItem || "";
+
+  console.log("searchParams", searchParams);
+  console.log("searchItem", searchItem);
 
   const session = await auth();
   const user = session?.user;
@@ -28,6 +31,7 @@ const ProductsPage = async ({
       </div>
     );
   }
+
   // Fetch user data from the database
   const userProfile = await db.user.findUnique({
     where: {
@@ -39,8 +43,10 @@ const ProductsPage = async ({
   }
 
   const userProfileData = {
-    bodyShape: userProfile?.bodyShape || "",
-    fashionStyle: userProfile?.fashionStyle || "",
+    userProfileData: {
+      bodyShape: userProfile.bodyShape || "",
+      fashionStyle: userProfile.fashionStyle || "",
+    },
   };
 
   return (

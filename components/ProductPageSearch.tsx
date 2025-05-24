@@ -9,12 +9,13 @@ import ProductsList from "./ProductsList";
 type ProductPageProps = {
   searchItem: string;
   userProfile: {
-    bodyShape: string;
-    fashionStyle: string;
+    userProfileData: {
+      bodyShape: string;
+      fashionStyle: string;
+    };
   };
 };
 
-// const ProductPageSearch: React.FC<ProductSearchProps> = () => {
 const ProductPageSearch = ({
   searchItem: initialSearch,
   userProfile,
@@ -33,7 +34,7 @@ const ProductPageSearch = ({
     <div className="flex w-full flex-col">
       <div className="mt-4">
         <SearchSuggestions
-          userProfile={userProfile}
+          userProfile={userProfile.userProfileData}
           setSearchItem={setSearchItem}
           handleSearch={handleSearch}
         />
