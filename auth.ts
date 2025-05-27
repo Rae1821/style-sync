@@ -25,31 +25,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             data: {
               name: user.name,
               email: user.email,
+              image: user.image || null, // Ensure image is optional
             },
           });
           token.id = newUser.id;
+          token.image = newUser.image || null; // Ensure image is set
         } else {
           token.id = existingUser.id;
+          token.image = existingUser.image || null; // Ensure image is set
         }
       }
-
-      // const userEmail = user?.email
-      //   ? await db.user.findUnique({
-      //       where: { email: user.email },
-      //     })
-      //   : null;
-
-      // if (!user && userEmail) {
-      //   const newUser = await db.user.create({
-      //     data: {
-      //       name: userEmail.name,
-      //       email: userEmail.email,
-      //     },
-      //   });
-      //   token.id = newUser.id;
-      // } else if (user) {
-      //   token.id = user.id;
-      // }
       return token;
     },
     session({ session, token }) {

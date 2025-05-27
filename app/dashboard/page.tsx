@@ -6,9 +6,12 @@ import db from "@/db";
 import Link from "next/link";
 import React from "react";
 import FavoriteOutfits from "@/components/FavoriteOutfits";
+import Image from "next/image";
+import { BsPersonCircle } from "react-icons/bs";
 
 const MyDashboard = async () => {
   const session = await auth();
+  // console.log("User:", user);
 
   if (!session?.user) {
     return (
@@ -76,18 +79,29 @@ const MyDashboard = async () => {
 
   return (
     <div className="magicpattern min-h-screen py-4">
-      <div className="container mx-auto">
-        <div className="flex flex-col p-8 mb-4">
-          {/* <h2 className="text-2xl font-semibold">
-            {" "}
-            Hello, {userProfile?.name}
-          </h2> */}
-          <h2 className="text-2xl font-semibold">Dashboard of Favorites</h2>
-          <p className="text-sm text-gray-600">
-            All your favorites, stored in one place for easy access.
-          </p>
+      <div className="flex flex-col p-8 mb-4">
+        <div className="flex flex-row items-start w-1/2">
+          {session?.user?.image ? (
+            <Image
+              src={session.user.image}
+              alt="User Profile"
+              width={50}
+              height={50}
+              className="rounded-full mb-4 mx-auto"
+            />
+          ) : (
+            <BsPersonCircle className="w-[50px] h-[50px] rounded-full mb-4 mx-auto" />
+          )}
+          <div>
+            <h3>{session?.user?.name}</h3>
+          </div>
         </div>
-
+        <h2 className="text-2xl font-semibold">Dashboard of Favorites</h2>
+        <p className="text-sm text-gray-600">
+          All your favorites, stored in one place for easy access.
+        </p>
+      </div>
+      <div className="container mx-auto">
         <div className="w-full flex flex-col items-center justify-center gap-4">
           <div className="w-full ">
             {userProfile && <Dashboard userProfile={userProfile} />}
