@@ -578,45 +578,36 @@ export const addOutfit = async (outfit: AddOutfitInput, imageData: string) => {
   }
 };
 
-interface AddFavoriteOutfit {
-  id: string;
-  outfit_occasion: string;
-  outfit_main_article: string;
-  outfit_shoes: string;
-  outfit_accessories: string;
-  outfit_completer_piece: string;
-  imageData: string;
-}
-
 // Adding outfit ideas to database
-export const addFavoriteOutfit = async (outfit: AddFavoriteOutfit) => {
+export const toggleFavoriteOutfit = async (outfitId: string) => {
   try {
     const session = await auth();
     const currentUser = session?.user;
-    const userId = session?.user?.id ?? "";
     if (!currentUser) {
       throw new Error("User not found");
     }
 
-    const favoriteOutfit = await db.outfit.update({
+    const outfit = await db.outfit.findUnique({
+      where: { id: outfitId },
+    });
+
+    if (!outfit) {
+      throw new Error("Outfit not found");
+    }
+
+    // Toggle the favorite value
+    const updatedOutfit = await db.outfit.update({
       where: {
-        id: userId,
+        id: outfitId,
       },
       data: {
-        user: { connect: { id: userId } },
-        imageData: outfit.imageData,
-        outfit_occasion: outfit.outfit_occasion,
-        outfit_main_article: outfit.outfit_main_article,
-        outfit_shoes: outfit.outfit_shoes,
-        outfit_accessories: outfit.outfit_accessories,
-        outfit_completer_piece: outfit.outfit_completer_piece,
-        favorite: true,
+        favorite: !outfit.favorite,
       },
     });
 
     revalidatePath("/dashboard");
-    console.log(favoriteOutfit, "Outfit added to favorites");
-    return favoriteOutfit;
+    console.log(updatedOutfit, "Outfit added to favorites");
+    return updatedOutfit;
   } catch (error) {
     console.log("Error adding outfit to favorites", error);
     throw error;

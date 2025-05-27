@@ -1,20 +1,28 @@
 import { auth } from "@/auth";
-import ProductPageSearch from "@/components/ProductPageSearch";
+// import ProductPageSearch from "@/components/ProductPageSearch";
 import ProductsList from "@/components/ProductsList";
+import SearchInput from "@/components/SearchInput";
+import SearchSuggestions from "@/components/SearchSuggestions";
 import db from "@/db";
 // import { cookies } from "next/headers";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
-const ProductsPage = async ({
-  searchParams,
-}: {
-  searchParams: { searchItem?: string };
+// const ProductsPage = async ({
+//   searchParams,
+// }: {
+//   searchParams: { searchItem?: string };
+// }) => {
+const ProductsPage = async (props: {
+  searchParams?: Promise<{ query?: string }>;
 }) => {
-  const searchItem: string = searchParams.searchItem || "";
+  // const searchItem: string = searchParams.searchItem || "";
 
-  console.log("searchParams", searchParams);
-  console.log("searchItem", searchItem);
+  // console.log("searchParams", searchParams);
+  // console.log("searchItem", searchItem);
+
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || "";
 
   const session = await auth();
   const user = session?.user;
@@ -43,10 +51,8 @@ const ProductsPage = async ({
   }
 
   const userProfileData = {
-    userProfileData: {
-      bodyShape: userProfile.bodyShape || "",
-      fashionStyle: userProfile.fashionStyle || "",
-    },
+    bodyShape: userProfile.bodyShape || "",
+    fashionStyle: userProfile.fashionStyle || "",
   };
 
   return (
@@ -65,11 +71,18 @@ const ProductsPage = async ({
             favorites section on your dashboard.
           </p>
         </div>
+        <div className="mt-8">
+          <SearchInput />
+          <SearchSuggestions userProfile={userProfileData} />
+        </div>
         <div className="mt-4">
-          <ProductPageSearch
+          <Suspense key={query} fallback={<div>Loading search...</div>}>
+            <ProductsList query={query} />
+          </Suspense>
+          {/* <ProductPageSearch
             searchItem={searchItem}
             userProfile={userProfileData}
-          />
+          /> */}
         </div>
 
         {/* rounded-[calc(var(--card-radius)-var(--card-padding)))] */}
@@ -312,9 +325,9 @@ const ProductsPage = async ({
           </div>
         </div> */}
       </div>
-      <div className="mt-24 max-w-[1300px]">
+      {/* <div className="mt-24 max-w-[1300px]">
         <ProductsList searchItem={searchItem || ""} />
-      </div>
+      </div> */}
     </div>
   );
 };

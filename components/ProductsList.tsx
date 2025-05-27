@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { fetchClothing } from "@/actions/auth";
 import ClothingCard from "./ClothingCard";
 
@@ -16,19 +14,22 @@ interface ClothingProps {
   asin: string;
 }
 
-const ProductsList = ({ searchItem }: { searchItem: string }) => {
-  const [items, setItems] = useState([]);
+// const ProductsList = ({ searchItem }: { searchItem: string }) => {
+const ProductsList = async ({ query }: { query: string }) => {
+  // const [items, setItems] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (searchItem) {
-        const products = await fetchClothing({ searchItem });
-        setItems(products);
-        console.log(products);
-      }
-    };
-    fetchData();
-  }, [searchItem]);
+  const products = await fetchClothing({ searchItem: query });
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (searchItem) {
+  //       const products = await fetchClothing({ searchItem });
+  //       setItems(products);
+  //       console.log(products);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [searchItem]);
 
   return (
     <div className="mt-24 max-w-[1300px]">
@@ -40,7 +41,12 @@ const ProductsList = ({ searchItem }: { searchItem: string }) => {
         />
       </div> */}
       <ul className="mt-12 flex flex-wrap items-center justify-center gap-4 mx-auto">
-        {items.map((item: ClothingProps) => (
+        {/* {items.map((item: ClothingProps) => (
+          <li className="flex" key={item.asin}>
+            <ClothingCard clothing={item} />
+          </li>
+        ))} */}
+        {products.map((item: ClothingProps) => (
           <li className="flex" key={item.asin}>
             <ClothingCard clothing={item} />
           </li>

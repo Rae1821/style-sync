@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  addFavoriteOutfit,
   addOutfit,
   findUniqueOutfits,
   geminiImageUpload,
   generateOutfitImage,
+  toggleFavoriteOutfit,
 } from "@/actions/auth";
 import { UploadButton } from "@/utils/uploadthing";
 
@@ -116,10 +116,10 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
     }
   };
 
-  const handleAddToFavorites = async (outfit: OutfitProps) => {
+  const handleAddToFavorites = async (outfitId: string) => {
     try {
       if (imageData && userProfile) {
-        await addFavoriteOutfit(outfit);
+        await toggleFavoriteOutfit(outfitId);
         // toast("Added to favorites", {
         //   action: {
         //     label: "Okay",
@@ -261,19 +261,19 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                 <Button
                   variant="ghost"
                   className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all"
-                  onClick={() =>
-                    handleAddToFavorites({
-                      id: userProfile.id || "",
-                      outfit_occasion: geminiResponse.outfit_occasion,
-                      outfit_main_article: geminiResponse.outfit_main_article,
-                      outfit_shoes: geminiResponse.outfit_shoes,
-                      outfit_accessories: geminiResponse.outfit_accessories,
-                      outfit_completer_piece:
-                        geminiResponse.outfit_completer_piece,
-                      imageData: imageData || "",
-                      favorite: addFavorite,
-                    })
-                  }
+                  // onClick={() =>
+                  // handleAddToFavorites({
+                  //   id: userProfile.id || "",
+                  //   outfit_occasion: geminiResponse.outfit_occasion,
+                  //   outfit_main_article: geminiResponse.outfit_main_article,
+                  //   outfit_shoes: geminiResponse.outfit_shoes,
+                  //   outfit_accessories: geminiResponse.outfit_accessories,
+                  //   outfit_completer_piece:
+                  //     geminiResponse.outfit_completer_piece,
+                  //   imageData: imageData || "",
+                  //   favorite: addFavorite,
+                  // })
+                  // handleAddToFavorites(geminiResponse.id)
                 >
                   {addFavorite ? "Remove from favorites" : "Add to favorites"}
                   {/* {addFavorite ? (
@@ -344,7 +344,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     //   imageData: imageData || "",
                     //   favorite: addFavorite,
                     // })
-                    handleAddToFavorites(outfit)
+                    handleAddToFavorites(outfit.id)
                   }
                 >
                   {addFavorite ? "Remove from favorites" : "Add to favorites"}

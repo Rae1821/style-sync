@@ -10,23 +10,34 @@ import { bodyShapeTerms } from "@/constants";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "./ui/badge";
 
-type SearchSuggestionProps = {
-  userProfile: {
-    bodyShape: string;
-    fashionStyle: string;
-  };
-  setSearchItem: (value: string) => void;
-  handleSearch: () => void;
-};
+// type SearchSuggestionProps = {
+//   userProfile: {
+//     bodyShape: string;
+//     fashionStyle: string;
+//   };
+//   setSearchItem: (value: string) => void;
+//   handleSearch: () => void;
+// };
+
+interface userProfileProps {
+  bodyShape: string;
+  fashionStyle: string;
+}
+
+// const SearchSuggestions = ({
+//   userProfile,
+//   setSearchItem,
+//   handleSearch,
+// }: SearchSuggestionProps) => {
+// const { bodyShape, fashionStyle } = userProfile;
 
 const SearchSuggestions = ({
   userProfile,
-  setSearchItem,
-  handleSearch,
-}: SearchSuggestionProps) => {
+}: {
+  userProfile: userProfileProps;
+}) => {
+  // console.log(bodyShapeTerms.boho.pear);
   const { bodyShape, fashionStyle } = userProfile;
-
-  console.log(bodyShapeTerms.boho.pear);
 
   return (
     <div>
@@ -58,10 +69,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.classic.pear.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -73,10 +84,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.classic.apple.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -88,10 +99,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.classic.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -103,10 +114,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.classic.hourglass.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -119,10 +130,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.classic.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -134,10 +145,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.boho.pear.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300 px-1"
                       >
                         {item}
@@ -149,10 +160,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.boho.apple.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -164,10 +175,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.boho.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -188,10 +199,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.boho.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -203,10 +214,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.chic.pear.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -218,10 +229,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.chic.apple.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -233,10 +244,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.chic.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -248,10 +259,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.chic.hourglass.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -264,10 +275,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.chic.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -279,10 +290,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.edgy.pear.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -294,10 +305,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.edgy.apple.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -309,10 +320,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.edgy.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -324,10 +335,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.edgy.hourglass.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -340,10 +351,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.edgy.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -355,10 +366,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.sporty.pear.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -370,10 +381,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.sporty.apple.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -385,10 +396,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.sporty.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -400,10 +411,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.sporty.hourglass.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -416,10 +427,10 @@ const SearchSuggestions = ({
                     {bodyShapeTerms.sporty.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        onClick={() => {
-                          setSearchItem(item);
-                          handleSearch();
-                        }}
+                        // onClick={() => {
+                        //   setSearchItem(item);
+                        //   handleSearch();
+                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}

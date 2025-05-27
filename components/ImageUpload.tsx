@@ -1,6 +1,6 @@
 "use client";
 
-import { UploadButton } from "@/utils/uploadthing";
+import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 import Image from "next/image";
 import React, { useState } from "react";
 import {
@@ -22,6 +22,20 @@ const ImageUpload = () => {
     <div>
       <UploadButton
         className="ut-button:bg-red-300 ut-label:text-black ut-button:ut-readying:bg-red-300/50 ut-button:ut-uploading:bg-red-300/70"
+        endpoint="imageUploader"
+        onClientUploadComplete={(res) => {
+          // Do something with the response
+          console.log("Files: ", res);
+          setImageUrl(res[0].url);
+          setImageName(res[0].name);
+        }}
+        onUploadError={(error: Error) => {
+          // Do something with the error.
+          alert(`ERROR! ${error.message}`);
+        }}
+      />
+      <UploadDropzone
+        className="bg-red-300 ut-label:text-lg ut-allowed-content:ut-uploading:text-red-300"
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           // Do something with the response

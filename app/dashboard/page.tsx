@@ -2,10 +2,10 @@ import { findUniqueOutfits, findUniqueProducts } from "@/actions/auth";
 import { auth } from "@/auth";
 import Dashboard from "@/components/Dashboard";
 import FavoriteProducts from "@/components/FavoriteProducts";
-import FavoriteStyleIdeas from "@/components/FavoriteOutfits";
 import db from "@/db";
 import Link from "next/link";
 import React from "react";
+import FavoriteOutfits from "@/components/FavoriteOutfits";
 
 const MyDashboard = async () => {
   const session = await auth();
@@ -33,6 +33,7 @@ const MyDashboard = async () => {
     },
     include: {
       products: true,
+      outfits: true,
     },
   });
   if (!userProfile) {
@@ -95,7 +96,7 @@ const MyDashboard = async () => {
             <FavoriteProducts favProducts={favProducts} />
           </div>
           <div className="mt-8 w-full px-4">
-            <FavoriteStyleIdeas favOutfits={favOutfits} />
+            <FavoriteOutfits favOutfits={favOutfits} />
           </div>
         </div>
       </div>
