@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import React from "react";
 
 const HowItWorks = () => {
@@ -29,13 +29,24 @@ const HowItWorks = () => {
                 </p>
               </div>
             </div>
-            <Image
+            {/* <Image
               src="./icons/placeholder-1.svg"
               height={291}
               width={396}
               alt="placeholder image"
               className="z-10 aspect-video w-full rounded-xl border object-cover min-[960px]:max-h-56 min-[960px]:w-auto"
-            />
+            /> */}
+            <video
+              width="396"
+              height="291"
+              controls
+              preload="none"
+              autoPlay
+              muted
+              loop
+            >
+              <source src="/video/body-shape-calc-2.mov" type="video/mp4" />
+            </video>
           </div>
           <div className="flex flex-col items-center justify-between min-[960px]:flex-row min-[960px]:gap-10">
             <div className="flex gap-4 min-[960px]:max-w-md">
@@ -57,13 +68,24 @@ const HowItWorks = () => {
                 </p>
               </div>
             </div>
-            <Image
+            {/* <Image
               src="/icons/placeholder-1.svg"
               height={291}
               width={396}
               alt="placeholder image"
               className="z-10 aspect-video w-full rounded-xl border object-cover min-[960px]:max-h-56 min-[960px]:w-auto"
-            />
+            /> */}
+            <video
+              width="396"
+              height="291"
+              controls
+              preload="none"
+              autoPlay
+              muted
+              loop
+            >
+              <source src="/video/fashion-style-quiz-2.mov" type="video/mp4" />
+            </video>
           </div>
           <div className="flex flex-col items-center justify-between min-[960px]:flex-row min-[960px]:gap-10">
             <div className="flex gap-4 min-[960px]:max-w-md">
@@ -83,13 +105,24 @@ const HowItWorks = () => {
                 </p>
               </div>
             </div>
-            <Image
+            {/* <Image
               src="/icons/placeholder-1.svg"
               height={291}
               width={396}
               alt="placeholder image"
               className="z-10 aspect-video w-full rounded-xl border object-cover min-[960px]:max-h-56 min-[960px]:w-auto"
-            />
+            /> */}
+            <video
+              width="396"
+              height="291"
+              controls
+              preload="none"
+              autoPlay
+              muted
+              loop
+            >
+              <source src="/video/style-sesh.mov" type="video/mp4" />
+            </video>
           </div>
         </div>
       </div>

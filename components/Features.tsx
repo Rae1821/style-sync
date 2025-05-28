@@ -24,13 +24,6 @@ const Features = () => {
               style recommendations according to your body shape and fashion
               style.
             </p>
-            <Image
-              src="/images/style-sesh.jpg"
-              height={291}
-              width={396}
-              alt="placeholder image"
-              className="absolute inset-0 -z-20 size-full rounded-2xl object-cover opacity-30 transition-transform duration-300"
-            />
           </div>
           <div className="group relative isolate flex h-80 flex-col justify-between gap-4 rounded-lg bg-muted/70 p-8">
             <div className="absolute inset-0 -z-10 bg-gradient-to-t from-primary to-transparent"></div>

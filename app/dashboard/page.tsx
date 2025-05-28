@@ -80,20 +80,21 @@ const MyDashboard = async () => {
   return (
     <div className="magicpattern min-h-screen py-4">
       <div className="flex flex-col p-8 mb-4">
-        <div className="flex flex-row items-start w-1/2">
+        <div className="flex w-1/2 mb-4">
           {session?.user?.image ? (
             <Image
               src={session.user.image}
               alt="User Profile"
               width={50}
               height={50}
-              className="rounded-full mb-4 mx-auto"
+              className="rounded-full mb-4 mr-2"
             />
           ) : (
             <BsPersonCircle className="w-[50px] h-[50px] rounded-full mb-4 mx-auto" />
           )}
           <div>
-            <h3>{session?.user?.name}</h3>
+            <p className="font-semibold">{session?.user?.name}</p>
+            <p className="text-xs text-gray-600">Fashion Enthusiast</p>
           </div>
         </div>
         <h2 className="text-2xl font-semibold">Dashboard of Favorites</h2>

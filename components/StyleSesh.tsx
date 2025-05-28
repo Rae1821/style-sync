@@ -18,14 +18,10 @@ import {
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
-// import { IoMdCheckmark, IoMdAdd } from "react-icons/io";
 import { MdOutlineDiamond } from "react-icons/md";
 import { Button } from "./ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import Image from "next/image";
-// import { toast } from "sonner";
-// import { Badge } from "./ui/badge";
-// import { Link } from "lucide-react";
 
 interface ProfileDetails {
   id: string | null;
@@ -120,14 +116,6 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
     try {
       if (imageData && userProfile) {
         await toggleFavoriteOutfit(outfitId);
-        // toast("Added to favorites", {
-        //   action: {
-        //     label: "Okay",
-        //     onClick: () => {
-        //       console.log("Okay clicked");
-        //     },
-        //   },
-        // });
       }
 
       setAddFavorite((prevAddFavorite) => !prevAddFavorite);
@@ -157,22 +145,6 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
       console.error("Error generating outfit images:", error);
     }
   };
-
-  // const outfitOccasionTitle = () => {
-  //   if (occasionValue === "casual") {
-  //     return "Casual";
-  //   } else if (occasionValue === "date-night") {
-  //     return "Date Night";
-  //   } else if (occasionValue === "special-event") {
-  //     return "Special Event";
-  //   } else if (occasionValue === "vacation") {
-  //     return "Vacation";
-  //   } else if (occasionValue === "work") {
-  //     return "Work";
-  //   } else if (occasionValue === "weekend") {
-  //     return "Weekend";
-  //   }
-  // };
 
   const handleStartOver = () => {
     setOccasionValue("");
@@ -261,26 +233,8 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                 <Button
                   variant="ghost"
                   className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all"
-                  // onClick={() =>
-                  // handleAddToFavorites({
-                  //   id: userProfile.id || "",
-                  //   outfit_occasion: geminiResponse.outfit_occasion,
-                  //   outfit_main_article: geminiResponse.outfit_main_article,
-                  //   outfit_shoes: geminiResponse.outfit_shoes,
-                  //   outfit_accessories: geminiResponse.outfit_accessories,
-                  //   outfit_completer_piece:
-                  //     geminiResponse.outfit_completer_piece,
-                  //   imageData: imageData || "",
-                  //   favorite: addFavorite,
-                  // })
-                  // handleAddToFavorites(geminiResponse.id)
                 >
                   {addFavorite ? "Remove from favorites" : "Add to favorites"}
-                  {/* {addFavorite ? (
-                    <IoMdCheckmark className="text-red-300 w-6 h-6" />
-                  ) : (
-                    <IoMdAdd className="text-red-300 w-6 h-6" />
-                  )} */}
                 </Button>
 
                 <CardContent className="mt-4">
@@ -313,75 +267,64 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
           </div>
         )
       )}
-      <div className="mt-12">
+      <div className="mt-24">
         <h2 className="text-xl font-semibold tracking-tight mb-2">
           Previous Suggestions
         </h2>
         <div className="mb-8 flex flex-col gap-4 md:flex-row">
-          {outfits.map((outfit) => (
-            <Card key={outfit.id} className="w-full max-w-2xl">
-              <CardHeader className="relative">
-                <CardTitle className="flex items-center gap-2">
-                  <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm">
-                    <MdOutlineDiamond className="text-red-300 size-6" />
-                  </span>
-                  <h2 className="text-lg font-semibold">
-                    {outfit.outfit_occasion}
-                  </h2>
-                </CardTitle>
-                <Button
-                  variant="ghost"
-                  className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all"
-                  onClick={() =>
-                    // handleAddToFavorites({
-                    //   id: userProfile.id || "",
-                    //   outfit_occasion: geminiResponse.outfit_occasion,
-                    //   outfit_main_article: geminiResponse.outfit_main_article,
-                    //   outfit_shoes: geminiResponse.outfit_shoes,
-                    //   outfit_accessories: geminiResponse.outfit_accessories,
-                    //   outfit_completer_piece:
-                    //     geminiResponse.outfit_completer_piece,
-                    //   imageData: imageData || "",
-                    //   favorite: addFavorite,
-                    // })
-                    handleAddToFavorites(outfit.id)
-                  }
-                >
-                  {addFavorite ? "Remove from favorites" : "Add to favorites"}
-                  {/* {addFavorite ? (
-                    <IoMdCheckmark className="text-red-300 w-6 h-6" />
-                  ) : (
-                    <IoMdAdd className="text-red-300 w-6 h-6" />
-                  )} */}
-                </Button>
-                <CardContent className="mt-4">
-                  <Image
-                    src={`data:image/png;base64, ${outfit.imageData}`}
-                    alt="Gemini generated outfit flatlay"
-                    height={300}
-                    width={300}
-                    className="mx-auto"
-                  />
-                  <p className="text-sm mb-2 mt-8">
-                    <span className="font-semibold">Main Item: </span>
-                    {outfit.outfit_main_article}
-                  </p>
-                  <p className="text-sm mb-2">
-                    <span className="font-semibold">Shoes: </span>{" "}
-                    {outfit.outfit_shoes}
-                  </p>
-                  <p className="text-sm mb-2">
-                    <span className="font-semibold">Accessories: </span>
-                    {outfit.outfit_accessories}
-                  </p>
-                  <p className="text-sm mb-2">
-                    <span className="font-semibold">Completer piece: </span>
-                    {outfit.outfit_completer_piece}
-                  </p>
-                </CardContent>
-              </CardHeader>
-            </Card>
-          ))}
+          {!outfits || outfits.length === 0 ? (
+            <p className="text-sm text-gray-500">
+              Nothing to see yet...Upload an image and select an occasion to get
+              started!
+            </p>
+          ) : (
+            outfits.map((outfit) => (
+              <Card key={outfit.id} className="w-full max-w-2xl">
+                <CardHeader className="relative">
+                  <CardTitle className="flex items-center gap-2">
+                    <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm">
+                      <MdOutlineDiamond className="text-red-300 size-6" />
+                    </span>
+                    <h2 className="text-lg font-semibold">
+                      {outfit.outfit_occasion}
+                    </h2>
+                  </CardTitle>
+                  <Button
+                    variant="ghost"
+                    className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all"
+                    onClick={() => handleAddToFavorites(outfit.id)}
+                  >
+                    {addFavorite ? "Remove from favorites" : "Add to favorites"}
+                  </Button>
+                  <CardContent className="mt-4">
+                    <Image
+                      src={`data:image/png;base64, ${outfit.imageData}`}
+                      alt="Gemini generated outfit flatlay"
+                      height={300}
+                      width={300}
+                      className="mx-auto"
+                    />
+                    <p className="text-sm mb-2 mt-8">
+                      <span className="font-semibold">Main Item: </span>
+                      {outfit.outfit_main_article}
+                    </p>
+                    <p className="text-sm mb-2">
+                      <span className="font-semibold">Shoes: </span>{" "}
+                      {outfit.outfit_shoes}
+                    </p>
+                    <p className="text-sm mb-2">
+                      <span className="font-semibold">Accessories: </span>
+                      {outfit.outfit_accessories}
+                    </p>
+                    <p className="text-sm mb-2">
+                      <span className="font-semibold">Completer piece: </span>
+                      {outfit.outfit_completer_piece}
+                    </p>
+                  </CardContent>
+                </CardHeader>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </div>

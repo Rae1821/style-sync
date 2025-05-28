@@ -210,19 +210,6 @@ export const deleteFavoriteProduct = async (
 // Gemini AI
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-// export const geminiAiAction = async () => {
-//   try {
-//     const response = await ai.models.generateContent({
-//       model: "gemini-2.0-flash-001",
-//       contents: "Why is the sky blue?",
-//     });
-
-//     console.log(response.text);
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//   }
-// };
-
 // Gemini Image Upload
 
 interface UploadedFile {
@@ -541,14 +528,6 @@ interface AddOutfitInput {
 
 export const addOutfit = async (outfit: AddOutfitInput, imageData: string) => {
   try {
-    // const userCookie = await cookies();
-    // const currentUser = userCookie.get("user");
-    // if (!currentUser) {
-    //   throw new Error("User not authenticated");
-    // }
-    // const userData = JSON.parse(currentUser.value);
-    // const email = userData.email;
-
     const session = await auth();
     const currentUser = session?.user;
     const email = session?.user?.email ?? "";
@@ -630,11 +609,6 @@ export const deleteFavoriteOutfit = async (
   outfit: DeleteFavoriteOutfitInput
 ) => {
   try {
-    // const userCookie = await cookies();
-    // const currentUser = userCookie.get("user");
-    // if (!currentUser) {
-    //   throw new Error("User not authenticated");
-    // }
     const session = await auth();
     const currentUser = session?.user;
     if (!currentUser) {

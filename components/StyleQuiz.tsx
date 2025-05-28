@@ -208,7 +208,7 @@ const StyleQuiz = () => {
         <div className="mx-auto mt-8 flex w-full items-center gap-4 md:mx-0 md:w-1/2 md:flex-row">
           <Button
             size="lg"
-            className="rounded-none border-4 border-black bg-red-300  text-black hover:bg-white hover:text-black"
+            className="rounded-none border-4 border-black bg-red-300  text-black hover:bg-white hover:text-black cursor-pointer"
             onClick={() => {
               getTheResult(styleObj);
             }}
@@ -216,7 +216,11 @@ const StyleQuiz = () => {
             Get Your Style
           </Button>
 
-          <Button variant="link" className=" md:ml-2" onClick={handleStartOver}>
+          <Button
+            variant="link"
+            className=" md:ml-2 cursor-pointer"
+            onClick={handleStartOver}
+          >
             Start over
           </Button>
         </div>

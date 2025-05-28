@@ -1,5 +1,6 @@
 import CTA from "@/components/CTA";
-import Features from "@/components/Features";
+// import Features from "@/components/Features";
+import Features2 from "@/components/Features2";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 
@@ -12,7 +13,7 @@ export default function Home() {
         <HowItWorks />
       </div>
       <div className="mt-4 px-8 mx-auto max-w-5xl">
-        <Features />
+        <Features2 />
       </div>
       <div className="mt-4 px-8 mx-auto max-w-5xl">
         <CTA />

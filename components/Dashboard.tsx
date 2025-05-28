@@ -11,6 +11,7 @@ import {
 import { HiMiniFire, HiMiniBolt } from "react-icons/hi2";
 import { IoWomanSharp } from "react-icons/io5";
 import { FaShirt } from "react-icons/fa6";
+import { BsArrowDown } from "react-icons/bs";
 
 import {
   pearBodyCharacteristic,
@@ -57,10 +58,17 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
             <CardHeader>
               <CardDescription>Body Shape</CardDescription>
               <CardTitle className="text-2xl font-semibold text-[#09090B]">
-                {userProfile?.bodyShape}
+                {userProfile.bodyShape === null ? (
+                  <p className="text-sm mt-4 text-gray-800">
+                    Hmm...Nothing here yet. Have you calculated your shape?
+                    <BsArrowDown className="h-6 w-6 mt-8 animate-bounce" />
+                  </p>
+                ) : (
+                  userProfile?.bodyShape
+                )}
               </CardTitle>
-              <div className="absolute right-4 top-4 bg-red-300 rounded-full p-2">
-                <IoWomanSharp className="text-2xl text-neutral-100" />
+              <div className="absolute right-4 top-4 bg-red-300/80 rounded-full p-2">
+                <IoWomanSharp className="text-2xl text-gray-800 size-4" />
               </div>
             </CardHeader>
             <CardContent>
@@ -212,10 +220,17 @@ const Dashboard = ({ userProfile }: { userProfile: ProfileDetails }) => {
             <CardHeader>
               <CardDescription>Fashion Style</CardDescription>
               <CardTitle className="text-2xl font-semibold text-[#09090B]">
-                {userProfile.fashionStyle}
+                {userProfile.fashionStyle === null ? (
+                  <p className="text-sm mt-4 text-gray-800">
+                    Hmm...Nothing here yet. Have you taken the style quiz?
+                    <BsArrowDown className="h-6 w-6 mt-8 animate-bounce" />
+                  </p>
+                ) : (
+                  userProfile?.fashionStyle
+                )}
               </CardTitle>
-              <div className="absolute right-4 top-4 bg-red-300 rounded-full p-2">
-                <FaShirt className="text-2xl text-neutral-100" />
+              <div className="absolute right-4 top-4 bg-red-300/80 rounded-full p-2">
+                <FaShirt className="text-2xl text-gray-800 size-4" />
               </div>
             </CardHeader>
             <CardContent>
