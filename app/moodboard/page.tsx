@@ -28,8 +28,10 @@ const MoodboardPage = async () => {
 
   return (
     <div className="container min-h-screen">
-      <div className="mt-4">
-        <h1 className="text-2xl font-bold">My Moodboard</h1>
+      <div className="mt-4 px-8">
+        <h1 className="text-2xl font-semibold bg-gradient-to-r from-red-300 from-10% via-red-500 via-30% to-red-700 bg-clip-text text-transparent tracking-tighter">
+          Moodboard
+        </h1>
         <p className="mb-8 text-sm text-muted-foreground tracking-tight">
           Here you can create your own outfit ideas by uploading photos of
           existing clothing items and/or saving products that you love. This is

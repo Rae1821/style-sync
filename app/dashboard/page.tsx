@@ -97,7 +97,9 @@ const MyDashboard = async () => {
             <p className="text-xs text-gray-600">Fashion Enthusiast</p>
           </div>
         </div>
-        <h2 className="text-2xl font-semibold">Dashboard of Favorites</h2>
+        <h2 className="text-2xl font-semibold bg-gradient-to-r from-red-300 from-10% via-red-500 via-30% to-red-700 to-90% bg-clip-text text-transparent tracking-tighter">
+          Dashboard of Favorites
+        </h2>
         <p className="text-sm text-gray-600">
           All your favorites, stored in one place for easy access.
         </p>
