@@ -11,7 +11,7 @@ const HowItWorks = () => {
             Get your style sync session started in 3 easy steps. <br />
           </p>
         </div>
-        <div className="mx-auto mt-14 flex max-w-screen-lg flex-col gap-4 lg:px-16">
+        <div className="mx-auto mt-14 flex max-w-screen-lg flex-col gap-4 lg:gap-12 lg:px-16">
           <div className="flex flex-col items-center justify-between min-[960px]:flex-row min-[960px]:gap-10">
             <div className="flex gap-4 min-[960px]:max-w-md">
               <div className="flex flex-col items-center justify-between gap-1">
@@ -44,6 +44,7 @@ const HowItWorks = () => {
               autoPlay
               muted
               loop
+              className="shadow-lg rounded-xl"
             >
               <source src="/video/body-shape-calc-2.mov" type="video/mp4" />
             </video>
@@ -83,6 +84,7 @@ const HowItWorks = () => {
               autoPlay
               muted
               loop
+              className="shadow-lg rounded-xl"
             >
               <source src="/video/fashion-style-quiz-2.mov" type="video/mp4" />
             </video>
@@ -120,6 +122,7 @@ const HowItWorks = () => {
               autoPlay
               muted
               loop
+              className="shadow-lg rounded-xl"
             >
               <source src="/video/style-sesh.mov" type="video/mp4" />
             </video>
