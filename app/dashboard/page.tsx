@@ -9,6 +9,20 @@ import FavoriteOutfits from "@/components/FavoriteOutfits";
 import Image from "next/image";
 import { BsPersonCircle } from "react-icons/bs";
 
+interface Product {
+  id: string;
+  userId: string;
+  userEmail: string | null;
+  product_title: string | null;
+  product_price: string | null;
+  product_original_price: string | null;
+  product_star_rating: string | null;
+  product_num_ratings: number | null;
+  product_url: string | null;
+  product_photo: string | null;
+  asin: string | null;
+}
+
 const MyDashboard = async () => {
   const session = await auth();
   // console.log("User:", user);
@@ -44,19 +58,19 @@ const MyDashboard = async () => {
   }
 
   const userProducts = await findUniqueProducts();
-  console.log(userProducts);
+  // console.log(userProducts);
 
-  const favProducts = userProducts.map((product) => {
+  const favProducts = userProducts.map((product: Product) => {
     return {
       id: product.id,
-      userEmail: product.userEmail || "",
-      product_title: product.product_title || "",
-      product_price: product.product_price || "",
-      product_original_price: product.product_original_price || "",
-      product_star_rating: product.product_star_rating || "",
-      product_num_ratings: product.product_num_ratings || 0,
-      product_url: product.product_url || "",
-      product_photo: product.product_photo || "",
+      userEmail: product.userEmail ?? "",
+      product_title: product.product_title ?? "",
+      product_price: product.product_price ?? "",
+      product_original_price: product.product_original_price ?? "",
+      product_star_rating: product.product_star_rating ?? "",
+      product_num_ratings: product.product_num_ratings ?? 0,
+      product_url: product.product_url ?? "",
+      product_photo: product.product_photo ?? "",
       asin: product.asin,
     };
   });
@@ -66,7 +80,7 @@ const MyDashboard = async () => {
   const favOutfits = userOutfits.map((outfit) => {
     return {
       id: outfit.id,
-      userEmail: outfit.userEmail || "",
+      userEmail: outfit.userEmail ?? "",
       outfit_occasion: outfit.outfit_occasion || "",
       outfit_main_article: outfit.outfit_main_article || "",
       outfit_shoes: outfit.outfit_shoes || "",
