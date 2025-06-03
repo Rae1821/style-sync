@@ -23,6 +23,19 @@ interface Product {
   asin: string | null;
 }
 
+interface Outfit {
+  id: string;
+  userId: string;
+  userEmail: string | null;
+  outfit_occasion: string | null;
+  outfit_main_article: string | null;
+  outfit_shoes: string | null;
+  outfit_accessories: string | null;
+  outfit_completer_piece: string | null;
+  imageData: string | null;
+  favorite: boolean | null;
+}
+
 const MyDashboard = async () => {
   const session = await auth();
   // console.log("User:", user);
@@ -77,17 +90,17 @@ const MyDashboard = async () => {
 
   const userOutfits = await findUniqueOutfits();
 
-  const favOutfits = userOutfits.map((outfit) => {
+  const favOutfits = userOutfits.map((outfit: Outfit) => {
     return {
       id: outfit.id,
       userEmail: outfit.userEmail ?? "",
-      outfit_occasion: outfit.outfit_occasion || "",
-      outfit_main_article: outfit.outfit_main_article || "",
-      outfit_shoes: outfit.outfit_shoes || "",
-      outfit_accessories: outfit.outfit_accessories || "",
-      outfit_completer_piece: outfit.outfit_completer_piece || "",
-      imageData: outfit.imageData || "",
-      favorite: outfit.favorite || false,
+      outfit_occasion: outfit.outfit_occasion ?? "",
+      outfit_main_article: outfit.outfit_main_article ?? "",
+      outfit_shoes: outfit.outfit_shoes ?? "",
+      outfit_accessories: outfit.outfit_accessories ?? "",
+      outfit_completer_piece: outfit.outfit_completer_piece ?? "",
+      imageData: outfit.imageData ?? "",
+      favorite: outfit.favorite ?? false,
     };
   });
 
