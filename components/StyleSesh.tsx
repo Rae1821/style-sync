@@ -41,13 +41,13 @@ interface GeminiResponse {
 
 interface OutfitProps {
   id: string;
-  outfit_occasion: string;
-  outfit_main_article: string;
-  outfit_shoes: string;
-  outfit_accessories: string;
-  outfit_completer_piece: string;
-  imageData: string;
-  favorite: boolean;
+  outfit_occasion: string | null;
+  outfit_main_article: string | null;
+  outfit_shoes: string | null;
+  outfit_accessories: string | null;
+  outfit_completer_piece: string | null;
+  imageData: string | null;
+  favorite: boolean | null;
 }
 
 const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
@@ -73,7 +73,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
         const response = await findUniqueOutfits();
 
         setOutfits(
-          response.map((outfit) => ({
+          response.map((outfit: OutfitProps) => ({
             id: outfit.id ?? "",
             outfit_occasion: outfit.outfit_occasion ?? "",
             outfit_main_article: outfit.outfit_main_article ?? "",
