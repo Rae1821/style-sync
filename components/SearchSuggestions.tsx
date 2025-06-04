@@ -7,117 +7,90 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { bodyShapeTerms } from "@/constants";
-import { Separator } from "@/components/ui/separator";
 import { Badge } from "./ui/badge";
-
-// type SearchSuggestionProps = {
-//   userProfile: {
-//     bodyShape: string;
-//     fashionStyle: string;
-//   };
-//   setSearchItem: (value: string) => void;
-//   handleSearch: () => void;
-// };
 
 interface userProfileProps {
   bodyShape: string;
   fashionStyle: string;
 }
 
-// const SearchSuggestions = ({
-//   userProfile,
-//   setSearchItem,
-//   handleSearch,
-// }: SearchSuggestionProps) => {
-// const { bodyShape, fashionStyle } = userProfile;
-
 const SearchSuggestions = ({
   userProfile,
 }: {
   userProfile: userProfileProps;
 }) => {
-  // console.log(bodyShapeTerms.boho.pear);
   const { bodyShape, fashionStyle } = userProfile;
 
   return (
     <div>
       <div className="flex flex-col w-full md:flex-row items-center justify-between gap-4 mt-8">
-        <div className=" bg-black rounded-2xl p-2 shadow w-full md:max-w-3/4 lg:max-w-1/2 mx-auto">
+        <div className="bg-muted rounded-2xl p-2 shadow w-full md:max-w-3/4 lg:max-w-1/2 mx-auto lg:mx-0">
           <Card className="w-full radius-xs">
-            <CardHeader className="flex flex-row items-center justify-between w-3/4 mx-auto">
+            <CardHeader className="flex flex-row items-center justify-between w-3/4 mx-auto border-b-2 border-red-300 pb-4">
               <div className="flex flex-col">
-                <CardDescription>Fashion Style</CardDescription>
-                <CardTitle className="text-xl mt-[-4]">
-                  {fashionStyle}
+                <CardDescription className="text-sm">
+                  Body Shape
+                </CardDescription>
+                <CardTitle className="text-xl mt-[-4] tracking-tight">
+                  {bodyShape}
                 </CardTitle>
               </div>
               <div className="flex flex-col">
-                <CardDescription>Body Shape</CardDescription>
-                <CardTitle className="text-xl mt-[-4]">{bodyShape}</CardTitle>
+                <CardDescription className="text-sm">
+                  Fashion Style
+                </CardDescription>
+                <CardTitle className="text-xl mt-[-4] tracking-tight">
+                  {fashionStyle}
+                </CardTitle>
               </div>
             </CardHeader>
-            <div className="w-3/4 mx-auto">
+            {/* <div className="w-3/4 mx-auto">
               <Separator className="bg-red-300" />
-            </div>
+            </div> */}
             <CardContent className="flex flex-col gap-4 items-center">
-              <div className="flex flex-col items-center">
-                <p className="font-semibold text-center mt-2">
-                  Search Term Ideas
+              <div className="flex flex-col items-center px-2">
+                <p className="font-semibold text-center mb-4">
+                  Search Term Suggestions
                 </p>
+
                 {fashionStyle === "Classic" && bodyShape === "Pear" ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-3/4 mx-auto mt-4">
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.classic.pear.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "classic" && bodyShape === "apple" ? (
-                  <div className="">
+                ) : fashionStyle === "Classic" && bodyShape === "Apple" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.classic.apple.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "classic" && bodyShape === "rectangle" ? (
-                  <div>
+                ) : fashionStyle === "Classic" && bodyShape === "Rectangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.classic.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "classic" && bodyShape === "hourglass" ? (
-                  <div>
+                ) : fashionStyle === "Classic" && bodyShape === "Hourglass" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.classic.hourglass.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -125,15 +98,11 @@ const SearchSuggestions = ({
                     ))}
                   </div>
                 ) : fashionStyle === "Classic" &&
-                  bodyShape === "invertedTriangle" ? (
-                  <div>
+                  bodyShape === "Inverted Triangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.classic.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
@@ -141,296 +110,223 @@ const SearchSuggestions = ({
                     ))}
                   </div>
                 ) : fashionStyle === "Boho" && bodyShape === "Pear" ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-3/4 mx-auto mt-4">
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.boho.pear.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300 px-1"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "boho" && bodyShape === "apple" ? (
-                  <div>
+                ) : fashionStyle === "Boho" && bodyShape === "Apple" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.boho.apple.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "boho" && bodyShape === "rectangle" ? (
-                  <div>
+                ) : fashionStyle === "Boho" && bodyShape === "Rectangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.boho.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
+                        className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300 "
+                      >
+                        {item}
+                      </Badge>
+                    ))}
+                  </div>
+                ) : fashionStyle === "Boho" && bodyShape === "Hourglass" ? (
+                  <div className="flex flex-wrap items-center gap-2">
+                    {bodyShapeTerms.boho.hourglass.map((item) => (
+                      <Badge
+                        key={item}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "boho" && bodyShape === "hourglass" ? (
-                  <div>
-                    {bodyShapeTerms.boho.hourglass.map((item) => (
-                      <li key={item} className="text-sm">
-                        {item}
-                      </li>
-                    ))}
-                  </div>
-                ) : fashionStyle === "boho" &&
-                  bodyShape === "invertedTriangle" ? (
-                  <ul>
+                ) : fashionStyle === "Boho" &&
+                  bodyShape === "Inverted Triangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.boho.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
-                  </ul>
-                ) : fashionStyle === "chic" && bodyShape === "pear" ? (
-                  <div>
+                  </div>
+                ) : fashionStyle === "Chic" && bodyShape === "Pear" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.chic.pear.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "chic" && bodyShape === "apple" ? (
-                  <div>
+                ) : fashionStyle === "Chic" && bodyShape === "Apple" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.chic.apple.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "chic" && bodyShape === "rectangle" ? (
-                  <div>
+                ) : fashionStyle === "Chic" && bodyShape === "Rectangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.chic.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "chic" && bodyShape === "hourglass" ? (
-                  <div>
+                ) : fashionStyle === "Chic" && bodyShape === "Hourglass" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.chic.hourglass.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "chic" &&
-                  bodyShape === "invertedTriangle" ? (
-                  <div>
+                ) : fashionStyle === "Chic" &&
+                  bodyShape === "Inverted Triangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.chic.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "edgy" && bodyShape === "pear" ? (
-                  <div>
+                ) : fashionStyle === "Edgy" && bodyShape === "Pear" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.edgy.pear.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "edgy" && bodyShape === "apple" ? (
-                  <div>
+                ) : fashionStyle === "Edgy" && bodyShape === "Apple" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.edgy.apple.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "edgy" && bodyShape === "rectangle" ? (
-                  <div>
+                ) : fashionStyle === "Edgy" && bodyShape === "Rectangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.edgy.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "edgy" && bodyShape === "hourglass" ? (
-                  <div>
+                ) : fashionStyle === "Edgy" && bodyShape === "Hourglass" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.edgy.hourglass.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "edgy" &&
-                  bodyShape === "invertedTriangle" ? (
-                  <div>
+                ) : fashionStyle === "Edgy" &&
+                  bodyShape === "Inverted Triangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.edgy.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "sporty" && bodyShape === "pear" ? (
-                  <div>
+                ) : fashionStyle === "Sporty" && bodyShape === "Pear" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.sporty.pear.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "sporty" && bodyShape === "apple" ? (
-                  <div>
+                ) : fashionStyle === "Sporty" && bodyShape === "Apple" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.sporty.apple.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "sporty" && bodyShape === "rectangle" ? (
-                  <div>
+                ) : fashionStyle === "Sporty" && bodyShape === "Rectangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.sporty.rectangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "sporty" && bodyShape === "hourglass" ? (
-                  <div>
+                ) : fashionStyle === "Sporty" && bodyShape === "Hourglass" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.sporty.hourglass.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                ) : fashionStyle === "sporty" &&
-                  bodyShape === "invertedTriangle" ? (
-                  <div>
+                ) : fashionStyle === "Sporty" &&
+                  bodyShape === "Inverted Triangle" ? (
+                  <div className="flex flex-wrap items-center gap-2">
                     {bodyShapeTerms.sporty.invertedTriangle.map((item) => (
                       <Badge
                         key={item}
-                        // onClick={() => {
-                        //   setSearchItem(item);
-                        //   handleSearch();
-                        // }}
                         className="text-sm bg-transparent text-black border-2 border-black cursor-pointer hover:bg-red-200 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:shadow-red-300"
                       >
                         {item}

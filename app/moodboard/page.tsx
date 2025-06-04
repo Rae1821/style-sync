@@ -1,6 +1,6 @@
 // import { findUniqueImages, findUniqueProducts } from "@/actions/auth";
 import { auth } from "@/auth";
-import MoodBoard from "@/components/MoodBoard";
+// import MoodBoard from "@/components/MoodBoard";
 // import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
@@ -40,10 +40,11 @@ const MoodboardPage = async () => {
         </p>
       </div>
       <div>
-        <MoodBoard
+        <p className="text-lg tracking-tight mt-12">Coming Soon...</p>
+        {/* <MoodBoard
         // userProducts={fetchUserProducts}
         // userImages={fetchUserImages}
-        />
+        /> */}
       </div>
     </div>
   );

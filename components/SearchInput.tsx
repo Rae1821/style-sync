@@ -25,16 +25,16 @@ const SearchInput = () => {
   }, 300);
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full lg:max-w-1/2">
       <Input
         type="text"
         name="searchItem"
         placeholder="Search styles..."
-        className="w-[300px] rounded-r-none border-r-0 focus-visible:ring-0 md:w-[500px] lg:w-[800px]"
+        className="w-full rounded-r-none border-r-0 focus-visible:ring-0 md:w-[500px] lg:w-[800px]"
         onChange={(e) => handleSearch(e.target.value)}
         defaultValue={searchParams.get("query")?.toString()}
       />
-      <Button type="submit">
+      <Button type="submit" className="bg-red-300">
         <Image
           src="/icons/magnifying-glass.svg"
           className="text-white"

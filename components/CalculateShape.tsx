@@ -49,7 +49,7 @@ const CalculateShape = () => {
       ) {
         setShapeResults("Hourglass");
       } else if (shoulders / hips >= 1.05 && waist < shoulders) {
-        setShapeResults("Triangle");
+        setShapeResults("Inverted Triangle");
       } else if (waist / shoulders >= 0.75 && shoulders * 0.95 < hips) {
         setShapeResults("Rectangle");
       } else if (shoulders === null || waist === null || hips === null) {

@@ -293,81 +293,19 @@ export const classicInvertedTriangleTerms = [
 
 export const bohoPearTerms = [];
 
-export const bohoAppleTerms = [
-  "empire waist maxi dresses",
-  "loose-fitting tunics",
-  "caftans",
-  "flowy kimonos",
-  "soft knit cardigans",
-  "statement earrings",
-  "layered bracelets",
-  "comfortable sandals",
-  "headbands",
-];
+export const bohoAppleTerms = [];
 
-export const bohoHourglassTerms = [
-  "wrap dresses",
-  "fitted tops with flared sleeves",
-  "high-waisted wide-leg pants",
-  "belted kimonos",
-  "crochet tops",
-  "long pendant necklaces",
-  "platform sandals",
-  "bohemian bags",
-];
+export const bohoHourglassTerms = [];
 
-export const bohoRectangleTerms = [
-  "flowy maxi dresses",
-  "layered tops and skirts",
-  "loose-knit cardigans",
-  "oversized shirts",
-  "fringed scarves",
-  "statement belts (worn lower on hips)",
-  "flat sandals",
-  "textured bags",
-];
+export const bohoRectangleTerms = [];
 
-export const bohoInvertedTriangleTerms = [
-  "full maxi skirts",
-  "wide-leg palazzo pants",
-  "peasant tops with gathered sleeves",
-  "halter neck tops",
-  "v-neck tunics",
-  "delicate necklaces",
-  "layered rings",
-  "espadrilles",
-];
+export const bohoInvertedTriangleTerms = [];
 
-export const chicPearTerms = [
-  "tailored A-line skirts",
-  "wide-leg trousers",
-  "high-waisted pencil skirts",
-  "fitted knit tops",
-  "silk blouses",
-  "structured blazers",
-  "pointed-toe heels",
-  "minimalist clutch bags",
-];
+export const chicPearTerms = [];
 
-export const chicAppleTerms = [
-  "tailored sheath dresses",
-  "straight-leg trousers",
-  "relaxed-fit silk blouses",
-  "minimalist coats",
-  "statement necklaces",
-  "structured shoulder bags",
-  "sleek ankle boots",
-];
+export const chicAppleTerms = [];
 
-export const chicHourglassTerms = [
-  "fitted pencil skirts",
-  "tailored sheath dresses",
-  "high-waisted trousers",
-  "silk camisoles",
-  "fitted blazers",
-  "stiletto heels",
-  "elegant chain bags",
-];
+export const chicHourglassTerms = [];
 
 export const chicRectangleTerms = [];
 
@@ -402,15 +340,77 @@ export const bodyShapeTerms = {
       "ankle boots",
       "wide-brimmed hats",
     ],
-    apple: bohoAppleTerms,
-    hourglass: bohoHourglassTerms,
-    rectangle: bohoRectangleTerms,
-    invertedTriangle: bohoInvertedTriangleTerms,
+    apple: [
+      "empire waist maxi dresses",
+      "loose-fitting tunics",
+      "caftans",
+      "flowy kimonos",
+      "soft knit cardigans",
+      "statement earrings",
+      "layered bracelets",
+      "comfortable sandals",
+      "headbands",
+    ],
+    hourglass: [
+      "wrap dresses",
+      "fitted tops with flared sleeves",
+      "high-waisted wide-leg pants",
+      "belted kimonos",
+      "crochet tops",
+      "long pendant necklaces",
+      "platform sandals",
+      "bohemian bags",
+    ],
+    rectangle: [
+      "flowy maxi dresses",
+      "layered tops and skirts",
+      "loose-knit cardigans",
+      "oversized shirts",
+      "fringed scarves",
+      "statement belts (worn lower on hips)",
+      "flat sandals",
+      "textured bags",
+    ],
+    invertedTriangle: [
+      "full maxi skirts",
+      "wide-leg palazzo pants",
+      "peasant tops with gathered sleeves",
+      "halter neck tops",
+      "v-neck tunics",
+      "delicate necklaces",
+      "layered rings",
+      "espadrilles",
+    ],
   },
   chic: {
-    pear: chicPearTerms,
-    apple: chicAppleTerms,
-    hourglass: chicHourglassTerms,
+    pear: [
+      "tailored A-line skirts",
+      "wide-leg trousers",
+      "high-waisted pencil skirts",
+      "fitted knit tops",
+      "silk blouses",
+      "structured blazers",
+      "pointed-toe heels",
+      "minimalist clutch bags",
+    ],
+    apple: [
+      "tailored sheath dresses",
+      "straight-leg trousers",
+      "relaxed-fit silk blouses",
+      "minimalist coats",
+      "statement necklaces",
+      "structured shoulder bags",
+      "sleek ankle boots",
+    ],
+    hourglass: [
+      "fitted pencil skirts",
+      "tailored sheath dresses",
+      "high-waisted trousers",
+      "silk camisoles",
+      "fitted blazers",
+      "stiletto heels",
+      "elegant chain bags",
+    ],
     rectangle: [
       "tailored trousers",
       "structured blazers",

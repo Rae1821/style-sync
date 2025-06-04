@@ -56,7 +56,7 @@ const ProductsPage = async (props: {
   };
 
   return (
-    <div className="container mx-auto max-w-[1300px] px-8 md:px-12 mt-4">
+    <div className="container mx-auto max-w-[1100px] px-8 md:px-12 mt-4">
       <div className="">
         <div className="">
           <h2 className="text-3xl font-semibold bg-gradient-to-r from-red-300 from-10% via-red-500 via-30% to-red-700 bg-clip-text text-transparent ">
@@ -72,8 +72,10 @@ const ProductsPage = async (props: {
           </p>
         </div>
         <div className="mt-8">
-          <SearchInput />
           <SearchSuggestions userProfile={userProfileData} />
+          <div className="mt-12">
+            <SearchInput />
+          </div>
         </div>
         <div className="mt-4">
           <Suspense key={query} fallback={<div>Loading search...</div>}>
