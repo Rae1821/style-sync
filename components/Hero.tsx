@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 const Hero = () => {
   const router = useRouter();
   return (
-    <section className="heroImage mx-auto flex h-[800px] w-full pt-24 md:items-center">
+    <section className="bg-[url(/images/hero.jpg)] bg-fixed bg-center bg-no-repeat bg-cover mx-auto flex w-full pt-24 md:items-center h-[800px]">
       <div className="block w-[300px] py-2 pl-8 md:ml-32 md:w-[500px] ">
         <AnimatedTextUnderlign />
         <p className="mb-12 mt-6 hidden md:flex md:w-[350px]">

@@ -20,6 +20,16 @@ const ProductsList = async ({ query }: { query: string }) => {
 
   const products = await fetchClothing({ searchItem: query });
 
+  if (query) {
+    try {
+      const products = await fetchClothing({ searchItem: query });
+      return products;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return [];
+    }
+  }
+
   // useEffect(() => {
   //   const fetchData = async () => {
   //     if (searchItem) {
@@ -46,7 +56,7 @@ const ProductsList = async ({ query }: { query: string }) => {
             <ClothingCard clothing={item} />
           </li>
         ))} */}
-        {products.map((item: ClothingProps) => (
+        {products?.map((item: ClothingProps) => (
           <li className="flex" key={item.asin}>
             <ClothingCard clothing={item} />
           </li>

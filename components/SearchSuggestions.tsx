@@ -44,9 +44,7 @@ const SearchSuggestions = ({
                 </CardTitle>
               </div>
             </CardHeader>
-            {/* <div className="w-3/4 mx-auto">
-              <Separator className="bg-red-300" />
-            </div> */}
+
             <CardContent className="flex flex-col gap-4 items-center">
               <div className="flex flex-col items-center px-2">
                 <p className="font-semibold text-center mb-4">

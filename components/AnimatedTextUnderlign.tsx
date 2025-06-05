@@ -36,7 +36,7 @@ const AnimatedTextUnderlign = () => {
               stroke="#fca5a5"
             />
           </motion.svg>
-          <span className="relative text-red-300">Your</span>
+          <span className="relative text-red-300"> Your </span>
         </span>{" "}
         Style
       </h1>

@@ -124,23 +124,6 @@
   }
 }
 
-.heroImageMobile {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
-    url("/images/hero.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.heroImage {
-  background-image: url("/images/hero.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-}
-
 /* PRODUCT CARD */
 
 .product-card {

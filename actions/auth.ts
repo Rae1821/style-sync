@@ -89,7 +89,7 @@ export async function fetchClothing({ searchItem }: { searchItem: string }) {
     // parse the response as json
     const result = await response.json();
 
-    return result.data.products;
+    return result?.data?.products;
   } catch (error) {
     console.log(error);
   }
