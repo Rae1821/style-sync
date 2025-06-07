@@ -5,12 +5,13 @@ import AnimatedTextUnderlign from "./AnimatedTextUnderlign";
 // import CoolButton from "./CoolButton";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+// import Image from "next/image";
 
 const Hero = () => {
   const router = useRouter();
   return (
-    <section className="bg-[url(/images/hero.png)] md:bg-[url(/images/hero.jpg)] bg-fixed bg-center bg-no-repeat bg-cover lg:bg-cover mx-auto flex w-full pt-24 md:items-center h-[500px] md:h-[800px]">
-      <div className="block w-[300px] py-2 pl-8 md:ml-32 md:w-[500px] ">
+    <section className="bg-[url(/images/hero.png)] md:bg-[url(/images/hero.jpg)] bg-fixed bg-center bg-no-repeat bg-contain md:bg-cover mx-auto flex w-full pt-24 md:items-center h-svh md:h-[800px]">
+      <div className="block w-[300px] py-2 pl-8 md:ml-32 md:w-[500px]">
         <AnimatedTextUnderlign />
         <p className="mb-12 mt-6 hidden md:flex md:w-[350px]">
           Take our quiz to find out your unique fashion style!
