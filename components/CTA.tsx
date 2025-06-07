@@ -27,7 +27,7 @@ const CTA = () => {
             >
               <span className="absolute inset-0 size-full -translate-x-2 -translate-y-2 bg-red-300 transition duration-300 ease-out group-hover:translate-x-0 group-hover:translate-y-0"></span>
               <span className="absolute inset-0 size-full border-4 border-black"></span>
-              <span className="relative">Yes I&asp;m Ready!</span>
+              <span className="relative">Yes I&apos;m Ready!</span>
             </Button>
           </div>
         </div>
