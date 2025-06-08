@@ -5,15 +5,15 @@ const HowItWorks = () => {
   return (
     <section className="py-32">
       <div className="container mx-auto">
-        <div className="flex mx-auto max-w-screen-md flex-col justify-center gap-7 md:text-center">
-          <h2 className="text-5xl max-w-2xl font-semibold tracking-tighter md:text-7xl">
+        <div className="flex max-w-screen-md flex-col justify-center">
+          <h2 className="text-4xl font-semibold tracking-tighter md:text-7xl">
             How It Works
           </h2>
-          <p className="text-sm text-muted-foregroud md:text-base">
+          <p className="text-muted-foregroud md:text-base">
             Get your style sync session started in 3 easy steps. <br />
           </p>
         </div>
-        <div className="mx-auto mt-14 flex max-w-screen-lg flex-col gap-4 lg:gap-12 lg:px-16">
+        <div className="mt-8 mx-auto flex max-w-screen-lg flex-col gap-4 lg:gap-12">
           <div className="flex flex-col items-center justify-between min-[960px]:flex-row min-[960px]:gap-10">
             <div className="flex gap-4 min-[960px]:max-w-md">
               <div className="flex flex-col items-center justify-between gap-1">

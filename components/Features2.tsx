@@ -14,10 +14,10 @@ const Features2 = () => {
     <section className="py-12">
       <div className="container relative flex flex-col items-center md:px-0 lg:pt-8">
         <div className="relative z-10 w-full justify-between lg:flex lg:flex-col">
-          <h2 className="max-w-2xl text-4xl font-semibold tracking-tighter md:text-7xl">
+          <h2 className="max-w-lg text-4xl font-semibold tracking-tighter md:text-7xl">
             What You Get
           </h2>
-          <p className="mt-8 max-w-lg tracking-tight text-muted-forground, md:text-xl lg:mt-0">
+          <p className="max-w-lg tracking-tight text-muted-forground, md:text-xl lg:mt-0">
             Discover the benefits of using our AI-powered fashion assistant.
           </p>
         </div>
