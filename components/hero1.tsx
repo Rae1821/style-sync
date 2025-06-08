@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 const Hero1 = () => {
   const router = useRouter();
   return (
-    <section className="px-4 overflow-hidden py-32">
+    <section className="px-4 overflow-hidden py-12 md:py-24">
       <div className="container flex flex-col items-center px-8 mx-auto">
         <AnimatedTextUnderlign />
         <p className="mb-8 max-w-xl text-gray-700 lg:text-lg text-center">
