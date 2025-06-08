@@ -6,7 +6,9 @@ const HowItWorks = () => {
     <section className="py-32">
       <div className="container mx-auto">
         <div className="flex mx-auto max-w-screen-md flex-col justify-center gap-7 md:text-center">
-          <h2 className="text-2xl md:text-4xl">How It Works</h2>
+          <h2 className="text-5xl max-w-2xl font-semibold tracking-tighter md:text-7xl">
+            How It Works
+          </h2>
           <p className="text-sm text-muted-foregroud md:text-base">
             Get your style sync session started in 3 easy steps. <br />
           </p>
@@ -29,13 +31,7 @@ const HowItWorks = () => {
                 </p>
               </div>
             </div>
-            {/* <Image
-              src="./icons/placeholder-1.svg"
-              height={291}
-              width={396}
-              alt="placeholder image"
-              className="z-10 aspect-video w-full rounded-xl border object-cover min-[960px]:max-h-56 min-[960px]:w-auto"
-            /> */}
+
             <video
               width="396"
               height="291"
@@ -69,13 +65,7 @@ const HowItWorks = () => {
                 </p>
               </div>
             </div>
-            {/* <Image
-              src="/icons/placeholder-1.svg"
-              height={291}
-              width={396}
-              alt="placeholder image"
-              className="z-10 aspect-video w-full rounded-xl border object-cover min-[960px]:max-h-56 min-[960px]:w-auto"
-            /> */}
+
             <video
               width="396"
               height="291"
@@ -107,13 +97,7 @@ const HowItWorks = () => {
                 </p>
               </div>
             </div>
-            {/* <Image
-              src="/icons/placeholder-1.svg"
-              height={291}
-              width={396}
-              alt="placeholder image"
-              className="z-10 aspect-video w-full rounded-xl border object-cover min-[960px]:max-h-56 min-[960px]:w-auto"
-            /> */}
+
             <video
               width="396"
               height="291"

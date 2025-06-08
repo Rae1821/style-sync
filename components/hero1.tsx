@@ -44,7 +44,7 @@ const Hero1 = () => {
               width={400}
               height={400}
               loading="lazy"
-              className="w-full rounded-md object-cover"
+              className="w-full rounded-md object-contain md:object-cover"
             />
           </div>
           <div className="absolute inset-0 z-5 m-auto flex aspect-29/36 max-w-[16rem] translate-x-[75%] translate-y-[10%] scale-[0.85] rotate-[15deg] justify-center rounded-lg border border-border bg-accent opacity-60 w-[21.25rem] md:max-w-[21.25rem]">
