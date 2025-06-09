@@ -47,20 +47,20 @@ const ProductsPage = async (props: {
   return (
     <div className="container mx-auto max-w-[1100px] px-8 md:px-12 mt-4">
       <div className="">
-        <div className="">
+        <div className="text-center">
           <h2 className="text-3xl font-semibold bg-gradient-to-r from-red-300 from-10% via-red-500 via-30% to-red-700 bg-clip-text text-transparent ">
             Product Search
           </h2>
-          <p className="mt-2 text-sm font-normal tracking-tight">
+          <p className="mt-2 text-sm font-normal tracking-tight text-muted-foreground">
             Use the search box below to find items that are perfect for your
             body shape and fashion style.
           </p>
-          <p className="mt-2 text-sm font-normal tracking-tight">
+          <p className="mt-2 text-sm font-normal tracking-tight text-muted-foreground">
             Click the plus icon at the top of each products to save it to the
             favorites section on your dashboard.
           </p>
         </div>
-        <div className="mt-8">
+        <div className="mt-8 mx-auto max-w-[1200px]">
           <SearchSuggestions userProfile={userProfileData} />
           <div className="mt-12">
             <SearchInput />

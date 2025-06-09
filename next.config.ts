@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
       {
         hostname: "utfs.io",
       },
+      {
+        protocol: "https",
+        hostname: "encrypted-tbn*.gstatic.com",
+      },
     ],
   },
 };

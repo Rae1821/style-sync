@@ -1,7 +1,6 @@
 "use server";
 import db from "@/db";
 import { revalidatePath } from "next/cache";
-// import { cookies } from "next/headers";
 import {
   GoogleGenAI,
   createUserContent,
@@ -46,16 +45,12 @@ export const updateUser = async (input: UpdateUserInput) => {
     if (input.fashionStyle) {
       updateData.fashionStyle = input.fashionStyle;
     }
-    // const userCookie = await cookies();
-    // const currentUser = userCookie.get("user");
     const session = await auth();
     const currentUser = session?.user;
     const email = session?.user?.email ?? "";
     if (!currentUser) {
       throw new Error("User not found");
     }
-    // const userData = JSON.parse(currentUser.value);
-    // const email = userData.email;
     const data = {
       ...updateData,
       updatedAt: new Date(),
@@ -74,21 +69,30 @@ export const updateUser = async (input: UpdateUserInput) => {
 
 // Fetch products from the Amazon API
 export async function fetchClothing({ searchItem }: { searchItem: string }) {
+  // Amazon API
+  // const headers = {
+  //   "X-RapidAPI-Key": "85109d553dmshaef4cc1a6980b3dp1d833fjsne5ad9b4d1cfa",
+  //   "X-RapidAPI-Host": "real-time-amazon-data.p.rapidapi.com",
+  // };
+
+  // SHEIN API
   const headers = {
-    "X-RapidAPI-Key": "85109d553dmshaef4cc1a6980b3dp1d833fjsne5ad9b4d1cfa",
-    "X-RapidAPI-Host": "real-time-amazon-data.p.rapidapi.com",
+    "x-rapidapi-key": "e8e61d9638mshf2c592bf697514fp18b971jsn02e0d86ad08e",
+    "x-rapidapi-host": "real-time-product-search.p.rapidapi.com",
   };
 
   try {
     const response = await fetch(
-      `https://real-time-amazon-data.p.rapidapi.com/search?query=${searchItem}&limit=5&page=1`,
+      // `https://real-time-amazon-data.p.rapidapi.com/search?query=${searchItem}&limit=5&page=1`,
+      `https://real-time-product-search.p.rapidapi.com/search-v2?q=${searchItem}&country=us&language=en&page=1&limit=10&sort_by=BEST_MATCH&product_condition=ANY&return_filters=true`,
       {
         headers,
       }
     );
+
     // parse the response as json
     const result = await response.json();
-
+    console.log(result, "Result from API");
     return result?.data?.products;
   } catch (error) {
     console.log(error);
@@ -122,16 +126,22 @@ export const findUniqueProducts = async () => {
   }
 };
 
+// Rapid API Product Interface
 interface AddProductInput {
-  id?: string;
   product_title?: string;
-  product_price?: string;
-  product_original_price?: string;
-  product_star_rating?: string;
-  product_num_ratings?: number;
-  product_url?: string;
-  product_photo?: string;
-  asin?: string;
+  product_id?: string;
+  on_sale?: boolean;
+  product_photos?: string;
+  store_name?: string;
+  product_rating?: string;
+  product_num_reviews?: number;
+  offer: {
+    offer_page_url: string;
+    price: string;
+    original_price?: string;
+    percentage_off?: string;
+    store_name?: string;
+  };
 }
 
 export const addFavoriteProduct = async (product: AddProductInput) => {
@@ -143,17 +153,17 @@ export const addFavoriteProduct = async (product: AddProductInput) => {
       throw new Error("User not found");
     }
 
+    const prodPhoto = product?.product_photos?.[0];
     const addNewProduct = await db.product.create({
       data: {
         user: { connect: { email: email } },
         product_title: product.product_title,
-        product_price: product.product_price,
-        product_original_price: product.product_original_price,
-        product_star_rating: product.product_star_rating,
-        product_num_ratings: product.product_num_ratings,
-        product_url: product.product_url,
-        product_photo: product.product_photo,
-        asin: product.asin,
+        product_price: product.offer.price,
+        product_original_price: product.offer.original_price,
+        product_url: product.offer.offer_page_url,
+        product_photo: prodPhoto,
+        asin: product.product_id,
+        store_name: product.store_name,
       },
     });
 
@@ -166,17 +176,31 @@ export const addFavoriteProduct = async (product: AddProductInput) => {
   }
 };
 
-// Delete Favorite Products
+// Delete Favorite Products - Amazon
+// interface DeleteFavoriteProductInput {
+//   id?: string;
+//   product_title?: string | null;
+//   product_price?: string | null;
+//   product_original_price?: string | null;
+//   product_star_rating?: string | null;
+//   product_num_ratings?: number | null;
+//   product_url?: string | null;
+//   product_photo?: string | null;
+//   asin?: string | null;
+// }
+
+// Delete Favorite Products - SHEIN
 interface DeleteFavoriteProductInput {
-  id?: string;
-  product_title?: string | null;
-  product_price?: string | null;
-  product_original_price?: string | null;
-  product_star_rating?: string | null;
-  product_num_ratings?: number | null;
-  product_url?: string | null;
-  product_photo?: string | null;
-  asin?: string | null;
+  id: string;
+  product_title?: string;
+  product_id?: string;
+  price?: string;
+  on_sale?: boolean;
+  product_photos?: string;
+  store_name?: string;
+  product_rating?: string;
+  product_num_reviews?: number;
+  product_page_url?: string;
 }
 
 export const deleteFavoriteProduct = async (

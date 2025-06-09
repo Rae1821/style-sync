@@ -1,38 +1,47 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { FaPlus, FaCheck } from "react-icons/fa6";
 import { Button } from "./ui/button";
 import { addFavoriteProduct } from "@/actions/auth";
 import { useState } from "react";
+import { Badge } from "./ui/badge";
+import Link from "next/link";
 
 interface ClothingProps {
   product_title: string;
-  product_price: string;
-  product_original_price: string;
-  currency: string;
-  product_star_rating: string;
-  product_num_ratings: number;
-  product_url: string;
-  product_photo: string;
-  asin: string;
+  product_id: string;
+  // product_description?: string;
+  on_sale: boolean;
+  product_photos: string;
+  store_name: string;
+  product_rating: string;
+  product_num_reviews: number;
+  offer: {
+    offer_page_url: string;
+    price: string;
+    original_price?: string;
+    percentage_off?: string;
+    store_name?: string;
+  };
 }
 
 const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
   const {
     product_title: productTitle,
-    product_price: productPrice,
-    product_original_price: productOriginalPrice,
-    product_star_rating: productStarRating,
-    product_num_ratings: productNumRatings,
-    product_url: productUrl,
-    product_photo: productPhoto,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    asin: productAsin,
+
+    product_rating: productStarRating,
+    product_num_reviews: productNumRatings,
+    product_photos: productPhotos,
+    offer,
   } = clothing;
 
-  // console.log(productAsin);
+  const {
+    offer_page_url: productUrl,
+    price: productPrice,
+    store_name: storeName,
+    original_price: productOriginalPrice,
+  } = offer;
 
   const [addFavorite, setAddFavorite] = useState(false);
 
@@ -48,13 +57,19 @@ const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
     }
   };
 
+  console.log(productPhotos[0]);
+  console.log(productUrl);
+
   const newProductTitle = productTitle.replace(/[^\w\s]/gi, "");
 
   return (
     // <Link href={productUrl} className="product-card">
     <div className="product-card">
       <div className="product-card_img-container">
-        <div className="">
+        <div className="flex flex-row items-center justify-between mb-2">
+          <Badge variant="secondary" className="">
+            {storeName}
+          </Badge>
           <Button
             variant="outline"
             size="icon"
@@ -64,7 +79,7 @@ const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
           </Button>
         </div>
         <Image
-          src={productPhoto}
+          src={productPhotos[0]}
           width={200}
           height={200}
           alt={productTitle}
@@ -96,7 +111,9 @@ const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
       </div>
       <div>
         <Button asChild className="mt-4 w-full bg-red-300">
-          <Link href={productUrl}>See More</Link>
+          <Link href={productUrl} target="_blank">
+            See More
+          </Link>
         </Button>
       </div>
     </div>

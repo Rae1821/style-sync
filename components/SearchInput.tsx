@@ -5,7 +5,6 @@ import { Input } from "./ui/input";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useDebouncedCallback } from "use-debounce";
 
 const SearchInput = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,21 +12,20 @@ const SearchInput = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = useDebouncedCallback((searchTerm) => {
-    console.log(`Searching... ${searchTerm}`);
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("clicked search button");
 
-    const params = new URLSearchParams(searchParams);
-    if (searchTerm) {
-      params.set("query", searchTerm);
-    } else {
-      params.delete("query");
+    if (searchTerm.trim()) {
+      const params = new URLSearchParams(searchParams);
+      params.set("query", searchTerm.trim());
+      replace(`${pathname}?${params.toString()}`);
+      setSearchTerm(""); // Clear the input field after submission
     }
-    replace(`${pathname}?${params.toString()}`);
-    setSearchTerm("");
-  }, 300);
+  };
 
   return (
-    <div className="flex w-full lg:max-w-1/2">
+    <form onSubmit={handleSearch} className="flex w-full lg:max-w-1/2 mx-auto">
       <Input
         type="text"
         name="searchItem"
@@ -38,11 +36,7 @@ const SearchInput = () => {
           setSearchTerm(e.target.value);
         }}
       />
-      <Button
-        onClick={() => handleSearch(searchTerm)}
-        type="submit"
-        className="bg-red-300"
-      >
+      <Button type="submit" className="bg-red-300">
         <Image
           src="/icons/magnifying-glass.svg"
           className="text-white"
@@ -51,7 +45,7 @@ const SearchInput = () => {
           width={20}
         />
       </Button>
-    </div>
+    </form>
   );
 };
 

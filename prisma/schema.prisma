@@ -52,6 +52,7 @@ model Product {
   product_url String?
   product_photo String?
   asin String?
+  store_name String?
 }
 
 model Outfit {
