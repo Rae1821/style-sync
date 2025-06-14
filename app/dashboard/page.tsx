@@ -81,7 +81,7 @@ const MyDashboard = async () => {
       product_title: product.product_title ?? "",
       product_price: product.product_price ?? "",
       product_original_price: product.product_original_price ?? "",
-      product_rating: product.product_rating ?? "",
+      product_rating: product.product_rating ?? 0,
       product_num_reviews: product.product_num_reviews ?? 0,
       product_url: product.product_url ?? "",
       product_photo: product.product_photo ?? "",
