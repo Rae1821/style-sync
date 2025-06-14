@@ -114,9 +114,11 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
 
   const handleAddToFavorites = async (outfitId: string) => {
     try {
-      if (imageData && userProfile) {
-        await toggleFavoriteOutfit(outfitId);
-      }
+      // if (imageData && userProfile) {
+      //   await toggleFavoriteOutfit(outfitId);
+      // }
+      const result = await toggleFavoriteOutfit(outfitId);
+      console.log(result);
 
       setAddFavorite((prevAddFavorite) => !prevAddFavorite);
     } catch (error) {

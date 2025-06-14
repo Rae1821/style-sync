@@ -8,14 +8,14 @@ import { useState } from "react";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 
-interface ClothingProps {
+interface ClothingCardProps {
   product_title: string;
   product_id: string;
   // product_description?: string;
   on_sale: boolean;
   product_photos: string;
   store_name: string;
-  product_rating: string;
+  product_rating: number;
   product_num_reviews: number;
   offer: {
     offer_page_url: string;
@@ -26,12 +26,11 @@ interface ClothingProps {
   };
 }
 
-const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
+const ClothingCard = ({ clothing }: { clothing: ClothingCardProps }) => {
   const {
     product_title: productTitle,
-
-    product_rating: productStarRating,
-    product_num_reviews: productNumRatings,
+    product_rating: productRating,
+    product_num_reviews: productNumReviews,
     product_photos: productPhotos,
     offer,
   } = clothing;
@@ -45,9 +44,9 @@ const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
 
   const [addFavorite, setAddFavorite] = useState(false);
 
-  const handleAddToFavorites = async (clothing: ClothingProps) => {
-    // console.log(clothing);
-    console.log(addFavoriteProduct);
+  const handleAddToFavorites = async (clothing: ClothingCardProps) => {
+    // console.log("CLOTHING:", clothing);
+    // console.log(addFavoriteProduct);
     try {
       const result = await addFavoriteProduct(clothing);
       console.log(result);
@@ -83,13 +82,13 @@ const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
           width={200}
           height={200}
           alt={productTitle}
-          className="product-card_img"
+          className="product-card_img aspect-square object-cover rounded-md transition-transform duration-300 ease-in-out"
         />
       </div>
 
       <div className="flex flex-col gap-1">
         <h3 className="product-title ">{newProductTitle}</h3>
-        <div className="flex justify-between">
+        <div className="relative">
           <p className="flex items-center gap-2 capitalize text-black opacity-50">
             <span>
               <Image
@@ -99,9 +98,9 @@ const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
                 alt="star icon"
               />
             </span>
-            {productStarRating} / {productNumRatings}
+            {productRating} / {productNumReviews}
           </p>
-          <p className="font-semibold text-black">
+          <p className="text-black absolute top-0 right-0">
             <span>{productPrice}</span>
             <span className="ml-2 font-light text-gray-400 line-through">
               {productOriginalPrice}
@@ -110,7 +109,7 @@ const ClothingCard = ({ clothing }: { clothing: ClothingProps }) => {
         </div>
       </div>
       <div>
-        <Button asChild className="mt-4 w-full bg-red-300">
+        <Button asChild className="mt-8 w-full bg-red-300">
           <Link href={productUrl} target="_blank">
             See More
           </Link>

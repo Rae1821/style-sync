@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import AnimatedTextUnderlign from "./AnimatedTextUnderlign";
+// import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Hero1 = () => {
@@ -15,14 +16,19 @@ const Hero1 = () => {
           Some sort of cool awesome fancy descriptive text goes here.
         </p>
         <div className="mt-2 flex w-full flex-col justify-center gap-2 md:w-1/2 lg:w-[200px]">
+          {/* <Link
+            href="/login"
+            className="group relative bg-transparent px-6 py-4 font-semibold text-black hover:cursor-pointer"
+          > */}
           <Button
             className="group relative bg-transparent px-6 py-4 font-semibold text-black hover:cursor-pointer"
             onClick={() => router.push("/login")}
           >
             <span className="absolute inset-0 size-full -translate-x-2 -translate-y-2 bg-red-300 transition duration-300 ease-out group-hover:translate-x-0 group-hover:translate-y-0"></span>
             <span className="absolute inset-0 size-full border-4 border-black"></span>
-            <span className="relative">Get started</span>
+            <span className="relative">Get started </span>
           </Button>
+          {/* </Link> */}
         </div>
       </div>
       <div className="mt-8 flex flex-col items-center justify-center lg:mt-12">

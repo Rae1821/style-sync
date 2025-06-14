@@ -11,7 +11,7 @@ interface ClothingProps {
   on_sale: boolean;
   product_photos: string;
   store_name: string;
-  product_rating: string;
+  product_rating: number;
   product_num_reviews: number;
   offer: {
     offer_page_url: string;
@@ -48,10 +48,11 @@ const ProductsList = ({ query }: { query: string }) => {
 
   return (
     <div className="mt-24 max-w-[1300px]">
-      {loading && <Skeleton />}
+      {loading && <Skeleton className="h-96 w-full" />}
       {!loading && products.length === 0 && query && (
         <p>No Products found for &quot;{query}&quot;.</p>
       )}
+
       <ul className="mt-12 flex flex-wrap items-center justify-center gap-4 mx-auto">
         {products?.map((item: ClothingProps) => (
           <li className="flex" key={item.product_id}>

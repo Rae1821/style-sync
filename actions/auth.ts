@@ -132,8 +132,7 @@ interface AddProductInput {
   product_id?: string;
   on_sale?: boolean;
   product_photos?: string;
-  store_name?: string;
-  product_rating?: string;
+  product_rating?: number;
   product_num_reviews?: number;
   offer: {
     offer_page_url: string;
@@ -154,6 +153,7 @@ export const addFavoriteProduct = async (product: AddProductInput) => {
     }
 
     const prodPhoto = product?.product_photos?.[0];
+    console.log("Store Name:", product.offer.store_name);
     const addNewProduct = await db.product.create({
       data: {
         user: { connect: { email: email } },
@@ -161,9 +161,11 @@ export const addFavoriteProduct = async (product: AddProductInput) => {
         product_price: product.offer.price,
         product_original_price: product.offer.original_price,
         product_url: product.offer.offer_page_url,
+        product_rating: product.product_rating,
+        product_num_reviews: product.product_num_reviews,
         product_photo: prodPhoto,
         asin: product.product_id,
-        store_name: product.store_name,
+        store_name: product.offer.store_name,
       },
     });
 
@@ -189,30 +191,25 @@ export const addFavoriteProduct = async (product: AddProductInput) => {
 //   asin?: string | null;
 // }
 
-// Delete Favorite Products - SHEIN
+// Delete Favorite Products
 interface DeleteFavoriteProductInput {
-  id: string;
+  id?: string;
+  userEmail?: string;
   product_title?: string;
-  product_id?: string;
-  price?: string;
-  on_sale?: boolean;
-  product_photos?: string;
+  product_photo?: string;
   store_name?: string;
-  product_rating?: string;
+  product_price?: string;
+  product_original_price?: string;
+  product_url?: string;
+  product_rating?: number;
   product_num_reviews?: number;
-  product_page_url?: string;
+  asin?: string;
 }
 
 export const deleteFavoriteProduct = async (
   product: DeleteFavoriteProductInput
 ) => {
   try {
-    // const userCookie = await cookies();
-    // const currentUser = userCookie.get("user");
-    // if (!currentUser) {
-    //   throw new Error("User not authenticated");
-    // }
-
     const session = await auth();
     const currentUser = session?.user;
     if (!currentUser) {

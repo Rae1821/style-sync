@@ -47,8 +47,8 @@ model Product {
   product_title String?
   product_price String?
   product_original_price String?
-  product_star_rating String?
-  product_num_ratings Int?
+  product_rating Float?
+  product_num_reviews Int?
   product_url String?
   product_photo String?
   asin String?

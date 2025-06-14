@@ -23,6 +23,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "encrypted-tbn*.gstatic.com",
       },
+      {
+        protocol: "https",
+        hostname: "annic.scene7.com",
+      },
+      {
+        protocol: "https",
+        hostname: "shukronline.com",
+      },
     ],
   },
 };

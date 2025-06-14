@@ -6,6 +6,8 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
+console.log("SearchInput component loaded");
+
 const SearchInput = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const searchParams = useSearchParams();
@@ -25,7 +27,7 @@ const SearchInput = () => {
   };
 
   return (
-    <form onSubmit={handleSearch} className="flex w-full lg:max-w-1/2 mx-auto">
+    <form onSubmit={handleSearch} className="flex w-full md:max-w-1/2 mx-auto">
       <Input
         type="text"
         name="searchItem"

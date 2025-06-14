@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { MdOutlineClose, MdOutlineDiamond } from "react-icons/md";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { deleteFavoriteOutfit } from "@/actions/auth";
+import { toggleFavoriteOutfit } from "@/actions/auth";
 import Image from "next/image";
 
 interface FavOutfitProps {
@@ -21,28 +21,29 @@ interface FavOutfitProps {
   }[];
 }
 
-interface DeleteFavOutfitProps {
-  id: string;
-  userEmail: string;
-  outfit_occasion: string | null;
-  outfit_main_article: string | null;
-  outfit_shoes: string | null;
-  outfit_accessories: string | null;
-  outfit_completer_piece: string | null;
-  imageData: string | null;
-  favorite: boolean;
-}
+// interface DeleteFavOutfitProps {
+//   id: string;
+//   userEmail: string;
+//   outfit_occasion: string | null;
+//   outfit_main_article: string | null;
+//   outfit_shoes: string | null;
+//   outfit_accessories: string | null;
+//   outfit_completer_piece: string | null;
+//   imageData: string | null;
+//   favorite: boolean;
+// }
 
 const FavoriteOutfits = ({ favOutfits }: FavOutfitProps) => {
   // console.log(favOutfits.imageData);
   // Delete favorite outfit
-  const handleDeleteFavorite = async (outfit: DeleteFavOutfitProps) => {
-    if (!outfit.id) {
+  const handleDeleteFavorite = async (outfitId: string) => {
+    if (!outfitId) {
       console.error("Outfit id is required to delete a favorite.");
       return;
     }
     try {
-      const result = await deleteFavoriteOutfit(outfit);
+      // const result = await deleteFavoriteOutfit(outfit);
+      const result = await toggleFavoriteOutfit(outfitId);
       console.log(result);
     } catch (error) {
       console.log(error);
@@ -73,7 +74,7 @@ const FavoriteOutfits = ({ favOutfits }: FavOutfitProps) => {
                     <div className="flex-end relative">
                       <MdOutlineClose
                         className="size-4 absolute top-2 right-2 hover:cursor-pointer"
-                        onClick={() => handleDeleteFavorite(outfit)}
+                        onClick={() => handleDeleteFavorite(outfit.id)}
                       />
                     </div>
                     <div className="px-2 flex flex-col gap-2">

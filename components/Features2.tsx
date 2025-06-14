@@ -30,30 +30,6 @@ const Features2 = () => {
           <div className="absolute top-[12.5px] right-[-3px] z-10 h-2 w-2 rounded-full bg-foreground"></div>
           <div className="absolute bottom-[12.5px] left-[-3px] z-10 h-2 w-2 rounded-full bg-foreground"></div>
           <div className="absolute bottom-[12.5px] right-[-3px] z-10 h-2 w-2 rounded-full bg-foreground"></div>
-          {/* <Carousel
-            opts={{
-              align: "start",
-            }}
-            className="w-full max-w-3xl"
-          >
-            <CarouselContent>
-              {Array.from({ length: 6 }).map((_, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
-                    <Card>
-                      <CardContent className="flex aspect-square items-center justify-center p-6">
-                        <span className="text-3xl font-semibold">
-                          {index + 1}
-                        </span>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel> */}
 
           <Carousel
             opts={{

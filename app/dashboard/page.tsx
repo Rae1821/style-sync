@@ -16,11 +16,12 @@ interface Product {
   product_title: string | null;
   product_price: string | null;
   product_original_price: string | null;
-  product_star_rating: string | null;
-  product_num_ratings: number | null;
+  product_rating: number | null;
+  product_num_reviews: number | null;
   product_url: string | null;
   product_photo: string | null;
   asin: string | null;
+  store_name: string | null;
 }
 
 interface Outfit {
@@ -80,11 +81,12 @@ const MyDashboard = async () => {
       product_title: product.product_title ?? "",
       product_price: product.product_price ?? "",
       product_original_price: product.product_original_price ?? "",
-      product_star_rating: product.product_star_rating ?? "",
-      product_num_ratings: product.product_num_ratings ?? 0,
+      product_rating: product.product_rating ?? "",
+      product_num_reviews: product.product_num_reviews ?? 0,
       product_url: product.product_url ?? "",
       product_photo: product.product_photo ?? "",
       asin: product.asin,
+      store_name: product.store_name ?? "",
     };
   });
 
@@ -106,33 +108,35 @@ const MyDashboard = async () => {
 
   return (
     <div className="magicpattern min-h-screen py-4">
-      <div className="flex flex-col p-8 mb-4">
+      <div className="flex flex-col py-8 px-10 mb-4 max-w-[1300px] mx-auto">
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold bg-gradient-to-r from-red-300 from-10% via-red-500 via-30% to-red-700 to-90% bg-clip-text text-transparent tracking-tighter">
+            Dashboard of Favorites
+          </h2>
+          <p className="text-sm tracking-tight">
+            All your favorites, stored in one place for easy access.
+          </p>
+        </div>
         <div className="flex w-1/2 mb-4">
           {session?.user?.image ? (
             <Image
               src={session.user.image}
               alt="User Profile"
-              width={50}
-              height={50}
+              width={38}
+              height={38}
               className="rounded-full mb-4 mr-2"
             />
           ) : (
-            <BsPersonCircle className="w-[50px] h-[50px] rounded-full mb-4 mx-auto" />
+            <BsPersonCircle className="w-[38px] h-[38px] rounded-full mb-4 mx-auto" />
           )}
           <div>
             <p className="font-semibold">{session?.user?.name}</p>
-            <p className="text-xs text-gray-600">Fashion Enthusiast</p>
+            <p className="text-xs text-muted-foreground">Fashion Enthusiast</p>
           </div>
         </div>
-        <h2 className="text-2xl font-semibold bg-gradient-to-r from-red-300 from-10% via-red-500 via-30% to-red-700 to-90% bg-clip-text text-transparent tracking-tighter">
-          Dashboard of Favorites
-        </h2>
-        <p className="text-sm text-gray-600">
-          All your favorites, stored in one place for easy access.
-        </p>
       </div>
       <div className="container mx-auto">
-        <div className="w-full flex flex-col items-center justify-center gap-4">
+        <div className="w-full flex flex-col items-center justify-center gap-4 max-w-[1300px] mx-auto">
           <div className="w-full ">
             {userProfile && <Dashboard userProfile={userProfile} />}
           </div>
