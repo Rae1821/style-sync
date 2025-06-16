@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { deleteFavoriteProduct } from "@/actions/auth";
-// import { FaArrowRightLong } from "react-icons/fa6";
 import { MdOutlineClose } from "react-icons/md";
 import { Badge } from "./ui/badge";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -73,8 +72,6 @@ const FavoriteProducts = ({ favProducts }: FavoriteProductsProps) => {
               key={product.product_title}
             >
               <div className="relative flex justify-between items-center py-2">
-                {/* <Badge>{product.store_name}</Badge>
-                 */}
                 <Badge variant="outline" className="bg-red-300/80">
                   {product.store_name || "Unknown Store"}
                 </Badge>
@@ -131,56 +128,6 @@ const FavoriteProducts = ({ favProducts }: FavoriteProductsProps) => {
           ))}
         </div>
       </div>
-      {/* <div>
-        <h2 className="text-xl mb-[-4]">Favorite Products</h2>
-        <div className="flex items-center gap-1 hover:gap-2 transition-all mt-2 w-[160px]">
-          <Link
-            href="/products"
-            className="text-sm text-muted-foreground hover:underline hover:decoration-2 hover:underline-offset-2 transition-all"
-          >
-            Find new products
-          </Link>
-          <FaArrowRightLong className="text-muted-foreground hover:cursor-pointer" />
-        </div>
-        <div className="mt-4 flex flex-col gap-4 overflow-y-scroll md:flex-row">
-          {favProducts?.map((product) => (
-            <Card key={product.id}>
-              <CardHeader>
-                <CardTitle className="text-lg">
-                  {product.product_title}
-                </CardTitle>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">
-                    {product.store_name}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleDeleteFavorite(product)}
-                  >
-                    <MdOutlineClose />
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="">
-                  <Image
-                    src={product.product_photo}
-                    width={200}
-                    height={200}
-                    alt={`${product.product_title}`}
-                    className="w-full h-auto object-cover rounded-md"
-                  />
-                  <MdOutlineClose
-                    className="absolute right-2 top-2 size-4 cursor-pointer"
-                    onClick={() => handleDeleteFavorite(product)}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 };

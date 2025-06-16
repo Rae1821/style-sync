@@ -114,9 +114,6 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
 
   const handleAddToFavorites = async (outfitId: string) => {
     try {
-      // if (imageData && userProfile) {
-      //   await toggleFavoriteOutfit(outfitId);
-      // }
       const result = await toggleFavoriteOutfit(outfitId);
       console.log(result);
 
@@ -137,12 +134,10 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
   const handleGenerateOutfitImages = async (outfit: OutfitResult) => {
     try {
       const imageResult = await generateOutfitImage(outfit);
-      // console.log(imageResult);
 
       setImageData(imageResult);
       await addOutfit(outfit, imageResult);
       setLoading(false);
-      // console.log(imageResult);
     } catch (error) {
       console.error("Error generating outfit images:", error);
     }
@@ -228,13 +223,13 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     <MdOutlineDiamond className="text-red-300 size-6" />
                   </span>
                   <h2 className="text-lg font-semibold">
-                    {/* {outfitOccasionTitle()} */}
                     {geminiResponse.outfit_occasion} Outfit
                   </h2>
                 </CardTitle>
                 <Button
                   variant="ghost"
-                  className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all"
+                  className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all hover:bg-red-300/50"
+                  onClick={() => handleAddToFavorites(outfits.id)}
                 >
                   {addFavorite ? "Remove from favorites" : "Add to favorites"}
                 </Button>
@@ -273,7 +268,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
         <h2 className="text-xl font-semibold tracking-tight mb-2">
           Previous Suggestions
         </h2>
-        <div className="mb-8 flex flex-col gap-4 md:flex-row">
+        <div className="mb-8 flex flex-col gap-4">
           {!outfits || outfits.length === 0 ? (
             <p className="text-sm text-gray-500">
               Nothing to see yet...Upload an image and select an occasion to get
@@ -281,7 +276,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
             </p>
           ) : (
             outfits.map((outfit) => (
-              <Card key={outfit.id} className="w-full max-w-2xl">
+              <Card key={outfit.id} className="max-w-[350px]">
                 <CardHeader className="relative">
                   <CardTitle className="flex items-center gap-2">
                     <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm">
@@ -292,11 +287,13 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     </h2>
                   </CardTitle>
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all"
                     onClick={() => handleAddToFavorites(outfit.id)}
                   >
-                    {addFavorite ? "Remove from favorites" : "Add to favorites"}
+                    {addFavorite || outfit.favorite
+                      ? "Remove from favorites"
+                      : "Add to favorites"}
                   </Button>
                   <CardContent className="mt-4">
                     <Image
