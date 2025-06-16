@@ -392,8 +392,9 @@ export const generateOutfitImage = async (
       }
       // Optionally save the image to disk
       const buffer = Buffer.from(imageData, "base64");
-      fs.writeFileSync("gemini-native-image.png", buffer);
-      console.log("Image saved as gemini-native-image.png");
+      // fs.writeFileSync("gemini-native-image.png", buffer);
+      // console.log("Image saved as gemini-native-image.png");
+      console.log(buffer, "Image buffer");
       return imageData;
     }
     if (part.text) {
