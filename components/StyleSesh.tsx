@@ -229,7 +229,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                 <Button
                   variant="ghost"
                   className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all hover:bg-red-300/50"
-                  onClick={() => handleAddToFavorites(outfits.id)}
+                  // onClick={() => handleAddToFavorites(outfits.id)}
                 >
                   {addFavorite ? "Remove from favorites" : "Add to favorites"}
                 </Button>

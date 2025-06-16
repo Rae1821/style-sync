@@ -261,12 +261,14 @@ export const geminiImageUpload = async (
   outfit_accessories: string;
   outfit_completer_piece: string;
 }> => {
+  console.log("Starting Gemini image upload...");
   const localFilePath = await downloadFile(fileUrl);
 
   const myFile: UploadedFile = await ai.files.upload({
     file: localFilePath,
     config: { mimeType: "image/jpeg" },
   });
+  console.log("File uploaded successfully:", myFile.uri, myFile.mimeType);
 
   const prompt = `Generate outfit pairings for ${outfit_occasion} using the clothing item in the uploaded image, taking into account the user's body shape: "${bodyShape}" (e.g., pear, apple, hourglass, rectangle, inverted triangle) and their fashion style: "${fashionStyle}" (e.g., classic, bohemian, chic, edgy, sporty). Adhere strictly to the following JSON schema and providing ONLY the JSON output. Do not include any introductory or explanatory text. 
 
@@ -316,7 +318,7 @@ export const geminiImageUpload = async (
       prompt,
     ]),
   });
-  console.log(response.text);
+  console.log("Response from Gemini API:", response.text);
 
   await fs.promises.unlink(localFilePath); // Clean up the temporary file
 
@@ -368,7 +370,7 @@ interface OutfitResult {
 export const generateOutfitImage = async (
   outfit: OutfitResult
 ): Promise<string> => {
-  const prompt = `Generate an image of a ${outfit.outfit_occasion} outfit with one of each of the following items: ${outfit.outfit_main_article}, ${outfit.outfit_shoes}, ${outfit.outfit_accessories}, ${outfit.outfit_completer_piece}. The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit. The image size should be 300x300 pixels and no more than 500KB. The original uploaded item should be included in the image. The image should be suitable for a fashion blog or social media post.`;
+  const prompt = `Generate an image of a ${outfit.outfit_occasion} outfit with one of each of the following items: ${outfit.outfit_main_article}, ${outfit.outfit_shoes}, ${outfit.outfit_accessories}, ${outfit.outfit_completer_piece}. The image should be in a realistic style, showcasing the outfit in a flat lay setting as if the picture is taken from above. The background should be simple and not distract from the outfit. The image size should be 300x300 pixels and no more than 500KB. The generated image should include a rendering of the original uploaded imagegit. The image should be suitable for a fashion blog or social media post.`;
 
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash-preview-image-generation",
