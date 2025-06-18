@@ -256,7 +256,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
         <h2 className="text-xl font-semibold tracking-tight mb-2">
           Previous Suggestions
         </h2>
-        <div className="flex gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {!outfits || outfits.length === 0 ? (
             <p className="text-sm text-gray-500">
               Nothing to see yet...Upload an image and select an occasion to get
@@ -275,7 +275,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     </h2>
                   </CardTitle>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     className="absolute top-0 right-0 p-0 px-2 hover:cursor-pointer transition-all"
                     onClick={() => handleAddToFavorites(outfit.id)}
                   >
@@ -287,7 +287,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                       alt="Gemini generated outfit flatlay"
                       height={300}
                       width={300}
-                      className="mx-auto"
+                      className="mx-auto aspect-square"
                     />
                     <p className="text-sm mb-2 mt-8">
                       <span className="font-semibold">Main Item: </span>
