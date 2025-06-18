@@ -58,20 +58,23 @@ const FavoriteOutfits = ({ favOutfits }: FavOutfitProps) => {
           {favOutfits
             ?.filter((outfit) => outfit.favorite === true)
             .map((outfit) => (
-              <div className="product-card w-[300px]" key={outfit.id}>
-                <div className="flex-end relative">
+              <div
+                className="w-[292px] shrink-0 flex flex-col gap-4 rounded-md border border-gray-200 p-2 shadow bg-white relative"
+                key={outfit.id}
+              >
+                <div className="flex items-center justify-between">
                   <MdOutlineClose
-                    className="size-4 absolute top-2 right-2 hover:cursor-pointer"
+                    className="size-4 absolute top-4 right-2 hover:cursor-pointer"
                     onClick={() => handleDeleteFavorite(outfit.id)}
                   />
-                </div>
-                <div className="px-2 flex flex-col gap-2">
-                  <h3 className="text-lg font-semibold flex items-center gap-4 underline decoration-wavy underline-offset-4 decoration-red-300 mb-2">
+                  <h3 className="text-lg font-semibold flex items-center gap-4 mb-2">
                     <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm">
                       <MdOutlineDiamond className="text-red-300 size-6" />
                     </span>
                     {outfit.outfit_occasion}
                   </h3>
+                </div>
+                <div className="px-2 flex flex-col gap-2">
                   <div className="product-card_img-container">
                     <Image
                       src={`data:image/png;base64, ${outfit.imageData}`}

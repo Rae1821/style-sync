@@ -436,14 +436,6 @@ export const addUploadedImages = async (image: AddUploadedImagesInput) => {
 // Find user's uploaded images
 export const findUniqueImages = async () => {
   try {
-    // const userCookie = await cookies();
-    // const currentUser = userCookie.get("user");
-
-    // if (!currentUser) {
-    //   throw new Error("User not authenticated");
-    // }
-    // const userData = JSON.parse(currentUser.value);
-
     const session = await auth();
     const email = session?.user?.email ?? "";
     const currentUser = session?.user;
@@ -575,7 +567,7 @@ export const addOutfit = async (outfit: AddOutfitInput, imageData: string) => {
     });
 
     revalidatePath("/dashboard");
-    console.log(addNewOutfit, "Outfit added to database");
+    // console.log(addNewOutfit, "Outfit added to database");
     return addNewOutfit;
   } catch (error) {
     console.log("Error adding outfit to database", error);

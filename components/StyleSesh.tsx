@@ -18,10 +18,11 @@ import {
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
-import { MdOutlineDiamond } from "react-icons/md";
+import { MdCheck, MdOutlineDiamond } from "react-icons/md";
 import { Button } from "./ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import Image from "next/image";
+import { MdAdd } from "react-icons/md";
 
 interface ProfileDetails {
   id: string | null;
@@ -31,13 +32,13 @@ interface ProfileDetails {
   fashionStyle: string | null;
 }
 
-interface GeminiResponse {
-  outfit_occasion: string;
-  outfit_main_article: string;
-  outfit_shoes: string;
-  outfit_accessories: string;
-  outfit_completer_piece: string;
-}
+// interface GeminiResponse {
+//   outfit_occasion: string;
+//   outfit_main_article: string;
+//   outfit_shoes: string;
+//   outfit_accessories: string;
+//   outfit_completer_piece: string;
+// }
 
 interface OutfitProps {
   id: string;
@@ -51,18 +52,12 @@ interface OutfitProps {
 }
 
 const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
-  const [geminiResponse, setGeminiResponse] = useState<GeminiResponse>({
-    outfit_occasion: "",
-    outfit_main_article: "",
-    outfit_shoes: "",
-    outfit_accessories: "",
-    outfit_completer_piece: "",
-  });
   const [loading, setLoading] = useState(false);
   const [occasionValue, setOccasionValue] = useState("");
-  const [addFavorite, setAddFavorite] = useState(false);
-  const [imageData, setImageData] = useState<string | null>(null);
+  // const [addFavorite, setAddFavorite] = useState(false);
+  // const [imageData, setImageData] = useState<string | null>(null);
   const [outfits, setOutfits] = useState<OutfitProps[]>([]);
+  const [newOutfit, setNewOutfit] = useState<OutfitProps | null>(null);
 
   const bodyShape = userProfile?.bodyShape;
   const fashionStyle = userProfile?.fashionStyle;
@@ -102,7 +97,6 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
         occasionValue || ""
       );
       console.log(result);
-      setGeminiResponse(result);
       const outfitResult = await handleGenerateOutfitImages(result);
 
       return outfitResult;
@@ -113,11 +107,12 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
   };
 
   const handleAddToFavorites = async (outfitId: string) => {
+    console.log("OUTFIT ID:", outfitId);
     try {
       const result = await toggleFavoriteOutfit(outfitId);
       console.log(result);
 
-      setAddFavorite((prevAddFavorite) => !prevAddFavorite);
+      // setAddFavorite((prevAddFavorite) => !prevAddFavorite);
     } catch (error) {
       console.log(error);
     }
@@ -135,9 +130,10 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
     try {
       const imageResult = await generateOutfitImage(outfit);
 
-      setImageData(imageResult);
-      await addOutfit(outfit, imageResult);
+      const createdOutfit = await addOutfit(outfit, imageResult);
+      setNewOutfit(createdOutfit);
       setLoading(false);
+      return createdOutfit;
     } catch (error) {
       console.error("Error generating outfit images:", error);
     }
@@ -145,18 +141,12 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
 
   const handleStartOver = () => {
     setOccasionValue("");
-    setGeminiResponse({
-      outfit_occasion: "",
-      outfit_main_article: "",
-      outfit_shoes: "",
-      outfit_accessories: "",
-      outfit_completer_piece: "",
-    });
-    setImageData(null);
+
     setLoading(false);
   };
 
-  console.log("Outfits:", outfits);
+  // console.log("Outfits:", outfits);
+  console.log("New Outfit:", newOutfit);
 
   return (
     <div>
@@ -210,11 +200,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
           </div>
         </div>
       ) : (
-        geminiResponse.outfit_occasion !== "" &&
-        geminiResponse.outfit_main_article !== "" &&
-        geminiResponse.outfit_shoes !== "" &&
-        geminiResponse.outfit_accessories !== "" &&
-        geminiResponse.outfit_completer_piece !== "" && (
+        newOutfit !== null && (
           <div className="mb-8 max-w-2xl mx-auto">
             <Card className="mt-12">
               <CardHeader className="relative">
@@ -223,20 +209,22 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     <MdOutlineDiamond className="text-red-300 size-6" />
                   </span>
                   <h2 className="text-lg font-semibold">
-                    {geminiResponse.outfit_occasion} Outfit
+                    {newOutfit?.outfit_occasion} Outfit
                   </h2>
                 </CardTitle>
                 <Button
                   variant="ghost"
                   className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all hover:bg-red-300/50"
-                  // onClick={() => handleAddToFavorites(outfits.id)}
+                  onClick={() =>
+                    newOutfit?.id && handleAddToFavorites(newOutfit.id)
+                  }
                 >
-                  {addFavorite ? "Remove from favorites" : "Add to favorites"}
+                  {newOutfit.id && newOutfit.favorite ? <MdCheck /> : <MdAdd />}
                 </Button>
 
                 <CardContent className="mt-4">
                   <Image
-                    src={`data:image/png;base64, ${imageData}`}
+                    src={`data:image/png;base64, ${newOutfit?.imageData}`}
                     alt="Gemini generated outfit flatlay"
                     height={300}
                     width={300}
@@ -244,19 +232,19 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                   />
                   <p className="text-sm mb-2 mt-8">
                     <span className="font-semibold">Main Item: </span>
-                    {geminiResponse.outfit_main_article}
+                    {newOutfit?.outfit_main_article}
                   </p>
                   <p className="text-sm mb-2">
                     <span className="font-semibold">Shoes: </span>{" "}
-                    {geminiResponse.outfit_shoes}
+                    {newOutfit?.outfit_shoes}
                   </p>
                   <p className="text-sm mb-2">
                     <span className="font-semibold">Accessories: </span>
-                    {geminiResponse.outfit_accessories}
+                    {newOutfit?.outfit_accessories}
                   </p>
                   <p className="text-sm mb-2">
                     <span className="font-semibold">Completer piece: </span>
-                    {geminiResponse.outfit_completer_piece}
+                    {newOutfit?.outfit_completer_piece}
                   </p>
                 </CardContent>
               </CardHeader>
@@ -268,7 +256,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
         <h2 className="text-xl font-semibold tracking-tight mb-2">
           Previous Suggestions
         </h2>
-        <div className="mb-8 flex flex-col gap-4">
+        <div className="flex gap-4">
           {!outfits || outfits.length === 0 ? (
             <p className="text-sm text-gray-500">
               Nothing to see yet...Upload an image and select an occasion to get
@@ -276,26 +264,24 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
             </p>
           ) : (
             outfits.map((outfit) => (
-              <Card key={outfit.id} className="max-w-[350px]">
-                <CardHeader className="relative">
-                  <CardTitle className="flex items-center gap-2">
-                    <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm">
-                      <MdOutlineDiamond className="text-red-300 size-6" />
-                    </span>
-                    <h2 className="text-lg font-semibold">
+              <Card key={outfit.id} className="product-card p-0">
+                <CardHeader className="relative pt-2">
+                  <CardTitle className="flex items-center gap-2 mb-4">
+                    <h2 className="text-lg flex items-center gap-2 font-semibold absolute top-0 left-0">
+                      <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm ">
+                        <MdOutlineDiamond className="text-red-300 size-6" />
+                      </span>
                       {outfit.outfit_occasion}
                     </h2>
                   </CardTitle>
                   <Button
                     variant="outline"
-                    className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all"
+                    className="absolute top-0 right-0 p-0 px-2 hover:cursor-pointer transition-all"
                     onClick={() => handleAddToFavorites(outfit.id)}
                   >
-                    {addFavorite || outfit.favorite
-                      ? "Remove from favorites"
-                      : "Add to favorites"}
+                    {outfit.id && outfit.favorite ? <MdCheck /> : <MdAdd />}
                   </Button>
-                  <CardContent className="mt-4">
+                  <CardContent className="mt-4 px-0">
                     <Image
                       src={`data:image/png;base64, ${outfit.imageData}`}
                       alt="Gemini generated outfit flatlay"
