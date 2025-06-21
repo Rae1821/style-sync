@@ -32,14 +32,6 @@ interface ProfileDetails {
   fashionStyle: string | null;
 }
 
-// interface GeminiResponse {
-//   outfit_occasion: string;
-//   outfit_main_article: string;
-//   outfit_shoes: string;
-//   outfit_accessories: string;
-//   outfit_completer_piece: string;
-// }
-
 interface OutfitProps {
   id: string;
   outfit_occasion: string | null;

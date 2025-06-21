@@ -26,19 +26,15 @@ const SearchSuggestions = ({
       <div className="flex flex-col w-full md:flex-row items-center justify-center gap-4 mt-8">
         <div className="bg-muted rounded-2xl p-2 shadow w-full md:max-w-3/4 lg:max-w-1/2 mx-auto lg:mx-0">
           <Card className="w-full radius-xs">
-            <CardHeader className="flex flex-row items-center justify-between w-3/4 mx-auto border-b-2 border-red-300 pb-4">
+            <CardHeader className="flex flex-row items-center justify-between w-full md:w-3/4 mx-auto border-b-2 border-red-300 pb-4">
               <div className="flex flex-col">
-                <CardDescription className="text-sm">
-                  Body Shape
-                </CardDescription>
+                <CardDescription className="text-sm">Shape</CardDescription>
                 <CardTitle className="text-xl mt-[-4] tracking-tight">
                   {bodyShape}
                 </CardTitle>
               </div>
               <div className="flex flex-col">
-                <CardDescription className="text-sm">
-                  Fashion Style
-                </CardDescription>
+                <CardDescription className="text-sm">Style</CardDescription>
                 <CardTitle className="text-xl mt-[-4] tracking-tight">
                   {fashionStyle}
                 </CardTitle>

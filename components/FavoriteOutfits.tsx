@@ -9,14 +9,14 @@ import Image from "next/image";
 interface FavOutfitProps {
   favOutfits: {
     id: string;
-    userEmail: string;
+    userEmail: string | null;
     outfit_occasion: string | null;
     outfit_main_article: string | null;
     outfit_shoes: string | null;
     outfit_accessories: string | null;
     outfit_completer_piece: string | null;
     imageData: string | null;
-    favorite: boolean;
+    favorite: boolean | null;
   }[];
 }
 

@@ -194,15 +194,15 @@ export const addFavoriteProduct = async (product: AddProductInput) => {
 // Delete Favorite Products
 interface DeleteFavoriteProductInput {
   id?: string;
-  userEmail?: string;
-  product_title?: string;
-  product_photo?: string;
-  store_name?: string;
-  product_price?: string;
-  product_original_price?: string;
-  product_url?: string;
-  product_rating?: number;
-  product_num_reviews?: number;
+  userEmail: string | null;
+  product_title: string | null;
+  product_photo: string | null;
+  store_name: string | null;
+  product_price: string | null;
+  product_original_price: string | null;
+  product_url: string | null;
+  product_rating: number | null;
+  product_num_reviews: number | null;
   asin?: string;
 }
 

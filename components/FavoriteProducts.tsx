@@ -10,29 +10,29 @@ import { FaArrowRightLong } from "react-icons/fa6";
 
 interface DeleteFavoriteProduct {
   id?: string;
-  userEmail?: string;
-  product_title?: string;
-  product_photo?: string;
-  store_name?: string;
-  product_price?: string;
-  product_original_price?: string;
-  product_url?: string;
-  product_rating?: number;
-  product_num_reviews?: number;
+  userEmail: string | null;
+  product_title: string | null;
+  product_photo: string | null;
+  store_name: string | null;
+  product_price: string | null;
+  product_original_price: string | null;
+  product_url: string | null;
+  product_rating: number | null;
+  product_num_reviews: number | null;
 }
 
 interface FavoriteProductsProps {
   favProducts: {
     id?: string;
-    userEmail?: string;
-    product_title?: string;
-    product_price?: string;
-    product_original_price?: string;
-    product_url?: string;
-    product_photo?: string;
-    store_name?: string;
-    product_rating?: number;
-    product_num_reviews?: number;
+    userEmail: string | null;
+    product_title: string | null;
+    product_price: string | null;
+    product_original_price: string | null;
+    product_url: string | null;
+    product_photo: string | null;
+    store_name: string | null;
+    product_rating: number | null;
+    product_num_reviews: number | null;
   }[];
 }
 
