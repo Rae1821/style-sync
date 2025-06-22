@@ -40,8 +40,8 @@ const MyDashboard = async () => {
     <div className="magicpattern min-h-screen py-4">
       <div className="flex flex-col py-8 px-10 mb-4 max-w-[1300px] mx-auto">
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold bg-gradient-to-r from-red-300 from-10% via-red-500 via-30% to-red-700 to-90% bg-clip-text text-transparent tracking-tighter">
-            Dashboard of Favorites
+          <h2 className="text-2xl font-semibold bg-gradient-to-r from-red-300 from-10% via-red-300/80 to-red-400 bg-clip-text text-transparent tracking-tighter">
+            Profile
           </h2>
           <p className="text-sm tracking-tight">
             All your favorites, stored in one place for easy access.

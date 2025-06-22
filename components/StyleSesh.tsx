@@ -50,6 +50,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
   // const [imageData, setImageData] = useState<string | null>(null);
   const [outfits, setOutfits] = useState<OutfitProps[]>([]);
   const [newOutfit, setNewOutfit] = useState<OutfitProps | null>(null);
+  const [visibleOutfitsCount, setVisibleOutfitsCount] = useState(6);
 
   const bodyShape = userProfile?.bodyShape;
   const fashionStyle = userProfile?.fashionStyle;
@@ -78,6 +79,10 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
 
     fetchOutfits();
   }, []);
+
+  const handleShowMore = () => {
+    setVisibleOutfitsCount((prevCount) => prevCount + 6);
+  };
 
   const handleUploadComplete = async (res: { ufsUrl: string }[]) => {
     try {
@@ -141,7 +146,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
   console.log("New Outfit:", newOutfit);
 
   return (
-    <div>
+    <div className="pb-32">
       <div className="flex flex-col items-center justify-center gap-8 md:flex-row md:items-baseline">
         <div className="flex flex-col items-center justify-start">
           <Select value={occasionValue} onValueChange={setOccasionValue}>
@@ -255,7 +260,7 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
               started!
             </p>
           ) : (
-            outfits.map((outfit) => (
+            outfits.slice(0, visibleOutfitsCount).map((outfit) => (
               <Card key={outfit.id} className="product-card p-0">
                 <CardHeader className="relative pt-2">
                   <CardTitle className="flex items-center gap-2 mb-4">
@@ -273,36 +278,43 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                   >
                     {outfit.id && outfit.favorite ? <MdCheck /> : <MdAdd />}
                   </Button>
-                  <CardContent className="mt-4 px-0">
-                    <Image
-                      src={`data:image/png;base64, ${outfit.imageData}`}
-                      alt="Gemini generated outfit flatlay"
-                      height={300}
-                      width={300}
-                      className="mx-auto aspect-square"
-                    />
-                    <p className="text-sm mb-2 mt-8">
-                      <span className="font-semibold">Main Item: </span>
-                      {outfit.outfit_main_article}
-                    </p>
-                    <p className="text-sm mb-2">
-                      <span className="font-semibold">Shoes: </span>{" "}
-                      {outfit.outfit_shoes}
-                    </p>
-                    <p className="text-sm mb-2">
-                      <span className="font-semibold">Accessories: </span>
-                      {outfit.outfit_accessories}
-                    </p>
-                    <p className="text-sm mb-2">
-                      <span className="font-semibold">Completer piece: </span>
-                      {outfit.outfit_completer_piece}
-                    </p>
-                  </CardContent>
                 </CardHeader>
+                <CardContent className="mt-4 px-0">
+                  <Image
+                    src={`data:image/png;base64, ${outfit.imageData}`}
+                    alt="Gemini generated outfit flatlay"
+                    height={300}
+                    width={300}
+                    className="mx-auto aspect-square"
+                  />
+                  <p className="text-sm mb-2 mt-8">
+                    <span className="font-semibold">Main Item: </span>
+                    {outfit.outfit_main_article}
+                  </p>
+                  <p className="text-sm mb-2">
+                    <span className="font-semibold">Shoes: </span>{" "}
+                    {outfit.outfit_shoes}
+                  </p>
+                  <p className="text-sm mb-2">
+                    <span className="font-semibold">Accessories: </span>
+                    {outfit.outfit_accessories}
+                  </p>
+                  <p className="text-sm mb-2">
+                    <span className="font-semibold">Completer piece: </span>
+                    {outfit.outfit_completer_piece}
+                  </p>
+                </CardContent>
               </Card>
             ))
           )}
         </div>
+        {visibleOutfitsCount < outfits.length && (
+          <div className="flex justify-center mt-8">
+            <Button variant="outline" onClick={handleShowMore}>
+              Show More
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

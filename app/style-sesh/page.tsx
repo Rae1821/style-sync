@@ -37,7 +37,7 @@ const StyleSeshPage = async () => {
     <div className="container min-h-screen px-4 mt-12 mx-auto">
       <h1 className="text-center mt-12 mb-8 text-xl tracking-tight font-semibold  md:text-2xl">
         Welcome to your <br />
-        <span className="bg-gradient-to-r from-red-200 from-10% via-red-300 via-30% to-red-500 bg-clip-text text-transparent text-4xl font-bold">
+        <span className="bg-gradient-to-r from-red-200 from-10% via-red-300/80 via-30% to-red-400 bg-clip-text text-transparent text-4xl font-bold">
           AI powered <br />
         </span>
         personalized style session

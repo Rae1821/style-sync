@@ -27,7 +27,7 @@ const MoodboardPage = async () => {
   }
 
   return (
-    <div className="container min-h-screen">
+    <div className="container min-h-screen max-w-[1300px] mx-auto">
       <div className="mt-4 px-8">
         <h1 className="text-2xl font-semibold bg-gradient-to-r from-red-300 from-10% via-red-500 via-30% to-red-700 bg-clip-text text-transparent tracking-tighter">
           Moodboard
@@ -40,7 +40,7 @@ const MoodboardPage = async () => {
         </p>
       </div>
       <div>
-        <p className="text-lg tracking-tight mt-12">Coming Soon...</p>
+        <p className="text-lg tracking-tight mt-12 px-8">Coming Soon...</p>
         {/* <MoodBoard
         // userProducts={fetchUserProducts}
         // userImages={fetchUserImages}
