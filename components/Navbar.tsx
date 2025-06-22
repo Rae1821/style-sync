@@ -34,7 +34,9 @@ const Navbar = async () => {
                 await signOut();
               }}
             >
-              <Button type="submit">Logout</Button>
+              <Button type="submit" className="cursor-pointer">
+                Logout
+              </Button>
             </form>
           )}
         </ul>

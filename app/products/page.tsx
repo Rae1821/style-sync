@@ -48,7 +48,7 @@ const ProductsPage = async (props: {
     <div className="container mx-auto max-w-[1100px] px-8 md:px-12 mt-4">
       <div className="">
         <div className="text-center">
-          <h2 className="text-3xl font-semibold bg-gradient-to-r from-red-300/30 via-red-300/80 to-red-500 bg-clip-text text-transparent ">
+          <h2 className="text-3xl font-semibold text-black tracking-tighter ">
             Product Search
           </h2>
           <p className="mt-2 text-sm font-normal tracking-tight text-muted-foreground">

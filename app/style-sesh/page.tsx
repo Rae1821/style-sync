@@ -49,7 +49,7 @@ const StyleSeshPage = async () => {
         </span>
       </p>
 
-      <p className="text-sm px-4 mx-auto max-w-2xl text-center text-gray-500 mt-2">
+      <p className="text-sm px-4 mx-auto max-w-2xl text-center text-gray-500 mt-2 leading-loose">
         Upload a picture of the item then pick an occasion from the dropdown and
         personalized outfit recommendations tailored to your{" "}
         <span className="font-semibold text-red-300 text-lg underline underline-offset-4 decoration-wavy">
