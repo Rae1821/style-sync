@@ -155,3 +155,56 @@
 .learn-card {
   @apply sm:w-[292px] sm:max-w-[292px] w-full flex-1 flex flex-col gap-4 rounded-md border border-gray-200 p-2 shadow hover:shadow-lg hover:-translate-y-1 hover:transition-all bg-white;
 }
+
+.shapedividers_com-5733 {
+  overflow: hidden;
+  position: relative;
+}
+.shapedividers_com-5733::before {
+  content: "";
+  font-family: "shape divider from ShapeDividers.com";
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  bottom: -0.1vw;
+  left: -0.1vw;
+  right: -0.1vw;
+  top: -0.1vw;
+  background-size: 100% 342px;
+  background-position: 50% 100%;
+  background-image: url('data:image/svg+xml;charset=utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.278 3.52" preserveAspectRatio="none"><path d="M0 3.528S27.04 3.352 35.278 0v3.528z" opacity=".2" fill="%23ffa2a2"/><path d="M0 3.528S27.04 3.374 35.278.425v3.103z" opacity=".2" fill="%23ffa2a2"/><path d="M0 3.528S27.04 3.396 35.278.882v2.646z" fill="%23ffa2a2"/><path d="M0 3.527h35.278v.092H0z" fill="%23ffa2a2"/></svg>');
+}
+
+@media (min-width: 2100px) {
+  .shapedividers_com-5733::before {
+    background-size: 100% calc(2vw + 342px);
+  }
+}
+
+.shapedividers_com-1919 {
+  overflow: hidden;
+  position: relative;
+}
+.shapedividers_com-1919::before {
+  content: "";
+  font-family: "shape divider from ShapeDividers.com";
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  bottom: -0.1vw;
+  left: -0.1vw;
+  right: -0.1vw;
+  top: -0.1vw;
+  background-size: 100% 342px;
+  background-position: 50% 0%;
+  transform: rotateY(180deg);
+  background-image: url('data:image/svg+xml;charset=utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.278 3.62" preserveAspectRatio="none"><path d="M35.278.092S8.238.267 0 3.62V.092z" opacity=".2" fill="%23ffa2a2"/><path d="M35.278.092S8.238.246 0 3.194V.092z" opacity=".2" fill="%23ffa2a2"/><path d="M35.278.092S8.238.223 0 2.738V.092zM35.278.092H0V0h35.278z" fill="%23ffa2a2"/></svg>');
+}
+
+@media (min-width: 2100px) {
+  .shapedividers_com-1919::before {
+    background-size: 100% calc(2vw + 342px);
+  }
+}

@@ -15,7 +15,7 @@ const Hero1 = () => {
         <p className="mb-8 max-w-2xl text-sm text-muted-foreground lg:text-lg text-center">
           Some sort of cool awesome fancy descriptive text goes here.
         </p>
-        <div className="mt-2 flex w-full flex-col justify-center gap-2 md:w-1/2 lg:w-[200px]">
+        <div className="mt-2 flex w-3/4 flex-col justify-center gap-2 md:w-1/2 lg:w-[200px]">
           {/* <Link
             href="/login"
             className="group relative bg-transparent px-6 py-4 font-semibold text-black hover:cursor-pointer"
@@ -53,14 +53,14 @@ const Hero1 = () => {
               className="w-full h-full rounded-md object-cover"
             />
           </div>
-          <div className="absolute inset-0 z-5 m-auto flex aspect-29/36 max-w-[16rem] translate-x-[75%] translate-y-[10%] scale-[0.85] rotate-[15deg] justify-center rounded-lg border border-border bg-accent opacity-60 w-[21.25rem] md:max-w-[21.25rem]">
+          <div className="absolute inset-0 z-0 m-auto flex aspect-29/36 max-w-[16rem] translate-x-[75%] translate-y-[10%] scale-[0.85] rotate-[15deg] justify-center rounded-lg border border-border bg-accent opacity-60 w-[21.25rem] md:max-w-[21.25rem]">
             <Image
               src="/images/hero.jpg"
               alt="hero section demo image showing interface components"
               width={400}
               height={400}
               loading="lazy"
-              className="w-full h-full rounded-md object-cover"
+              className="w-full h-full rounded-md object-cover z-0"
             />
           </div>
         </div>
