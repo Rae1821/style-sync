@@ -12,8 +12,8 @@ const Hero1 = () => {
     <section className="px-4 overflow-hidden py-12 md:py-24">
       <div className="container flex flex-col items-center px-8 mx-auto">
         <AnimatedTextUnderlign />
-        <p className="mb-8 max-w-2xl text-sm text-muted-foreground lg:text-lg text-center">
-          Some sort of cool awesome fancy descriptive text goes here.
+        <p className="mb-8 mt-2 max-w-2xl text-sm lg:text-lg text-center">
+          Where technology meets style, AI-powered fashion at your fingertips.
         </p>
         <div className="mt-2 flex w-3/4 flex-col justify-center gap-2 md:w-1/2 lg:w-[200px]">
           {/* <Link

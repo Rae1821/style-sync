@@ -24,7 +24,9 @@ const HowItWorks = () => {
                 <span className="h-20 w-[3px] shrink-0 bg-gradient-to-b from-transparent to-black opacity-70"></span>
               </div>
               <div className="flex flex-col justify-center gap-5 px-0 min-[960px]:gap-6 min-[960px]:px-4 min-[960px]:py-4">
-                <h3 className="text-xl min-[960px]:text-2xl">Body Shape</h3>
+                <h3 className="text-xl min-[960px]:text-2xl font-semibold tracking-tight">
+                  Body Shape
+                </h3>
                 <p className="text-sm min-[960px]:text-base">
                   Use our simple calculator to quickly find out your body shape.
                   The results will be saved to your dashboard for easy access.
@@ -57,7 +59,9 @@ const HowItWorks = () => {
                 <span className="h-20 w-[3px] shrink-0 bg-black opacity-70"></span>
               </div>
               <div className="flex flex-col justify-center gap-5 px-0 min-[960px]:gap-6 min-[960px]:px-4 min-[960px]:py-4">
-                <h3 className="text-xl min-[960px]:text-2xl">Fashion Style</h3>
+                <h3 className="text-xl min-[960px]:text-2xl font-semibold tracking-tight">
+                  Fashion Style
+                </h3>
                 <p className="text-sm min-[960px]:text-base">
                   Take our quick and easy quiz to find out your fashion style.
                   You can take the quiz as many times as you want, the results
@@ -89,7 +93,9 @@ const HowItWorks = () => {
                 <span className="h-20 shrink-0"></span>
               </div>
               <div className="flex flex-col justify-center gap-5 px-0 min-[960px]:gap-6 min-[960px]:px-4 min-[960px]:py-4">
-                <h3 className="text-xl min-[960px]:text-2xl">Style Sesh</h3>
+                <h3 className="text-xl min-[960px]:text-2xl font-semibold tracking-tight">
+                  Style Sesh
+                </h3>
                 <p className="text-sm min-[960px]:text-base">
                   Upload a picture of a piece of clothing in your style session
                   and get personalized outfit recommendations for multiple
