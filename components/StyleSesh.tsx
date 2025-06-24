@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { MdCheck, MdOutlineDiamond } from "react-icons/md";
 import { Button } from "./ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
+import { Card, CardHeader, CardContent } from "./ui/card";
 import Image from "next/image";
 import { MdAdd } from "react-icons/md";
 
@@ -200,33 +200,38 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
         newOutfit !== null && (
           <div className="mb-8 max-w-2xl mx-auto">
             <Card className="mt-12">
-              <CardHeader className="relative">
-                <CardTitle className="flex items-center gap-2">
-                  <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm">
-                    <MdOutlineDiamond className="text-red-300 size-6" />
-                  </span>
-                  <h2 className="text-lg font-semibold">
+              <CardHeader className="relative pt-2">
+                <Image
+                  src={`data:image/png;base64, ${newOutfit?.imageData}`}
+                  alt="Gemini generated outfit flatlay"
+                  height={300}
+                  width={300}
+                  className="mx-auto"
+                />
+              </CardHeader>
+              <CardContent className="mt-4">
+                <div className="flex justify-between items-center">
+                  <h2 className="flex items-center gap-2 font-semibold text-primary text-lg tracking-tight">
+                    <span className="flex size-10 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm">
+                      <MdOutlineDiamond className="text-red-300 size-6" />
+                    </span>
                     {newOutfit?.outfit_occasion} Outfit
                   </h2>
-                </CardTitle>
-                <Button
-                  variant="ghost"
-                  className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all hover:bg-red-300/50"
-                  onClick={() =>
-                    newOutfit?.id && handleAddToFavorites(newOutfit.id)
-                  }
-                >
-                  {newOutfit.id && newOutfit.favorite ? <MdCheck /> : <MdAdd />}
-                </Button>
-
-                <CardContent className="mt-4">
-                  <Image
-                    src={`data:image/png;base64, ${newOutfit?.imageData}`}
-                    alt="Gemini generated outfit flatlay"
-                    height={300}
-                    width={300}
-                    className="mx-auto"
-                  />
+                  <Button
+                    variant="ghost"
+                    className="absolute top-0 right-4 p-0 text-xs px-2 hover:cursor-pointer transition-all hover:bg-red-300/50"
+                    onClick={() =>
+                      newOutfit?.id && handleAddToFavorites(newOutfit.id)
+                    }
+                  >
+                    {newOutfit.id && newOutfit.favorite ? (
+                      <MdCheck />
+                    ) : (
+                      <MdAdd />
+                    )}
+                  </Button>
+                </div>
+                <div className="px-2">
                   <p className="text-sm mb-2 mt-8">
                     <span className="font-semibold">Main Item: </span>
                     {newOutfit?.outfit_main_article}
@@ -243,8 +248,8 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     <span className="font-semibold">Completer piece: </span>
                     {newOutfit?.outfit_completer_piece}
                   </p>
-                </CardContent>
-              </CardHeader>
+                </div>
+              </CardContent>
             </Card>
           </div>
         )
@@ -263,23 +268,6 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
             outfits.slice(0, visibleOutfitsCount).map((outfit) => (
               <Card key={outfit.id} className="product-card p-0">
                 <CardHeader className="relative pt-2">
-                  <CardTitle className="flex items-center gap-2 mb-4">
-                    <h2 className="text-lg flex items-center gap-2 font-semibold absolute top-0 left-0">
-                      <span className="flex size-12 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm ">
-                        <MdOutlineDiamond className="text-red-300 size-6" />
-                      </span>
-                      {outfit.outfit_occasion}
-                    </h2>
-                  </CardTitle>
-                  <Button
-                    variant="ghost"
-                    className="absolute top-0 right-0 p-0 px-2 hover:cursor-pointer transition-all"
-                    onClick={() => handleAddToFavorites(outfit.id)}
-                  >
-                    {outfit.id && outfit.favorite ? <MdCheck /> : <MdAdd />}
-                  </Button>
-                </CardHeader>
-                <CardContent className="mt-4 px-0">
                   <Image
                     src={`data:image/png;base64, ${outfit.imageData}`}
                     alt="Gemini generated outfit flatlay"
@@ -287,22 +275,50 @@ const StyleSesh = ({ userProfile }: { userProfile: ProfileDetails }) => {
                     width={300}
                     className="mx-auto aspect-square"
                   />
-                  <p className="text-sm mb-2 mt-8">
-                    <span className="font-semibold">Main Item: </span>
-                    {outfit.outfit_main_article}
-                  </p>
-                  <p className="text-sm mb-2">
-                    <span className="font-semibold">Shoes: </span>{" "}
-                    {outfit.outfit_shoes}
-                  </p>
-                  <p className="text-sm mb-2">
-                    <span className="font-semibold">Accessories: </span>
-                    {outfit.outfit_accessories}
-                  </p>
-                  <p className="text-sm mb-2">
-                    <span className="font-semibold">Completer piece: </span>
-                    {outfit.outfit_completer_piece}
-                  </p>
+                </CardHeader>
+                <CardContent className="mt-4 px-0">
+                  <div className="flex justify-between items-center">
+                    <h2 className="flex items-center gap-2 font-semibold text-primary text-lg tracking-tight">
+                      {" "}
+                      <span className="flex size-10 items-center justify-center rounded-xl border border-background/20 bg-red-300/15 backdrop-blur-sm ">
+                        <MdOutlineDiamond className="text-red-300 size-6" />
+                      </span>
+                      {outfit.outfit_occasion}
+                    </h2>
+                    <Button
+                      variant="ghost"
+                      className="p-0 px-2 hover:cursor-pointer transition-all"
+                      onClick={() => handleAddToFavorites(outfit.id)}
+                    >
+                      {outfit.id && outfit.favorite ? <MdCheck /> : <MdAdd />}
+                    </Button>
+                  </div>
+                  <div className="px-2">
+                    <p className="text-sm mb-2 mt-4 text-secondary-foreground">
+                      <span className="text-primary font-semibold">
+                        Main Item:{" "}
+                      </span>
+                      {outfit.outfit_main_article}
+                    </p>
+                    <p className="text-sm mb-2 text-secondary-foreground">
+                      <span className="font-semibold text-primary">
+                        Shoes:{" "}
+                      </span>{" "}
+                      {outfit.outfit_shoes}
+                    </p>
+                    <p className="text-sm mb-2 text-secondary-foreground">
+                      <span className="font-semibold text-primary">
+                        Accessories:{" "}
+                      </span>
+                      {outfit.outfit_accessories}
+                    </p>
+                    <p className="text-sm mb-2 text-secondary-foreground">
+                      <span className="font-semibold text-primary">
+                        Completer piece:{" "}
+                      </span>
+                      {outfit.outfit_completer_piece}
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             ))
