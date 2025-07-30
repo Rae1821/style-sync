@@ -22,13 +22,17 @@ This is my passion project so always looking for ways to make it bigger and bett
 
 - Calculate body shape
 - Find fashion style
-- Find best products for your shape and style on Amazon
-- Add your favorites to a 'favorite products' list on your dashboard
-- Upload your own photos and pair them with your favorites on a 'moodboard'
+- Find best products for your shape and style
+- Save your favorites to a 'favorite products' list on your dashboard
+- Upload a photo of an item of clothing and get outfit recommendations according to list of occasions
+- Save favorite outfits to a 'favorite outfits' list on your dashboard
 
 ## Future Capabilities
 
-- Upload a photo and have Gemini analyze and give user advice on what items might work best with that item
 - Ability for Gemini to search for these items for the user across multiple websites
 - A chatbot to get additional style advice
 - Maybe a potential list of stores that align with certain fashion styles
+
+## TO DOs
+
+- Refactor components and streamline logic

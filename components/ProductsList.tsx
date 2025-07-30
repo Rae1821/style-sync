@@ -22,9 +22,7 @@ interface ClothingProps {
   };
 }
 
-// const ProductsList = ({ searchItem }: { searchItem: string }) => {
 const ProductsList = ({ query }: { query: string }) => {
-  // const [items, setItems] = useState([]);
   const [products, setProducts] = useState<ClothingProps[]>([]);
   const [loading, setLoading] = useState(false);
 

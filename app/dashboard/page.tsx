@@ -37,10 +37,10 @@ const MyDashboard = async () => {
   }
 
   return (
-    <div className="magicpattern min-h-screen py-4">
+    <div className="min-h-screen py-4">
       <div className="flex flex-col py-8 px-10 mb-4 max-w-[1300px] mx-auto">
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold tracking-tighter">Favorites</h2>
+          <h2 className="text-2xl font-semibold tracking-tighter">Dashboard</h2>
           <p className="text-sm tracking-tight">
             All your favorites, stored in one place for easy access.
           </p>
