@@ -11,6 +11,7 @@ import path from "path";
 import fs from "fs";
 import os from "os";
 import { auth } from "@/auth";
+import bcrypt from "bcryptjs";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -24,6 +25,41 @@ export const getUserByEmail = async (email: string) => {
   } catch (error) {
     console.log(error);
     return null;
+  }
+};
+
+// Sign up with email and password
+export const signUp = async (
+  email: string,
+  password: string,
+  name?: string
+) => {
+  try {
+    // Check if user already exists
+    const existingUser = await db.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return { error: "User with this email already exists" };
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create the user
+    const newUser = await db.user.create({
+      data: {
+        email,
+        name: name || null,
+        hashedPassword,
+      },
+    });
+
+    return { success: true, user: { id: newUser.id, email: newUser.email } };
+  } catch (error) {
+    console.error("Error signing up:", error);
+    return { error: "Failed to create account. Please try again." };
   }
 };
 

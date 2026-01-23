@@ -8,31 +8,42 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { signUp } from "@/actions/auth";
 
-const LoginPage = () => {
+const SignUpPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCredentialsLogin = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+      const result = await signUp(email, password, name);
 
-      if (result?.error) {
-        setError("Invalid email or password");
+      if (result.error) {
+        setError(result.error);
       } else {
-        router.push("/");
-        router.refresh();
+        // Sign in the user after successful signup
+        const signInResult = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (signInResult?.error) {
+          setError(
+            "Account created but failed to sign in. Please log in manually."
+          );
+        } else {
+          router.push("/");
+          router.refresh();
+        }
       }
     } catch (err) {
       setError("An error occurred. Please try again." + err);
@@ -52,10 +63,20 @@ const LoginPage = () => {
           <div className="flex flex-col gap-4">
             <div className="mx-auto w-[300px] rounded-md p-6 shadow">
               <div className="mb-6 flex flex-col items-center">
-                <h1 className="mb-2 text-2xl font-bold">Log in</h1>
-                <p className="text-muted-foreground">Welcome back</p>
+                <h1 className="mb-2 text-2xl font-bold">Sign up</h1>
+                <p className="text-muted-foreground">Create your account</p>
               </div>
-              <form onSubmit={handleCredentialsLogin} className="space-y-4">
+              <form onSubmit={handleSignUp} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Name (optional)</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="Your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
@@ -76,13 +97,14 @@ const LoginPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    minLength={8}
                   />
                 </div>
                 {error && (
                   <p className="text-sm text-red-500 text-center">{error}</p>
                 )}
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Logging in..." : "Log in"}
+                  {isLoading ? "Creating account..." : "Sign up"}
                 </Button>
               </form>
               <div className="relative my-6">
@@ -102,15 +124,15 @@ const LoginPage = () => {
                 onClick={handleGoogleLogin}
               >
                 <FcGoogle className="mr-2 size-5" />
-                Login with Google
+                Sign up with Google
               </Button>
               <p className="mt-4 text-center text-sm text-muted-foreground">
-                Don&apos;t have an account?{" "}
+                Already have an account?{" "}
                 <Link
-                  href="/signup"
+                  href="/login"
                   className="text-primary hover:underline font-medium"
                 >
-                  Sign up
+                  Log in
                 </Link>
               </p>
             </div>
@@ -121,4 +143,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

@@ -42,8 +42,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
 
-    redirect() {
-      return "/";
+    redirect({ baseUrl }) {
+      return baseUrl;
     },
   },
 });
